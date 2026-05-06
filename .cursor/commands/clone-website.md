@@ -458,6 +458,26 @@ These are lessons from previous failed clones — each one cost hours of rework:
 - **Don't forget smooth scroll libraries.** Check for Lenis (`.lenis` class), Locomotive Scroll, or similar. Default browser scrolling feels noticeably different and the user will spot it immediately.
 - **Don't dispatch builders without a spec file.** The spec file forces exhaustive extraction and creates an auditable artifact. Skipping it means the builder gets whatever you can fit in a prompt from memory.
 
+## Phase 6: Post-Clone Enhancements (MANDATORY)
+
+After visual QA passes, you MUST apply all enhancements defined in `ENHANCE.md` before declaring the clone done. This is non-negotiable.
+
+1. Read `ENHANCE.md` in the project root — it defines 10 enhancement categories
+2. Apply every section in order, confirming each compiles before moving to the next:
+   - §1 Scroll Animations — IntersectionObserver `.reveal`/`.visible` on all below-fold sections
+   - §2 Micro Animations — `btn-glow`, `card-lift`, `nav-underline`, `input-glow`, `cta-shimmer` CSS classes on all interactive elements
+   - §3 Page Load Animations — staggered hero element animations with delays (0.3s / 0.5s / 0.7s)
+   - §4 Mascot Placeholder — if original has a mascot/robot/character, add `.mascot-placeholder` div
+   - §5 Particle/Background Effects — CTA shimmer or tsparticles if original has particles
+   - §6 Number Counters — `CountUp` component on any stat numbers, triggered by IntersectionObserver
+   - §7 Mobile Responsiveness — verify no horizontal overflow at 375px, 768px, 1024px
+   - §8 Preloader — full-screen `.preloader` overlay fading out after 800ms
+   - §9 Cursor Effect — `CustomCursor` component if original site uses a custom cursor
+   - §10 Asset Fallbacks — `.asset-placeholder` CSS and `onError` on every `<img>`
+3. After all enhancements: run `npm run build` — the build MUST pass before declaring done
+
+Do not skip any section. Do not mark the clone complete until enhancements are applied and the build passes.
+
 ## Completion
 
 When done, report:
@@ -467,4 +487,5 @@ When done, report:
 - Total assets downloaded (images, videos, SVGs, fonts)
 - Build status (`npm run build` result)
 - Visual QA results (any remaining discrepancies)
+- Enhancement status (all 10 sections from ENHANCE.md applied ✅)
 - Any known gaps or limitations

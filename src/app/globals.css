@@ -5,11 +5,39 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Fonts */
+  --font-sans: var(--font-body, ui-sans-serif, system-ui, sans-serif);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-heading: var(--font-heading, sans-serif);
+
+  /* Solais brand colors */
+  --color-brown: #3c091e;
+  --color-brown-transparent: #3c091e00;
+  --color-burnt-orange: #97494e;
+  --color-orange: #af6267;
+  --color-dark-grey: #646464;
+  --color-grey: #dedede;
+  --color-light-grey: #f4f4f4;
+
+  /* shadcn tokens mapped to Solais palette */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
-  --font-heading: var(--font-sans);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -18,113 +46,519 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
+
+  /* Solais custom breakpoints */
+  --breakpoint-phone: 36rem;
+  --breakpoint-mini: 48rem;
+  --breakpoint-tablet: 64rem;
+  --breakpoint-laptop: 80rem;
+  --breakpoint-big-laptop: 90rem;
+  --breakpoint-desktop: 100rem;
+
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --background: #ffffff;
+  --foreground: #3c091e;
+  --card: #ffffff;
+  --card-foreground: #3c091e;
+  --popover: #ffffff;
+  --popover-foreground: #3c091e;
+  --primary: #3c091e;
+  --primary-foreground: #ffffff;
+  --secondary: #f4f4f4;
+  --secondary-foreground: #3c091e;
+  --muted: #f4f4f4;
+  --muted-foreground: #646464;
+  --accent: #97494e;
+  --accent-foreground: #ffffff;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --border: #dedede;
+  --input: #dedede;
+  --ring: #3c091e;
+  --radius: 0px;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #3c091e;
+  --sidebar-primary: #3c091e;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f4f4f4;
+  --sidebar-accent-foreground: #3c091e;
+  --sidebar-border: #dedede;
+  --sidebar-ring: #3c091e;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
+    box-sizing: border-box;
   }
   html {
-    @apply font-sans;
+    /* overflow-x:hidden removed — breaks position:sticky stacking */
+    /* scroll-behavior:smooth removed — conflicts with GSAP ScrollTrigger pin */
   }
+  body {
+    background-color: #3c091e;
+    color: #ffffff;
+    font-family: var(--font-body, ui-sans-serif), sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    /* overflow-x:hidden removed — breaks position:sticky stacking */
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading, sans-serif);
+    font-weight: 400;
+    line-height: 1.05;
+  }
+}
+
+/* ── Typography Scale (matching solais.ai is-h* classes) ─────────── */
+.is-h1 {
+  font-size: clamp(2rem, 4vw, 4.5rem);
+  line-height: 1;
+  font-family: var(--font-heading, sans-serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.is-h2 {
+  font-size: clamp(1.5rem, 3vw, 3rem);
+  line-height: 1;
+  font-family: var(--font-heading, sans-serif);
+  font-weight: 400;
+}
+.is-h3 {
+  font-size: clamp(1.25rem, 2vw, 2rem);
+  line-height: 1.1;
+  font-family: var(--font-heading, sans-serif);
+}
+.is-h4 {
+  font-size: clamp(1rem, 1.5vw, 1.5rem);
+  line-height: 1.2;
+  font-family: var(--font-heading, sans-serif);
+}
+.is-h6 {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  font-family: var(--font-heading, sans-serif);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.supertitle {
+  font-size: 0.75rem;
+  line-height: 1;
+  font-family: var(--font-heading, sans-serif);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.para-indent {
+  padding-left: 2rem;
+}
+.font-heading {
+  font-family: var(--font-heading, sans-serif);
+}
+.font-body {
+  font-family: var(--font-body, sans-serif);
+}
+
+/* ── Custom Colors (shorthand classes) ──────────────────────────── */
+.bg-brown { background-color: #3c091e; }
+.bg-burntOrange { background-color: #97494e; }
+.text-brown { color: #3c091e; }
+.text-burntOrange { color: #97494e; }
+.fill-brown { fill: #3c091e; }
+.border-brown { border-color: #3c091e; }
+.border-burntOrange { border-color: #97494e; }
+.border-t-white { border-top-color: #ffffff; }
+
+/* ── Blink animation ─────────────────────────────────────────────── */
+@keyframes blink {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+.blink {
+  animation: blink 0.4s 0.1s infinite alternate;
+}
+.blinking-cursor {
+  display: inline-block;
+  animation: blink 0.4s 0.1s infinite alternate;
+}
+
+/* ── Marquee ─────────────────────────────────────────────────────── */
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 18s linear infinite;
+}
+
+/* ── Scrollbar hide ──────────────────────────────────────────────── */
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+
+/* ── Nav link underline hover ────────────────────────────────────── */
+.nav-link { position: relative; display: inline-block; }
+.nav-link .btn-text { position: relative; }
+.nav-link .btn-text::after {
+  content: "";
+  position: absolute;
+  bottom: -1px; left: 0;
+  width: 0; height: 1px;
+  background: currentColor;
+  transition: width 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+.nav-link:hover .btn-text::after { width: 100%; }
+
+/* ── Loading screen grid background ─────────────────────────────── */
+.grid-background {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ── Button styles ───────────────────────────────────────────────── */
+.button-primary {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button.second {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid currentColor;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease;
+  font-family: var(--font-heading, sans-serif);
+}
+.button.second:hover {
+  background-color: currentColor;
+}
+.button.second .btn-text {
+  position: relative;
+  z-index: 1;
+  mix-blend-mode: difference;
+}
+.button.second.white {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+/* ── Clip path utility ───────────────────────────────────────────── */
+.clip-parallelogram-tl {
+  clip-path: polygon(0 0, 100% 0, 100% 75%, 85.9% 100%, 0% 100%);
+}
+
+/* ── Smooth scroll wrapper (GSAP) ────────────────────────────────── */
+#smooth-wrapper { overflow: hidden; height: 100vh; }
+#smooth-content { will-change: transform; }
+
+/* ── ENHANCE §1: Scroll reveal — GSAP-driven now, neutralize legacy CSS ── */
+.reveal { opacity: 1; transform: none; transition: none; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── ENHANCE §2: Micro animations ───────────────────────────────── */
+.btn-glow {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.btn-glow:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 32px rgba(151,73,78,0.65), 0 0 12px rgba(90,15,45,0.4);
+}
+.card-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+}
+.input-glow:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(60,9,30,0.4);
+}
+@keyframes ctaShimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.cta-shimmer {
+  background-size: 200% auto;
+  animation: ctaShimmer 3s linear infinite;
+}
+
+/* ── ENHANCE §3: Page load animations ───────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* Navbar fires immediately; hero elements staggered after ~2s loading screen */
+.navbar-load   { animation: fadeDown  0.5s ease 0.1s  both; }
+.hero-label    { animation: fadeInUp  0.6s ease 2.25s both; }
+.hero-heading  { animation: fadeInUp  0.6s ease 2.45s both; }
+.hero-load-sub { animation: fadeInUp  0.6s ease 2.65s both; }
+.hero-load-cta { animation: fadeInUp  0.6s ease 2.85s both; }
+
+/* ── ENHANCE §8: Preloader ──────────────────────────────────────── */
+@keyframes blockRevealIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes blockRevealOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+.preloader-block-in  { animation: blockRevealIn  0.15s ease forwards; }
+.preloader-block-out { animation: blockRevealOut 0.15s ease forwards; }
+
+/* ── ENHANCE §9: Custom cursor ──────────────────────────────────── */
+@media (pointer: fine) {
+  body, a, button { cursor: none; }
+}
+.custom-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease;
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+.custom-cursor.hovering { width: 22px; height: 22px; }
+
+/* ── ENHANCE §10: Asset placeholder ─────────────────────────────── */
+.asset-placeholder {
+  background: #2a0815;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.3);
+  font-size: 11px;
+  text-align: center;
+}
+img[src].error { display: none; }
+
+/* ── Mascot / 3D visual placeholder ─────────────────────────────── */
+@keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+@keyframes pulse-glow {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+@keyframes robotFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+.mascot-placeholder {
+  width: 500px;
+  height: 500px;
+  border: 2px dashed rgba(255,255,255,0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: rgba(255,255,255,0.4);
+  font-family: sans-serif;
+  font-size: 14px;
+  text-align: center;
+  gap: 8px;
+  position: relative;
+  animation: spin-slow 20s linear infinite;
+}
+
+/* ── Section visual placeholder ──────────────────────────────────── */
+.section-placeholder {
+  width: 100%;
+  height: 300px;
+  border-top: 2px dashed rgba(255,255,255,0.15);
+  border-bottom: 2px dashed rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.3);
+  font-family: sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  margin: 2rem 0;
+}
+
+/* ── Nav underline hover (slide from left) ───────────────────────── */
+.nav-underline {
+  position: relative;
+}
+.nav-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.25s ease;
+}
+.nav-underline:hover::after { width: 100%; }
+
+/* ── Process steps ───────────────────────────────────────────────── */
+.process-step {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 1.5rem;
+  padding: 1.75rem 0;
+  border-top: 1px solid rgb(53,53,57);
+}
+.process-step-desc {
+  overflow: hidden;
+}
+
+/* ── Number counter slot machine ────────────────────────────────── */
+.number-slot {
+  overflow: hidden;
+  display: inline-flex;
+}
+.number-column {
+  display: flex;
+  flex-direction: column;
+  transition: transform 2s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ── Hero load staggered reveal ─────────────────────────────────── */
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-section [class*="eyebrow"], .hero-section [class*="label"] {
+  animation: heroFadeUp 0.6s ease-out 0.2s both;
+}
+.hero-section h1 {
+  animation: heroFadeUp 0.7s ease-out 0.4s both;
+}
+.hero-section h2 {
+  animation: heroFadeUp 0.7s ease-out 0.55s both;
+}
+.hero-section p {
+  animation: heroFadeUp 0.6s ease-out 0.7s both;
+}
+.hero-section button,
+.hero-section a[class*="cta"],
+.hero-section [class*="schedule"],
+.hero-section [class*="request"] {
+  animation: heroFadeUp 0.6s ease-out 0.85s both;
+}
+.hero-section [class*="navbar"], header {
+  animation: heroFadeUp 0.5s ease-out 0s both;
+}
+
+/* ── Button active + focus states ───────────────────────────────── */
+button:active, [class*="btn"]:active, [class*="cta"]:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
+}
+button:focus-visible, a:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.4);
+  outline-offset: 3px;
+}
+
+/* ── Pulse (used by Suspense fallbacks etc.) ────────────────────── */
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 1; }
+}
+
+/* ── Legacy sr-reveal classes — neutralized; GSAP handles reveals now ── */
+.sr-reveal, .sr-visible { opacity: 1; transform: none; transition: none; }
+
+/* Respect prefers-reduced-motion globally — disable GSAP transforms */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Button hover ───────────────────────────────────────────────── */
+button, a[class*="btn"], [class*="button"], [class*="cta"] {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+button:hover, a[class*="btn"]:hover {
+  transform: scale(1.03);
+}
+
+/* ── Card hover ─────────────────────────────────────────────────── */
+[class*="card"], [class*="Card"] {
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+[class*="card"]:hover, [class*="Card"]:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255,255,255,0.2);
+}
+
+/* ── Step / item hover slide ────────────────────────────────────── */
+[class*="step"]:hover h3,
+[class*="step"]:hover h4,
+[class*="item"]:hover h3 {
+  transform: translateX(8px);
+  transition: transform 0.3s ease;
+}
+[class*="step"] h3,
+[class*="step"] h4,
+[class*="item"] h3 {
+  transition: transform 0.3s ease;
+}
+
+/* ── Nav link underline ─────────────────────────────────────────── */
+nav a {
+  position: relative;
+  transition: color 0.2s ease;
+}
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.3s ease;
+}
+nav a:hover::after {
+  width: 100%;
+}
+
+/* ── Industry cards lift ────────────────────────────────────────── */
+.industry-card {
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+.industry-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255,255,255,0.2);
 }

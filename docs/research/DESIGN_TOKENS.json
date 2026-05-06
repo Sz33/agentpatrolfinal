@@ -1,0 +1,167 @@
+{
+  "fonts": [
+    "sans-serif",
+    "Violetsans, Arial, sans-serif",
+    "\"Roboto Mono\", sans-serif",
+    "webflow-icons"
+  ],
+  "colors": [
+    "rgb(239, 239, 229)",
+    "rgb(255, 255, 255)",
+    "rgb(51, 51, 51)",
+    "rgb(9, 9, 14)",
+    "rgba(239, 239, 229, 0.6)",
+    "rgb(10, 9, 15)",
+    "rgb(53, 53, 57)",
+    "rgb(18, 18, 18)",
+    "rgb(221, 221, 221)"
+  ],
+  "fontLinks": [
+    "https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700%7CRoboto+Mono:300,400,500,600,700%7CRoboto+Mono:300,400,500,600,700"
+  ],
+  "favicons": [
+    {
+      "href": "https://cdn.prod.website-files.com/64354b8ce4872ad8cd1c7b04/66e9a1b24861e4af25ba59f3_CGPT%20Favicon%2032x32.png",
+      "sizes": "",
+      "rel": "shortcut icon"
+    },
+    {
+      "href": "https://cdn.prod.website-files.com/64354b8ce4872ad8cd1c7b04/66e9a1933a2b2e8f0db816a5_CGPT%20Favicon%20256x256.png",
+      "sizes": "",
+      "rel": "apple-touch-icon"
+    }
+  ],
+  "ogImage": "https://cdn.prod.website-files.com/64354b8ce4872ad8cd1c7b04/64d9d5f89cc52bd948b9d53b_Chain-GPT.jpg",
+  "metaDesc": "ChainGPT offers the fastest growing AI technology for all Crypto and Blockchain related topics. Access unlimited solutions and use-cases using our advanced AI model: Blockchain analytics, AI NFT Generator, AI trading, smart-contract development, AI auditing, risk management, source of crypto news, and much more. Visit ChainGPT.org today. Chain GPT Crypto AI Tools.",
+  "title": "ChainGPT - Unleash The Power of Blockchain AI",
+  "bodyStyles": {
+    "fontFamily": "Violetsans, Arial, sans-serif",
+    "fontSize": "16px",
+    "lineHeight": "24px",
+    "color": "rgb(239, 239, 229)",
+    "backgroundColor": "rgb(10, 9, 15)"
+  },
+  "hasLenis": true,
+  "hasLocomotive": false,
+  "styleSheets": [
+    {
+      "href": null,
+      "rules": 1
+    },
+    {
+      "href": "https://cdn.prod.website-files.com/64354b8ce4872ad8cd1c7b04/css/chain-gpt.shared.3a821f896.min.css",
+      "rules": 4675
+    },
+    {
+      "href": null,
+      "rules": 4
+    },
+    {
+      "href": "https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700%7CRoboto+Mono:300,400,500,600,700%7CRoboto+Mono:300,400,500,600,700"
+    },
+    {
+      "href": null,
+      "rules": 120
+    },
+    {
+      "href": null,
+      "rules": 51
+    },
+    {
+      "href": null,
+      "rules": 3
+    },
+    {
+      "href": null,
+      "rules": 3
+    },
+    {
+      "href": null,
+      "rules": 1
+    },
+    {
+      "href": null,
+      "rules": 6
+    },
+    {
+      "href": null,
+      "rules": 39
+    },
+    {
+      "href": null,
+      "rules": 3
+    },
+    {
+      "href": null,
+      "rules": 3
+    },
+    {
+      "href": null,
+      "rules": 1
+    },
+    {
+      "href": null,
+      "rules": 1
+    },
+    {
+      "href": null,
+      "rules": 1
+    },
+    {
+      "href": null,
+      "rules": 3
+    },
+    {
+      "href": null,
+      "rules": 3
+    },
+    {
+      "href": null,
+      "rules": 1
+    },
+    {
+      "href": null,
+      "rules": 1
+    },
+    {
+      "href": null,
+      "rules": 1
+    },
+    {
+      "href": null,
+      "rules": 1
+    },
+    {
+      "href": null,
+      "rules": 14
+    },
+    {
+      "href": null,
+      "rules": 9
+    },
+    {
+      "href": null,
+      "rules": 3
+    },
+    {
+      "href": null,
+      "rules": 3
+    },
+    {
+      "href": null,
+      "rules": 3
+    },
+    {
+      "href": null,
+      "rules": 2
+    },
+    {
+      "href": null,
+      "rules": 12
+    },
+    {
+      "href": null,
+      "rules": 30
+    }
+  ]
+}

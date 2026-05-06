@@ -1,0 +1,784 @@
+{
+  "links": [
+    {
+      "text": "",
+      "href": "https://www.chaingpt.org/",
+      "classes": "brand-2 w-nav-brand w--current"
+    },
+    {
+      "text": "MAIN WEBSITE",
+      "href": "https://www.chaingpt.org/",
+      "classes": "product-menu-link is-selected w-inline-block w--cu"
+    },
+    {
+      "text": "CRYPTO AI HUB",
+      "href": "https://app.chaingpt.org/",
+      "classes": "product-menu-link w-inline-block"
+    },
+    {
+      "text": "AI NFT GENERATOR",
+      "href": "https://nft.chaingpt.org/",
+      "classes": "product-menu-link w-inline-block"
+    },
+    {
+      "text": "OUR LAUNCHPAD",
+      "href": "https://pad.chaingpt.org/",
+      "classes": "product-menu-link w-inline-block"
+    },
+    {
+      "text": "Incubation Labs",
+      "href": "https://labs.chaingpt.org/",
+      "classes": "product-menu-link w-inline-block"
+    },
+    {
+      "text": "IDO platform",
+      "href": "https://degenpad.com/",
+      "classes": "product-menu-link w-inline-block"
+    },
+    {
+      "text": "SECURITY EXTENSION",
+      "href": "https://www.cryptoguard.ai/",
+      "classes": "product-menu-link w-inline-block"
+    },
+    {
+      "text": "COMING SOON",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "product-menu-link w-inline-block"
+    },
+    {
+      "text": "Web3 AI Chatbot",
+      "href": "https://app.chaingpt.org/web3-chatbot",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "AI Powered Crypto Alerts",
+      "href": "https://app.chaingpt.org/ai-trading-assistant",
+      "classes": "dd-main-menu-link-2-copy w-inline-block"
+    },
+    {
+      "text": "AI Generated News",
+      "href": "https://app.chaingpt.org/news",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "Smart-Contracts Generator",
+      "href": "https://app.chaingpt.org/smart-contract-generator",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "Smart-Contracts Auditor",
+      "href": "https://app.chaingpt.org/smart-contract-auditor?_gl=1*x9pys1*_gcl_au*MTUwMDA4ODk4LjE3MzY5NTMwMDguMTY5OTE5MzQzNC4xNzM4NjY3NjE1LjE3Mzg2Njc2MTQ.",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "AI Trading Assistant",
+      "href": "https://app.chaingpt.org/ai-trading-assistant?_gl=1*16p7gh0*_gcl_au*MTUwMDA4ODk4LjE3MzY5NTMwMDguMTY5OTE5MzQzNC4xNzM4NjY3NjE1LjE3Mzg2Njc2MTQ.",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "Crypto Compliance Assistant",
+      "href": "https://app.chaingpt.org/crypto-compliance-assistant",
+      "classes": "dd-main-menu-link-2-2copy w-inline-block"
+    },
+    {
+      "text": "Enter AI Hub",
+      "href": "https://app.chaingpt.org/",
+      "classes": "link-more-2 link-more--width-100 link-more--width-"
+    },
+    {
+      "text": "AI NFT Generator",
+      "href": "https://nft.chaingpt.org/",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "Saleium (Self Hosted Sales)",
+      "href": "https://pad.chaingpt.org/Saleium",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "API/SDK Access",
+      "href": "https://docs.chaingpt.org/the-ecosystem/apis-and-sdks?_gl=1*r86u2f*_gcl_au*MTUwMDA4ODk4LjE3MzY5NTMwMDguMTY5OTE5MzQzNC4xNzM4NjY3NjE1LjE3Mzg2Njc2MTQ.",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "CryptoGuard",
+      "href": "https://www.cryptoguard.ai/",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "Telegram AI Chatbot",
+      "href": "https://t.me/chaingptai_bot",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "Discord AI Chatbot",
+      "href": "https://discord.com/invite/chaingpt",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "Launchpad Whitelabel (SaaS)",
+      "href": "https://docs.chaingpt.org/misc/b2b-offerings/launchpad-whitelabel?_gl=1*1bilm2a*_gcl_au*MTUwMDA4ODk4LjE3MzY5NTMwMDguMTY5OTE5MzQzNC4xNzM4NjY3NjE1LjE3Mzg2Njc2MTQ.",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "View Our Solutions",
+      "href": "https://app.chaingpt.org/",
+      "classes": "link-more-2 link-more--width-100 link-more--width-"
+    },
+    {
+      "text": "GPU Marketplace",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-main-menu-link-2 disabled w-inline-block"
+    },
+    {
+      "text": "AI Data Marketplace",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-main-menu-link-2 disabled w-inline-block"
+    },
+    {
+      "text": "AI Agents Infrastructure",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-main-menu-link-2 disabled w-inline-block"
+    },
+    {
+      "text": "On-Chain LLM Deployment",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-main-menu-link-2 disabled w-inline-block"
+    },
+    {
+      "text": "On-Chain LLM Training",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-main-menu-link-2 disabled w-inline-block"
+    },
+    {
+      "text": "On/Off Chain Inference",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-main-menu-link-2 disabled w-inline-block"
+    },
+    {
+      "text": "Learn More",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "link-more-2 link-more--width-100 link-more--width-"
+    },
+    {
+      "text": "ChainGPT AI on Telegram",
+      "href": "https://t.me/chaingptai_bot",
+      "classes": "single-link-2 w-inline-block"
+    },
+    {
+      "text": "ChainGPT AI on Discord",
+      "href": "https://discord.gg/chaingpt",
+      "classes": "single-link-2 w-inline-block"
+    },
+    {
+      "text": "Our Pricing",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "link-more-2 link-more--width-100 link-more--width-"
+    },
+    {
+      "text": "CONTACT US",
+      "href": "https://www.chaingpt.org/contact-us",
+      "classes": "link-more-2 link-more--width-100 link-more--width-"
+    },
+    {
+      "text": "Web3 AI Chatbot",
+      "href": "https://app.chaingpt.org/",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "AI NFT Generator",
+      "href": "https://nft.chaingpt.org/",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "AI Generated News",
+      "href": "https://app.chaingpt.org/news",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "Smart-Contracts Generator",
+      "href": "https://app.chaingpt.org/",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "Smart-Contracts Auditor",
+      "href": "https://app.chaingpt.org/?_gl=1*x9pys1*_gcl_au*MTUwMDA4ODk4LjE3MzY5NTMwMDguMTY5OTE5MzQzNC4xNzM4NjY3NjE1LjE3Mzg2Njc2MTQ.",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "AI Trading Assistant",
+      "href": "https://app.chaingpt.org/?_gl=1*16p7gh0*_gcl_au*MTUwMDA4ODk4LjE3MzY5NTMwMDguMTY5OTE5MzQzNC4xNzM4NjY3NjE1LjE3Mzg2Njc2MTQ.",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "Enter AI Hub",
+      "href": "https://app.chaingpt.org/",
+      "classes": "link-more-2 link-more--width-100 link-more--width-"
+    },
+    {
+      "text": "CryptoGuard",
+      "href": "https://www.cryptoguard.ai/",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "Telegram AI Chatbot",
+      "href": "https://t.me/chaingptai_bot",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "Discord AI Chatbot",
+      "href": "https://discord.com/invite/chaingpt",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "API/SDK Access",
+      "href": "https://docs.chaingpt.org/the-ecosystem/apis-and-sdks?_gl=1*r86u2f*_gcl_au*MTUwMDA4ODk4LjE3MzY5NTMwMDguMTY5OTE5MzQzNC4xNzM4NjY3NjE1LjE3Mzg2Njc2MTQ.",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "Launchpad Whitelabel (SaaS)",
+      "href": "https://docs.chaingpt.org/misc/b2b-offerings/launchpad-whitelabel?_gl=1*1bilm2a*_gcl_au*MTUwMDA4ODk4LjE3MzY5NTMwMDguMTY5OTE5MzQzNC4xNzM4NjY3NjE1LjE3Mzg2Njc2MTQ.",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "View Our Solutions",
+      "href": "https://app.chaingpt.org/",
+      "classes": "link-more-2 link-more--width-100 link-more--width-"
+    },
+    {
+      "text": "GPU Marketplace",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-main-menu-link-2 disabled w-inline-block"
+    },
+    {
+      "text": "AI Data Marketplace",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-main-menu-link-2 disabled w-inline-block"
+    },
+    {
+      "text": "AI Agents Infrastructure",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-main-menu-link-2 disabled w-inline-block"
+    },
+    {
+      "text": "On-Chain LLM Deployment",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-main-menu-link-2 disabled w-inline-block"
+    },
+    {
+      "text": "On-Chain LLM Training",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-main-menu-link-2 disabled w-inline-block"
+    },
+    {
+      "text": "On/Off Chain Inference",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-main-menu-link-2 disabled w-inline-block"
+    },
+    {
+      "text": "Learn More",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "link-more-2 link-more--width-100 link-more--width-"
+    },
+    {
+      "text": "ChainGPT AI on Telegram",
+      "href": "https://t.me/chaingptai_bot",
+      "classes": "single-link-2 w-inline-block"
+    },
+    {
+      "text": "ChainGPT AI on Discord",
+      "href": "https://discord.gg/chaingpt",
+      "classes": "single-link-2 w-inline-block"
+    },
+    {
+      "text": "Our Pricing",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "link-more-2 link-more--width-100 link-more--width-"
+    },
+    {
+      "text": "CONTACT US",
+      "href": "https://www.chaingpt.org/contact-us",
+      "classes": "link-more-2 link-more--width-100 link-more--width-"
+    },
+    {
+      "text": "Web3 AI Chatbot (Web)",
+      "href": "https://app.chaingpt.org/",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "AI NFT Generator",
+      "href": "https://nft.chaingpt.org/",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "AI Generated News",
+      "href": "https://app.chaingpt.org/news",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "Smart-Contracts Generator",
+      "href": "https://app.chaingpt.org/?_gl=1*1nxpi8a*_gcl_au*MTA0NjgwMDQ3LjE3NDcxMjgxNDE.",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "Smart-Contracts Auditor",
+      "href": "https://app.chaingpt.org/?_gl=1*1nxpi8a*_gcl_au*MTA0NjgwMDQ3LjE3NDcxMjgxNDE.",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "AI Trading Assistant",
+      "href": "https://app.chaingpt.org/?_gl=1*1nxpi8a*_gcl_au*MTA0NjgwMDQ3LjE3NDcxMjgxNDE.",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "Cross-Chain Swap",
+      "href": "https://app.chaingpt.org/?_gl=1*16p7gh0*_gcl_au*MTUwMDA4ODk4LjE3MzY5NTMwMDguMTY5OTE5MzQzNC4xNzM4NjY3NjE1LjE3Mzg2Njc2MTQ.",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "CryptoGuard",
+      "href": "https://www.cryptoguard.ai/",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "Web3 AI Telegram Chatbot",
+      "href": "https://t.me/chaingptai_bot",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "NOVA AI Agent on X",
+      "href": "https://x.com/ChainGPTAINews",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "AI Crypto Signalscoming soon",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-main-menu-link-2 disabled w-inline-block"
+    },
+    {
+      "text": "AI Crypto Compliance Assistantcoming soon",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-main-menu-link-2 disabled w-inline-block"
+    },
+    {
+      "text": "AIVM Whitepaper",
+      "href": "https://docs.chaingpt.org/ai-tools-and-applications/aivm-blockchain-whitepaper",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "GPU Marketplacecoming soon",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-main-menu-link-2 disabled w-inline-block"
+    },
+    {
+      "text": "AI Data Marketplacecoming soon",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-main-menu-link-2 disabled w-inline-block"
+    },
+    {
+      "text": "AIVM Explorercoming soon",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-main-menu-link-2 disabled w-inline-block"
+    },
+    {
+      "text": "Inference SDKcoming soon",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-main-menu-link-2 disabled w-inline-block"
+    },
+    {
+      "text": "ChainGPT AI on Telegram",
+      "href": "https://t.me/chaingptai_bot",
+      "classes": "single-link-2 w-inline-block"
+    },
+    {
+      "text": "ChainGPT AI on Discord",
+      "href": "https://discord.gg/chaingpt",
+      "classes": "single-link-2 w-inline-block"
+    },
+    {
+      "text": "API Pricing",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "API Dashboard & Playground",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "Purchase API Credits",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "Grant Program",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "Introduction",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "Case Studies",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "Global QuickStart Guide",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "Grant Program & Co-Marketing (API & SDK)",
+      "href": "https://docs.chaingpt.org/dev-docs-b2b-saas-api-and-sdk/grant-program-and-co-marketing/application",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "AI NFT Generator (API & SDK)",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "Smart-Contracts Generator (API & SDK)",
+      "href": "https://docs.chaingpt.org/dev-docs-b2b-saas-api-and-sdk/smart-contracts-generator-api-and-sdk",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "Smart-Contracts Auditor (API & SDK)",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "AI Crypto News (RSS, API & SDK)",
+      "href": "https://docs.chaingpt.org/dev-docs-b2b-saas-api-and-sdk/ai-crypto-news-api-and-sdk-and-rss",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "AgenticOS Framework",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "Solidity LLM",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "AgenticOS",
+      "href": "https://docs.chaingpt.org/dev-docs-b2b-saas-api-and-sdk/agenticos-framework-web3-ai-agent-on-x-open-source",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "IDO Launchpad",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "AI Agents Launcher",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "Staking Portal",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "Claim / Vesting Portal",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "Branded AI Discord Bot",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "Branded AI Telegram Bot",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-child-link w-inline-block"
+    },
+    {
+      "text": "Grant Program",
+      "href": "https://www.chaingpt.org/#",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "Case Studies",
+      "href": "https://www.chaingpt.org/case-studies",
+      "classes": "dd-main-menu-link-2 w-inline-block"
+    },
+    {
+      "text": "$1m Web3-AI Grant",
+      "href": "https://www.chaingpt.org/web3-ai-grant",
+      "classes": "dd-secondary-menu-link dd-menu-icon grant-icon w-d"
+    },
+    {
+      "text": "Dev Docs",
+      "href": "https://docs.chaingpt.org/dev-docs-b2b-api-sdk/introduction-to-chaingpts-developer-tools",
+      "classes": "dd-secondary-menu-link dd-menu-icon dev-docs-icon "
+    },
+    {
+      "text": "API Dashboard",
+      "href": "https://app.chaingpt.org/apidashboard",
+      "classes": "dd-secondary-menu-link dd-menu-icon dashboard-icon"
+    },
+    {
+      "text": "API Pricing",
+      "href": "https://app.chaingpt.org/pricing",
+      "classes": "dd-secondary-menu-link dd-menu-icon price-icon w-d"
+    },
+    {
+      "text": "Discord Dev Chat",
+      "href": "https://discord.com/invite/chaingpt",
+      "classes": "dd-secondary-menu-link dd-menu-icon discord-icon w"
+    },
+    {
+      "text": "Launchpad Whitelabel",
+      "href": "https://docs.chaingpt.org/misc/b2b-offerings/launchpad-whitelabel",
+      "classes": "dd-secondary-menu-link dd-menu-icon launchpad-icon"
+    },
+    {
+      "text": "Case Studies",
+      "href": "https://www.chaingpt.org/case-studies",
+      "classes": "dd-secondary-menu-link dd-menu-icon case-studies-i"
+    },
+    {
+      "text": "AI Hub Overview",
+      "href": "https://www.chaingpt.org/crypto-ai-hub",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "Crypto AI Chatbot",
+      "href": "https://www.chaingpt.org/web3-chatbot",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "Smart Contract Auditor",
+      "href": "https://www.chaingpt.org/smart-contract-auditor",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "Smart Contract Generator",
+      "href": "https://www.chaingpt.org/smart-contract-generator",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "AI Crypto Alerts",
+      "href": "https://www.chaingpt.org/ai-crypto-alerts",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "AI Trading Assistant",
+      "href": "https://www.chaingpt.org/ai-trading-assistant",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "AI Crypto Compliance Assistant",
+      "href": "https://www.chaingpt.org/crypto-compliance-assistant",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "ChainGPT Web3 News",
+      "href": "https://www.chaingpt.org/ai-web3-news",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "Docs",
+      "href": "https://docs.chaingpt.org/",
+      "classes": "dd-secondary-menu-link dd-menu-icon docs-icon w-dr"
+    },
+    {
+      "text": "Help Center",
+      "href": "http://help.chaingpt.org/",
+      "classes": "dd-secondary-menu-link dd-menu-icon help-icon w-dr"
+    },
+    {
+      "text": "Blog",
+      "href": "https://www.chaingpt.org/blog",
+      "classes": "dd-secondary-menu-link dd-menu-icon blog-icon w-dr"
+    },
+    {
+      "text": "Video Feed",
+      "href": "https://www.chaingpt.org/videos",
+      "classes": "dd-secondary-menu-link dd-menu-icon youtube-icon w"
+    },
+    {
+      "text": "Google News",
+      "href": "https://news.google.com/publications/CAAqBwgKMPWDzwswpJ_mAw?ceid=IL:en&oc=3",
+      "classes": "dd-secondary-menu-link dd-menu-icon google-news-ic"
+    },
+    {
+      "text": "Brand Kit",
+      "href": "https://www.chaingpt.org/brand-kit",
+      "classes": "dd-secondary-menu-link dd-menu-icon brand-kit-icon"
+    },
+    {
+      "text": "Roadmap",
+      "href": "https://docs.chaingpt.org/overview/road-map",
+      "classes": "dd-secondary-menu-link dd-menu-icon brand-kit-icon"
+    },
+    {
+      "text": "Binance",
+      "href": "https://www.binance.com/en/trade/CGPT_USDT?type=spot",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "KuCoin",
+      "href": "https://www.kucoin.com/trade/CGPT-USDT",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "ByBit",
+      "href": "https://www.bybit.com/en-US/trade/spot/CGPT/USDT",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "Gate.io",
+      "href": "https://www.gate.io/trade/CGPT_USDT",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "MEXC",
+      "href": "https://www.mexc.com/tr-TR/exchange/CGPT_USDT",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "Bitget",
+      "href": "https://www.bitget.com/en/spot/CGPTUSDT_SPBL?type=spot",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "HTX (Huobi)",
+      "href": "https://www.htx.com/en-us/trade/cgpt_usdt?invite_code=865b8223",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "Bitpanda",
+      "href": "https://www.bitpanda.com/en/prices/chaingpt-cgpt",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "PancakeSwap",
+      "href": "https://pancakeswap.finance/swap?outputCurrency=0x9840652DC04fb9db2C43853633f0F62BE6f00f98&inputCurrency=0x55d398326f99059fF775485246999027B3197955",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "Uniswap",
+      "href": "https://app.uniswap.org/swap?inputCurrency=0xdAC17F958D2ee523a2206206994597C13D831ec7&outputCurrency=0x25931894a86d47441213199621f1f2994e1c39aa&chain=mainnet",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "$CGPT Staking",
+      "href": "https://app.chaingpt.org/staking",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "DAO Governance",
+      "href": "https://app.chaingpt.org/dao",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "CertiK Audit Report",
+      "href": "https://www.certik.com/projects/chaingpt",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "Hacken Audit Report",
+      "href": "https://hacken.io/audits/chaingpt/",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "CoinMarketCap Page",
+      "href": "https://coinmarketcap.com/currencies/chaingpt/",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "DEXCheck Page",
+      "href": "https://dexcheck.io/app/bsc/chart/0xcfe847aae922cbe3dcbba61dbb1ed97d2124d322",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "Supply Dashboard",
+      "href": "https://app.chaingpt.org/supplydashboard",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "Burn Dashboard",
+      "href": "https://app.chaingpt.org/burndashboard",
+      "classes": "dd-secondary-menu-link w-dropdown-link"
+    },
+    {
+      "text": "Telegram Chat",
+      "href": "https://t.me/ChainGPT",
+      "classes": "dd-secondary-menu-link dd-menu-icon telegram-icon "
+    },
+    {
+      "text": "Telegram News",
+      "href": "https://t.me/ChainGPTNews",
+      "classes": "dd-secondary-menu-link dd-menu-icon telegram-icon "
+    },
+    {
+      "text": "Discord",
+      "href": "https://discord.gg/chaingpt",
+      "classes": "dd-secondary-menu-link dd-menu-icon discord-icon w"
+    },
+    {
+      "text": "Facebook",
+      "href": "https://facebook.com/ChainGPT",
+      "classes": "dd-secondary-menu-link dd-menu-icon facebook-icon "
+    },
+    {
+      "text": "Twitter",
+      "href": "https://twitter.com/Chain_GPT",
+      "classes": "dd-secondary-menu-link dd-menu-icon twitter-icon w"
+    },
+    {
+      "text": "Youtube",
+      "href": "https://www.youtube.com/@ChainGPT",
+      "classes": "dd-secondary-menu-link dd-menu-icon youtube-icon w"
+    },
+    {
+      "text": "Instagram",
+      "href": "https://instagram.com/ChainGPTAI",
+      "classes": "dd-secondary-menu-link dd-menu-icon instagram-icon"
+    },
+    {
+      "text": "Medium",
+      "href": "https://medium.com/@chaingpt",
+      "classes": "dd-secondary-menu-link dd-menu-icon medium-icon w-"
+    },
+    {
+      "text": "Linkedin",
+      "href": "https://www.linkedin.com/company/chaingpt",
+      "classes": "dd-secondary-menu-link dd-menu-icon linkedin-icon "
+    },
+    {
+      "text": "TikTok",
+      "href": "https://tiktok.com/@chain_gpt",
+      "classes": "dd-secondary-menu-link dd-menu-icon tiktok-icon w-"
+    },
+    {
+      "text": "CoinMarketCap",
+      "href": "https://coinmarketcap.com/community/profile/ChainGPT/",
+      "classes": "dd-secondary-menu-link dd-menu-icon coin-market-ic"
+    },
+    {
+      "text": "Try Our Prototype",
+      "href": "https://app.chaingpt.org/",
+      "classes": "link-5"
+    },
+    {
+      "text": "launch dapp",
+      "href": "https://app.chaingpt.org/",
+      "classes": "btn-primary ml-auto w-inline-block"
+    }
+  ],
+  "logo": {
+    "src": "https://cdn.prod.website-files.com/64354b8ce4872ad8cd1c7b04/648329053d5c25f54cbb89c2_chaingpt-logoLight-Neon-2.svg",
+    "outerHTML": "<img src=\"https://cdn.prod.website-files.com/64354b8ce4872ad8cd1c7b04/648329053d5c25f54cbb89c2_chaingpt-logoLight-Neon-2.svg\" alt=\"ChainGPT Logo\" width=\"156\" height=\"34\" class=\"image-1022\">",
+    "alt": "ChainGPT Logo"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "before": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "backdropFilter": "none",
+    "boxShadow": "none",
+    "height": "92px",
+    "position": "fixed"
+  },
+  "after": {
+    "bg": "rgba(0, 0, 0, 0)",
+    "backdropFilter": "none",
+    "boxShadow": "none",
+    "height": "92px"
+  }
+}
