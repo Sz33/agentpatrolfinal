@@ -27,7 +27,7 @@ export function Hero() {
       >
         {/* Tag */}
         <div className="hero-tag">
-          CLASSIFIED // AUTONOMOUS DEFENSE LAYER
+          // RUNTIME SECURITY FOR AI AGENTS
         </div>
 
         {/* Title */}
@@ -66,8 +66,7 @@ export function Hero() {
             letterSpacing: '.02em',
           }}
         >
-          AgentPatrol deploys <b style={{ color: 'var(--ink)', fontWeight: 600 }}>autonomous security agents</b> across your stack — monitoring traffic, detecting anomalies, and neutralizing threats in real time.{' '}
-          <b style={{ color: 'var(--ink)', fontWeight: 600 }}>Zero alerts. Zero downtime. Zero mercy.</b>
+          AgentPatrol monitors, enforces, and protects any AI agent running on your infrastructure — whether your team built it or someone else did. <b style={{ color: 'var(--ink)', fontWeight: 600 }}>Zero code changes. Full enforcement in 90 seconds.</b>
         </p>
 
         {/* Hero art — Scene replaces the robot image */}
@@ -198,7 +197,7 @@ export function Hero() {
           >
             <div className="spec-row-left"><span>STATUS · <b style={{ color: 'var(--amber)', fontWeight: 600 }}>ACTIVE</b></span></div>
             <div className="spec-row-left"><span>POWER · <b style={{ color: 'var(--amber)', fontWeight: 600 }}>98%</b></span></div>
-            <div className="spec-row-left"><span>RANGE · <b style={{ color: 'var(--amber)', fontWeight: 600 }}>2.4 KM</b></span></div>
+            <div className="spec-row-left"><span>INSTALL · <b style={{ color: 'var(--amber)', fontWeight: 600 }}>90s</b></span></div>
           </div>
 
           {/* Right spec readouts */}
@@ -240,7 +239,7 @@ export function Hero() {
           }}
         >
           <a href="#" className="btn btn-primary">
-            Deploy An Agent <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontWeight: 400 }}>→</span>
+            Request Early Access <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontWeight: 400 }}>→</span>
           </a>
           <a href="#docs" className="btn btn-ghost">
             Read The Docs
@@ -263,10 +262,11 @@ export function Hero() {
             color: 'var(--ink-mute)',
           }}
         >
-          <div><span style={{ color: 'var(--ink)', marginRight: 6 }}>Deployed</span> 12,400+ orgs</div>
-          <div><span style={{ color: 'var(--ink)', marginRight: 6 }}>Threats stopped</span> 9.2M / day</div>
-          <div><span style={{ color: 'var(--ink)', marginRight: 6 }}>Mean response</span> 12ms</div>
-          <div><span style={{ color: 'var(--ink)', marginRight: 6 }}>SOC 2</span> Type II</div>
+          <span style={{ color: 'var(--ink)' }}>90s INSTALL</span>
+          <span style={{ color: 'var(--ink-faint)' }}>·</span>
+          <span style={{ color: 'var(--ink)' }}>0 CODE CHANGES</span>
+          <span style={{ color: 'var(--ink-faint)' }}>·</span>
+          <span style={{ color: 'var(--ink)' }}>KERNEL-LEVEL ENFORCEMENT</span>
         </div>
       </div>
     </section>

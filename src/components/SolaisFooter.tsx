@@ -1,11 +1,41 @@
 "use client";
 import { useState } from "react";
 
-const NAV_LINKS = [
-  { label: "About", href: "#about" },
-  { label: "How it works", href: "#how-it-works" },
-  { label: "Advantage", href: "#advantage" },
-  { label: "Industries", href: "#industries" },
+const FOOTER_COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
+  {
+    title: "Product",
+    links: [
+      { label: "Features", href: "#" },
+      { label: "How It Works", href: "#how-it-works" },
+      { label: "Pre-Flight Scan", href: "#" },
+      { label: "Session Reports", href: "#" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { label: "About", href: "#about" },
+      { label: "Blog", href: "#" },
+      { label: "Careers", href: "#" },
+      { label: "Contact", href: "#" },
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
+      { label: "Documentation", href: "#" },
+      { label: "API Reference", href: "#" },
+      { label: "OWASP ASI Guide", href: "#" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { label: "Privacy Policy", href: "#" },
+      { label: "Terms of Service", href: "#" },
+      { label: "Security", href: "#" },
+    ],
+  },
 ];
 
 export default function SolaisFooter() {
@@ -53,7 +83,7 @@ export default function SolaisFooter() {
             className="text-[rgb(239,239,229)] opacity-55 max-w-xl text-base lg:text-lg leading-relaxed reveal"
             style={{ fontFamily: "var(--font-body, sans-serif)" }}
           >
-            AgentPatrol enforces security at the kernel level — before damage is done.
+            The missing security layer between AI agents and enterprise infrastructure.
           </p>
         </div>
 
@@ -100,26 +130,28 @@ export default function SolaisFooter() {
             )}
           </div>
 
-          {/* Nav links */}
-          <nav className="lg:w-1/2 flex flex-col gap-4 reveal">
-            <p
-              className="text-[rgb(239,239,229)] text-xs tracking-[0.2em] uppercase opacity-50 mb-2"
-              style={{ fontFamily: "var(--font-heading, sans-serif)" }}
-            >
-              Navigation
-            </p>
-            <div className="flex flex-wrap gap-x-8 gap-y-3">
-              {NAV_LINKS.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="nav-underline text-[rgb(239,239,229)] text-sm opacity-60 hover:opacity-100 transition-opacity"
-                  style={{ fontFamily: "var(--font-body, sans-serif)" }}
+          {/* Four-column link grid */}
+          <nav className="lg:w-1/2 grid grid-cols-2 sm:grid-cols-4 gap-8 reveal">
+            {FOOTER_COLUMNS.map((col) => (
+              <div key={col.title} className="flex flex-col gap-3">
+                <p
+                  className="text-[rgb(239,239,229)] text-xs tracking-[0.2em] uppercase opacity-50 mb-1"
+                  style={{ fontFamily: "var(--font-heading, sans-serif)" }}
                 >
-                  {link.label}
-                </a>
-              ))}
-            </div>
+                  {col.title}
+                </p>
+                {col.links.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    className="nav-underline text-[rgb(239,239,229)] text-sm opacity-60 hover:opacity-100 transition-opacity self-start"
+                    style={{ fontFamily: "var(--font-body, sans-serif)" }}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            ))}
           </nav>
         </div>
 
@@ -131,18 +163,6 @@ export default function SolaisFooter() {
           >
             © {new Date().getFullYear()} AgentPatrol. All rights reserved.
           </span>
-          <div className="flex gap-6">
-            {["Privacy Policy", "Terms of Service"].map((label) => (
-              <a
-                key={label}
-                href="#"
-                className="text-[rgb(239,239,229)] text-xs opacity-40 hover:opacity-70 transition-opacity"
-                style={{ fontFamily: "var(--font-body, sans-serif)" }}
-              >
-                {label}
-              </a>
-            ))}
-          </div>
         </div>
       </div>
     </footer>

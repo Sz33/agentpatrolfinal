@@ -85,7 +85,7 @@ export function Navbar() {
           onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'var(--amber-2)'; }}
           onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'var(--amber)'; }}
         >
-          Request Access
+          Request Early Access <span style={{ fontWeight: 400 }}>→</span>
         </a>
       </div>
     </header>

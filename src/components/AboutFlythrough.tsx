@@ -545,27 +545,27 @@ interface Stage {
 const STAGES: Stage[] = [
   {
     num: '01',
-    pillLabel: 'DEPLOY',
+    pillLabel: 'KERNEL',
     heading: 'RUNTIME ENFORCEMENT',
-    desc: 'AgentPatrol intercepts agent actions at the kernel level — before they reach your files, APIs, or infrastructure.',
+    desc: 'seccomp-bpf and Tetragon eBPF block threats before the syscall completes. Not after. Before.',
   },
   {
     num: '02',
-    pillLabel: 'OBSERVE',
-    heading: 'COMPLETE OBSERVABILITY',
-    desc: 'Every syscall, network request and permission your agents attempt is logged with full context and timestamps.',
+    pillLabel: 'INTERCEPT',
+    heading: 'LLM PROXY VISIBILITY',
+    desc: "Every prompt, tool call, and response captured. Your agent thinks it's talking to OpenAI. It's actually talking to AgentPatrol first.",
   },
   {
     num: '03',
-    pillLabel: 'RESPOND',
-    heading: 'POLICY ENFORCEMENT',
-    desc: 'When agents step outside their boundaries, AgentPatrol blocks, alerts, and rolls back automatically — in milliseconds.',
+    pillLabel: 'CORRELATE',
+    heading: 'AI DETECTION ENGINE',
+    desc: 'Claude Haiku triages every event in real time. Sonnet analyzes high-risk chains. Two streams, one verdict.',
   },
   {
     num: '04',
     pillLabel: 'INTEGRATE',
-    heading: 'ZERO-FRICTION DEPLOYMENT',
-    desc: 'No SDK changes, no prompt modifications. Drop in AgentPatrol and your entire agent fleet is covered immediately.',
+    heading: 'ZERO CODE CHANGE',
+    desc: 'Wraps any LangChain, LangGraph, or CrewAI agent with one command. No SDK. No framework hooks.',
   },
 ];
 
