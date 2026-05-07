@@ -6,7 +6,7 @@ import SecuringHeadingZone from "@/components/SecuringHeadingZone";
 import SolaisMarqueeSection from "@/components/SolaisMarqueeSection";
 import StackingSteps from "@/components/StackingSteps";
 import WhyKernelSection from "@/components/WhyKernelSection";
-import SolaisDashboardSection from "@/components/SolaisDashboardSection";
+import LiveDemoSection from "@/components/LiveDemoSection";
 import SolaisIndustriesSection from "@/components/SolaisIndustriesSection";
 import SolaisStatsSection from "@/components/SolaisStatsSection";
 import FinalCtaSection from "@/components/FinalCtaSection";
@@ -43,7 +43,7 @@ export default function Home() {
         <SecuringHeadingZone />
         <StackingSteps />
         <WhyKernelSection />
-        <SolaisDashboardSection />
+        <LiveDemoSection />
         <SolaisMarqueeSection />
         <SolaisIndustriesSection />
         <SolaisStatsSection />
