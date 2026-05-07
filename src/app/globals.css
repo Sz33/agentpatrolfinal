@@ -331,9 +331,10 @@
 .preloader-block-in  { animation: blockRevealIn  0.15s ease forwards; }
 .preloader-block-out { animation: blockRevealOut 0.15s ease forwards; }
 
-/* ── ENHANCE §9: Custom cursor ──────────────────────────────────── */
+/* Hide native cursor globally — EvilCursor handles hero zone,
+   CustomCursor handles everywhere else. */
 @media (pointer: fine) {
-  body, a, button { cursor: none; }
+  html, body, * { cursor: none; }
 }
 .custom-cursor {
   position: fixed;
@@ -561,4 +562,206 @@ nav a:hover::after {
 .industry-card:hover {
   transform: translateY(-6px);
   border-color: rgba(255,255,255,0.2);
+}
+
+/* ============================================================
+   AGENTPATROL HERO ZONE — scoped to #hero-zone
+   Transplanted from landing-page/src/app/globals.css.
+   All selectors prefixed with #hero-zone so the AgentPatrol
+   theme (red/black) does not bleed into the rest of the page.
+   ============================================================ */
+
+/* Tokens scoped to hero zone only */
+#hero-zone {
+  --bg: #000000;
+  --bg-2: #0a0a0a;
+  --bg-3: #0f0606;
+  --ink: #ffffff;
+  --ink-dim: rgba(255, 255, 255, 0.65);
+  --ink-mute: rgba(255, 255, 255, 0.4);
+  --ink-faint: rgba(255, 255, 255, 0.25);
+  --line: rgba(255, 255, 255, 0.08);
+  --line-2: rgba(255, 255, 255, 0.15);
+  --amber: #ef4444;
+  --amber-2: #dc2626;
+  --amber-glow: rgba(239, 68, 68, 0.35);
+  --accent: #ef4444;
+  --accent-deep: #7f1d1d;
+  --accent-tint: #ff6644;
+  --red: #ef4444;
+  --green: #22c55e;
+  --cyan: #7ad7ff;
+  --font-jetbrains-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-orbitron: var(--font-heading);
+
+  position: relative;
+  background:
+    radial-gradient(1200px 700px at 50% 20%, rgba(239, 68, 68, 0.05), transparent 60%),
+    radial-gradient(900px 600px at 50% 95%, rgba(239, 68, 68, 0.03), transparent 70%),
+    var(--bg);
+  color: var(--ink);
+}
+
+#hero-zone h1, #hero-zone h2, #hero-zone h3,
+#hero-zone h4, #hero-zone h5, #hero-zone h6 {
+  font-family: var(--font-heading), sans-serif;
+  font-weight: 400;
+  line-height: 1.05;
+  margin: 0;
+}
+
+/* Suppress global nav-link underline rule inside hero-zone navbar */
+#hero-zone nav a::after { display: none; }
+/* Suppress global button hover scale inside hero-zone (we use translateY) */
+#hero-zone button:hover, #hero-zone a[class*="btn"]:hover { transform: none; }
+
+/* Background overlays — absolute, scoped to hero zone */
+#hero-zone .bg-fx {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+#hero-zone .bg-scan {
+  position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  mix-blend-mode: overlay; opacity: 0.25;
+  background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 3px);
+}
+#hero-zone .bg-vignette {
+  position: absolute; inset: 0; pointer-events: none; z-index: 2;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+/* Brand dot pulses — reuses existing @keyframes pulse */
+#hero-zone .brand-dot { animation: pulse 2s infinite; }
+
+/* Hero tag */
+#hero-zone .hero-tag {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  color: var(--amber);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  animation: fadeInUp 0.6s 0.05s ease both;
+  text-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+}
+#hero-zone .hero-tag::before,
+#hero-zone .hero-tag::after {
+  content: "";
+  height: 1px;
+  width: 60px;
+  background: linear-gradient(90deg, transparent, var(--amber), transparent);
+  flex-shrink: 0;
+}
+
+/* Spec readouts */
+#hero-zone .spec-row-left {
+  display: flex; align-items: center; gap: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px; color: var(--ink-mute); letter-spacing: 0.06em;
+}
+#hero-zone .spec-row-left::before {
+  content: ""; width: 18px; height: 1px;
+  background: var(--amber); opacity: 0.6; flex-shrink: 0;
+}
+#hero-zone .spec-row-right {
+  display: flex; align-items: center; gap: 8px; flex-direction: row-reverse;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px; color: var(--ink-mute); letter-spacing: 0.06em;
+}
+#hero-zone .spec-row-right::after {
+  content: ""; width: 18px; height: 1px;
+  background: var(--amber); opacity: 0.6; flex-shrink: 0;
+}
+
+/* Buttons */
+#hero-zone .btn {
+  font-family: var(--font-heading), sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 18px 28px;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.15s, background 0.2s, box-shadow 0.2s;
+  border: 1px solid var(--amber);
+}
+#hero-zone .btn-primary {
+  background: var(--amber);
+  color: #0a0a0a;
+  box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.3), 0 0 32px rgba(239, 68, 68, 0.25);
+}
+#hero-zone .btn-primary:hover {
+  background: var(--amber-2);
+  transform: translateY(-1px);
+}
+#hero-zone .btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line-2);
+}
+#hero-zone .btn-ghost:hover {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+/* Hero entrance — reuses existing @keyframes fadeInUp */
+#hero-zone .hero-h1-anim       { animation: fadeInUp 0.7s  0.2s  ease both; }
+#hero-zone .hero-subtitle-anim { animation: fadeInUp 0.65s 0.4s  ease both; }
+#hero-zone .hero-art-anim      { animation: fadeInUp 0.75s 0.55s ease both; }
+#hero-zone .hero-cta-anim      { animation: fadeInUp 0.65s 0.72s ease both; }
+#hero-zone .hero-stats-anim    { animation: fadeInUp 0.65s 0.9s  ease both; }
+
+/* "SLEEP. PATROL." shimmer */
+#hero-zone .patrol-shimmer {
+  display: block;
+  background: linear-gradient(90deg, #7f1d1d 0%, var(--amber) 25%, var(--amber-2) 44%, #ffe5e5 50%, var(--amber-2) 56%, var(--amber) 75%, #7f1d1d 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmerHero 5s linear infinite, patrolGlow 3s ease-in-out infinite;
+}
+
+/* HUD label glow */
+#hero-zone .hud-glow {
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.55), 0 0 26px rgba(239, 68, 68, 0.2);
+}
+
+/* Brand "Patrol" hover glow */
+#hero-zone .brand-patrol {
+  color: var(--amber);
+  transition: text-shadow 0.3s ease;
+}
+#hero-zone .brand-patrol:hover {
+  text-shadow: 0 0 12px rgba(239, 68, 68, 0.7), 0 0 28px rgba(239, 68, 68, 0.3);
+}
+
+/* Mobile collapses — original landing page rules */
+@media (max-width: 980px) {
+  #hero-zone .specs-side { display: none !important; }
+  #hero-zone .nav-links  { display: none !important; }
+}
+
+/* Hero-zone-only keyframes (fadeInUp + pulse already exist globally) */
+@keyframes shimmerHero {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+@keyframes patrolGlow {
+  0%, 100% { filter: drop-shadow(0 0 16px rgba(239, 68, 68, 0.3)); }
+  50%      { filter: drop-shadow(0 0 40px rgba(239, 68, 68, 0.7)) drop-shadow(0 0 80px rgba(239, 68, 68, 0.2)); }
 }

@@ -353,25 +353,6 @@ export default function StackingSteps() {
         ))}
       </div>
 
-      <div style={{ textAlign: 'center', padding: '120px 24px 60px', position: 'relative', zIndex: 1 }}>
-        <p style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', fontSize: '11px', letterSpacing: '0.3em', margin: '0 0 16px' }}>
-          SECURING
-        </p>
-        <h2
-          style={{
-            color: 'white',
-            fontFamily: 'monospace',
-            fontSize: 'clamp(40px, 6vw, 80px)',
-            fontWeight: 700,
-            letterSpacing: '-0.02em',
-            margin: 0,
-            lineHeight: 1.1,
-          }}
-        >
-          YOUR AGENT STACK
-        </h2>
-      </div>
-
       {STEPS.map((step, idx) => (
         <StepCard key={idx} step={step} idx={idx} total={STEPS.length} />
       ))}

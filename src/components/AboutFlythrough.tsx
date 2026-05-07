@@ -52,11 +52,33 @@ function fadeOut(p: number, start: number, end: number) {
   if (p >= end) return 0;
   return 1 - (p - start) / (end - start);
 }
-// fadeIn: 0 → 1 as p goes from start to end.
-function fadeIn(p: number, start: number, end: number) {
-  if (p <= start) return 0;
-  if (p >= end) return 1;
-  return (p - start) / (end - start);
+// Heading opacity — single source of truth for the dedicated
+// SecuringHeadingZone (a 100vh section sandwiched between AboutFlythrough
+// and the marquee). Crossfades with Stage 04's fade-out tail.
+//   < 0.85      → 0
+//   0.85 → 0.95 → 0 → 1  (covers full exit transition)
+//   ≥ 0.95      → 1
+export function headingOpacity(extendedProgress: number) {
+  const ep = extendedProgress;
+  if (ep < 0.85) return 0;
+  if (ep < 0.95) return (ep - 0.85) / 0.10;
+  return 1;
+}
+
+// Computes the same extendedProgress used by AboutFlythrough from any
+// component that can read the About section's rect — lets StackingSteps
+// drive its heading opacity off the exact same scroll metric without
+// needing to share React state across components.
+export function computeAboutExtendedProgress(): number {
+  if (typeof window === 'undefined') return 0;
+  const about = document.getElementById('about');
+  if (!about) return 0;
+  const rect = about.getBoundingClientRect();
+  const vh = window.innerHeight;
+  const aboutScrollable = rect.height - vh;
+  if (aboutScrollable <= 0) return 0;
+  const scrolled = -rect.top;
+  return Math.max(0, scrolled / aboutScrollable);
 }
 
 // ── Wireframe fragments ──────────────────────────────────────────────────────
@@ -551,15 +573,15 @@ const STAGES: Stage[] = [
 // can crossfade with the next-section heading per spec.
 function stageVisual(progress: number, stageIdx: number) {
   if (stageIdx === 3) {
-    // Stage 4 per Step 5:
+    // Stage 4 — must hand off cleanly to the phantom heading at 0.92:
     //   fade in 0.70 → 0.75
-    //   hold     0.75 → 0.90
-    //   fade out 0.90 → 0.95
+    //   hold     0.75 → 0.85
+    //   fade out 0.85 → 0.92  (ends exactly when phantom starts)
     if (progress < 0.70) return { opacity: 0, shiftY: 0 };
     if (progress < 0.75) return { opacity: (progress - 0.70) / 0.05, shiftY: 0 };
-    if (progress < 0.90) return { opacity: 1, shiftY: 0 };
-    if (progress < 0.95) {
-      const t = (progress - 0.90) / 0.05;
+    if (progress < 0.85) return { opacity: 1, shiftY: 0 };
+    if (progress < 0.92) {
+      const t = (progress - 0.85) / 0.07;
       return { opacity: 1 - t, shiftY: -t * 16 };
     }
     return { opacity: 0, shiftY: -16 };
@@ -579,22 +601,15 @@ const GRAIN_URL =
 
 interface OverlayProps {
   progress: number;
-  extendedProgress: number;
 }
 
-function StageOverlay({ progress, extendedProgress }: OverlayProps) {
+function StageOverlay({ progress }: OverlayProps) {
   const fmt = (n: number) => n.toFixed(2);
   const coords = `[${fmt(progress * -1.0 + 0.25)}, ${fmt(
     progress * -0.6 - 0.05,
   )}, ${fmt(progress * 1.5 - 0.5)}]`;
   const chromeOpacity = fadeOut(progress, 0.85, 0.92);
   const atmosOpacity = fadeOut(progress, 0.85, 0.95);
-
-  // Phantom heading — appears at the same viewport center as stage 4 and
-  // crossfades with it. Lives until user enters StackingSteps proper.
-  const phantomFadeIn = fadeIn(extendedProgress, 0.92, 0.97);
-  const phantomFadeOut = fadeOut(extendedProgress, 1.10, 1.30);
-  const phantomOpacity = phantomFadeIn * phantomFadeOut;
 
   return (
     <>
@@ -707,49 +722,8 @@ function StageOverlay({ progress, extendedProgress }: OverlayProps) {
           );
         })}
 
-        {/* PHANTOM heading — crossfades with stage 04, mirrors next section's
-            "SECURING / YOUR AGENT STACK" at the same viewport center */}
-        {phantomOpacity > 0.001 && (
-          <div
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              opacity: phantomOpacity,
-              maxWidth: '900px',
-              width: 'calc(100% - 48px)',
-              textAlign: 'center',
-              fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
-            }}
-          >
-            <p
-              style={{
-                color: 'rgba(255,255,255,0.4)',
-                fontSize: 11,
-                letterSpacing: '0.3em',
-                margin: '0 0 16px',
-                opacity: fadeIn(extendedProgress, 0.95, 1.0) * phantomFadeOut,
-              }}
-            >
-              SECURING
-            </p>
-            <h2
-              style={{
-                color: 'white',
-                fontFamily: 'monospace',
-                fontSize: 'clamp(40px, 6vw, 80px)',
-                fontWeight: 700,
-                letterSpacing: '-0.02em',
-                margin: 0,
-                lineHeight: 1.1,
-                textShadow: '0 0 30px rgba(0,0,0,0.85)',
-              }}
-            >
-              YOUR AGENT STACK
-            </h2>
-          </div>
-        )}
+        {/* Heading rendering moved out — single element lives in
+            StackingSteps and pulls itself to viewport centre via transform. */}
 
         {/* Corner labels */}
         <div style={{ position: 'absolute', top: 24, left: 28, fontSize: 10, letterSpacing: '0.25em', color: 'rgba(255,255,255,0.35)', opacity: chromeOpacity }}>
@@ -826,7 +800,7 @@ function DebugOverlay({
   const fragmentOp = fadeOut(progress, 0.85, 0.95);
   const streakOp = fadeOut(streakProgress, 0.7, 1.0) * 0.5; // base 0.5
   const stage04 = stageVisual(progress, 3).opacity;
-  const phantom = fadeIn(extendedProgress, 0.92, 0.97) * fadeOut(extendedProgress, 1.10, 1.30);
+  const heading = headingOpacity(extendedProgress);
   const f = (n: number) => n.toFixed(3);
   return (
     <div
@@ -851,7 +825,7 @@ function DebugOverlay({
       <div>fragment opacity:   {f(fragmentOp)}</div>
       <div>streak opacity:     {f(streakOp)}</div>
       <div>stage04 opacity:    {f(stage04)}</div>
-      <div>phantom heading:    {f(phantom)}</div>
+      <div>heading opacity:    {f(heading)}</div>
     </div>
   );
 }
@@ -947,10 +921,12 @@ export default function AboutFlythrough() {
       setExtendedProgress(ep);
       setStreakProgress(sp);
 
-      // Active when within range that needs the canvas mounted (1 vh before
-      // section start, 2 vh after section end). Keeps GPU off when far away.
-      const isActive =
-        scrolled > -vh && scrolled < aboutScrollable + 2 * vh;
+      // Active when within range that needs the canvas mounted. Extended
+      // past the section so the phantom heading can finish its crossfade
+      // (phantomOpacity reaches 0 at extendedProgress 1.05) — we keep the
+      // overlay alive until ep ≈ 1.10 with a small safety margin, then
+      // unmount to free the GPU.
+      const isActive = scrolled > -vh && ep < 1.10;
       setActive(isActive);
     };
     const onMove = (e: MouseEvent) => {
@@ -1026,7 +1002,7 @@ export default function AboutFlythrough() {
           <CameraTilt mouseRef={mouseRef} />
         </Canvas>
 
-        <StageOverlay progress={progress} extendedProgress={extendedProgress} />
+        <StageOverlay progress={progress} />
       </div>
 
       <DebugOverlay
