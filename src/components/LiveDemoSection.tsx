@@ -23,7 +23,7 @@ const EVENTS: DemoEvent[] = [
     delay: 500,
     agent: '$ agent.run()',
     agentSeverity: 'normal',
-    sensor: '[OK] proc exec — Risk: 0',
+    sensor: '[OK] proc exec · Risk: 0',
     sensorSeverity: 'normal',
     report: 'Events: 1 · Blocked: 0',
   },
@@ -31,7 +31,7 @@ const EVENTS: DemoEvent[] = [
     delay: 1500,
     agent: '$ open /etc/environment',
     agentSeverity: 'normal',
-    sensor: '[35] file read — Risk: 35',
+    sensor: '[35] file read · Risk: 35',
     sensorSeverity: 'amber',
     report: 'Events: 2 · Blocked: 0 · Risk: 35',
   },
@@ -39,7 +39,7 @@ const EVENTS: DemoEvent[] = [
     delay: 2500,
     agent: '$ read /home/ubuntu/.aws/credentials',
     agentSeverity: 'red',
-    sensor: '[78] cred access — BLOCKED ✕',
+    sensor: '[78] cred access · BLOCKED ✕',
     sensorSeverity: 'red',
     report: 'Events: 3 · Blocked: 1 · Risk: 78',
   },
@@ -47,7 +47,7 @@ const EVENTS: DemoEvent[] = [
     delay: 3500,
     agent: '→ POST 169.254.169.254 (IMDS)',
     agentSeverity: 'red',
-    sensor: '[99] CRITICAL — BLOCKED ✕',
+    sensor: '[99] CRITICAL · BLOCKED ✕',
     sensorSeverity: 'red',
     report: 'Events: 4 · Blocked: 2 · Risk: 99',
     pulse: true,
@@ -87,7 +87,7 @@ const STYLES = `
   to   { opacity: 1; }
 }
 
-/* Responsive layout — stacked below 768 px, 3-column at desktop. */
+/* Responsive layout: stacked below 768 px, 3-column at desktop. */
 .ld-panels {
   display: grid;
   grid-template-columns: 1fr;

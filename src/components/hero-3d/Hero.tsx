@@ -66,7 +66,7 @@ export function Hero() {
             letterSpacing: '.02em',
           }}
         >
-          AgentPatrol monitors, enforces, and protects any AI agent running on your infrastructure — whether your team built it or someone else did. <b style={{ color: 'var(--ink)', fontWeight: 600 }}>Zero code changes. Full enforcement in 90 seconds.</b>
+          AgentPatrol monitors, enforces, and protects any AI agent running on your infrastructure, whether your team built it or someone else did. <b style={{ color: 'var(--ink)', fontWeight: 600 }}>Zero code changes. Full enforcement in 90 seconds.</b>
         </p>
 
         {/* Hero art — Scene replaces the robot image */}
@@ -225,14 +225,15 @@ export function Hero() {
           </div>
         </div>
 
-        {/* CTA buttons */}
+        {/* CTA buttons — marginTop is generous so the button clears the
+            radar ring (which extends ~67 px below the art container). */}
         <div
           className="hero-cta-anim"
           style={{
             display: 'flex',
             justifyContent: 'center',
             gap: 14,
-            marginTop: 48,
+            marginTop: 'clamp(80px, 12vw, 120px)',
             flexWrap: 'wrap',
             position: 'relative',
             zIndex: 5,
@@ -240,9 +241,6 @@ export function Hero() {
         >
           <a href="#" className="btn btn-primary">
             Request Early Access <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontWeight: 400 }}>→</span>
-          </a>
-          <a href="#docs" className="btn btn-ghost">
-            Read The Docs
           </a>
         </div>
 

@@ -40,11 +40,11 @@ const STEPS: Step[] = [
   {
     num: '03',
     title: 'LLM PROXY',
-    desc: 'Every OpenAI and Anthropic call routed through AgentPatrol first. Payload guard scans for data exfiltration. Every prompt, tool call, and response captured.',
+    desc: 'Every external LLM call routed through AgentPatrol first. Payload guard scans for data exfiltration. Every prompt, tool call, and response captured.',
     bg: '#14080a',
     accent: '#b91c1c',
     iconLines: [
-      '[PROXY] POST api.openai.com/v1/chat',
+      '[PROXY] POST api.[your_llm].com/v1/chat',
       '[SCAN] payload: clean',
       '[SCAN] response: clean',
       '[LOG] tokens: 1247',
@@ -53,7 +53,7 @@ const STEPS: Step[] = [
   {
     num: '04',
     title: 'DETECT & BLOCK',
-    desc: 'OS-layer and reasoning-layer correlation. Threats stopped before completion — not after. Two streams correlated by Claude into a unified threat verdict.',
+    desc: 'OS-layer and reasoning-layer correlation. Threats stopped before completion, not after. Two streams correlated by an LLM into a unified threat verdict.',
     bg: '#1a0a0a',
     accent: '#dc2626',
     iconLines: [
@@ -111,8 +111,8 @@ const STYLES = `
 
 .ss-glitch    { animation: ss-glitch 0.4s steps(2, end); }
 .ss-glow      { animation: ss-glow 0.8s ease-out; }
-.ss-counter   { position: relative; display: inline-block; height: 1em; vertical-align: bottom; overflow: hidden; min-width: 1.6em; }
-.ss-counter > span { display: block; }
+.ss-counter   { position: relative; display: inline-block; height: 1.2em; vertical-align: middle; overflow: hidden; min-width: 1.6em; line-height: 1.2; }
+.ss-counter > span { display: block; line-height: 1.2; }
 .ss-counter .ss-old { animation: ss-roll-old 0.3s ease-out forwards; position: absolute; left: 0; top: 0; }
 .ss-counter .ss-new { animation: ss-roll-new 0.3s ease-out forwards; }
 .ss-pulse-dot {

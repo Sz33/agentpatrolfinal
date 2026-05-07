@@ -1,38 +1,8 @@
-const FOOTER_COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
-  {
-    title: "Product",
-    links: [
-      { label: "Features", href: "#" },
-      { label: "How It Works", href: "#how-it-works" },
-      { label: "Pre-Flight Scan", href: "#" },
-      { label: "Session Reports", href: "#" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "About", href: "#about" },
-      { label: "Blog", href: "#" },
-      { label: "Careers", href: "#" },
-      { label: "Contact", href: "#" },
-    ],
-  },
-  {
-    title: "Resources",
-    links: [
-      { label: "Documentation", href: "#" },
-      { label: "API Reference", href: "#" },
-      { label: "OWASP ASI Guide", href: "#" },
-    ],
-  },
-  {
-    title: "Legal",
-    links: [
-      { label: "Privacy Policy", href: "#" },
-      { label: "Terms of Service", href: "#" },
-      { label: "Security", href: "#" },
-    ],
-  },
+const PRODUCT_LINKS: { label: string; href: string }[] = [
+  { label: "Features", href: "#" },
+  { label: "How It Works", href: "#how-it-works" },
+  { label: "Pre-Flight Scan", href: "#" },
+  { label: "Session Reports", href: "#" },
 ];
 
 export default function SolaisFooter() {
@@ -70,27 +40,23 @@ export default function SolaisFooter() {
             </p>
           </div>
 
-          {/* Four-column link grid */}
-          <nav className="lg:w-1/2 grid grid-cols-2 sm:grid-cols-4 gap-8">
-            {FOOTER_COLUMNS.map((col) => (
-              <div key={col.title} className="flex flex-col gap-3">
-                <p
-                  className="text-[rgb(239,239,229)] text-xs tracking-[0.2em] uppercase opacity-50 mb-1"
-                  style={{ fontFamily: "var(--font-heading, sans-serif)" }}
-                >
-                  {col.title}
-                </p>
-                {col.links.map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    className="nav-underline text-[rgb(239,239,229)] text-sm opacity-60 hover:opacity-100 transition-opacity self-start"
-                    style={{ fontFamily: "var(--font-body, sans-serif)" }}
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </div>
+          {/* Single Product column */}
+          <nav className="flex flex-col gap-3">
+            <p
+              className="text-[rgb(239,239,229)] text-xs tracking-[0.2em] uppercase opacity-50 mb-1"
+              style={{ fontFamily: "var(--font-heading, sans-serif)" }}
+            >
+              Product
+            </p>
+            {PRODUCT_LINKS.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="nav-underline text-[rgb(239,239,229)] text-sm opacity-60 hover:opacity-100 transition-opacity self-start"
+                style={{ fontFamily: "var(--font-body, sans-serif)" }}
+              >
+                {link.label}
+              </a>
             ))}
           </nav>
         </div>

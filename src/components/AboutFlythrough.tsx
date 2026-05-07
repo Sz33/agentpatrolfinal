@@ -528,13 +528,13 @@ const STAGES: Stage[] = [
     num: '02',
     pillLabel: 'INTERCEPT',
     heading: 'LLM PROXY VISIBILITY',
-    desc: "Every prompt, tool call, and response captured. Your agent thinks it's talking to OpenAI. It's actually talking to AgentPatrol first.",
+    desc: "Every prompt, tool call, and response captured. Your agent thinks it's talking to an external LLM. It's actually talking to AgentPatrol first.",
   },
   {
     num: '03',
     pillLabel: 'CORRELATE',
     heading: 'AI DETECTION ENGINE',
-    desc: 'Claude Haiku triages every event in real time. Sonnet analyzes high-risk chains. Two streams, one verdict.',
+    desc: 'LLM triages every event in real time. LLM analyzes high-risk chains. Two streams, one verdict.',
   },
   {
     num: '04',

@@ -17,7 +17,7 @@ const teknolog = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "AgentPatrol — Runtime Security for AI Agents",
+  title: "AgentPatrol · Runtime Security for AI Agents",
   description:
     "AgentPatrol sits below your agent stack and enforces exactly what AI agents can and cannot do. Kernel-level security for autonomous AI.",
   keywords: "AI agent security, runtime security, kernel-level, LangChain security, autonomous AI",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     shortcut: "/favicon.svg",
   },
   openGraph: {
-    title: "AgentPatrol — Runtime Security for AI Agents",
+    title: "AgentPatrol · Runtime Security for AI Agents",
     description: "AgentPatrol sits below your agent stack and enforces exactly what AI agents can and cannot do. Kernel-level security for autonomous AI.",
     siteName: "AgentPatrol",
   },

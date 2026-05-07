@@ -145,50 +145,6 @@ export default function FinalCtaSection() {
             Talk to a Founder
           </a>
         </div>
-
-        {/* Trust line */}
-        <p
-          style={{
-            color: 'rgba(255,255,255,0.4)',
-            fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-            fontSize: 12,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            margin: '20px 0 0',
-          }}
-        >
-          No credit card required · 90s install · Any Python agent
-        </p>
-
-        {/* Highlighted note — design-partner slots */}
-        <div
-          style={{
-            maxWidth: 520,
-            margin: '40px auto 0',
-            padding: '20px 28px',
-            border: '1px solid rgba(239,68,68,0.25)',
-            borderRadius: 8,
-            background: 'rgba(239,68,68,0.04)',
-            color: 'rgba(255,255,255,0.75)',
-            fontSize: 14,
-            lineHeight: 1.5,
-            textAlign: 'center',
-          }}
-        >
-          <span
-            style={{
-              display: 'inline-block',
-              width: 6,
-              height: 6,
-              borderRadius: '50%',
-              background: '#ef4444',
-              marginRight: 10,
-              transform: 'translateY(-2px)',
-            }}
-          />
-          3 design partner slots remaining. Free access in exchange for
-          feedback and a case study.
-        </div>
       </div>
     </section>
   );
