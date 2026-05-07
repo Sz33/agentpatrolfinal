@@ -5,9 +5,11 @@ import AboutFlythrough from "@/components/AboutFlythrough";
 import SecuringHeadingZone from "@/components/SecuringHeadingZone";
 import SolaisMarqueeSection from "@/components/SolaisMarqueeSection";
 import StackingSteps from "@/components/StackingSteps";
+import WhyKernelSection from "@/components/WhyKernelSection";
 import SolaisDashboardSection from "@/components/SolaisDashboardSection";
 import SolaisIndustriesSection from "@/components/SolaisIndustriesSection";
 import SolaisStatsSection from "@/components/SolaisStatsSection";
+import FinalCtaSection from "@/components/FinalCtaSection";
 import SolaisFooter from "@/components/SolaisFooter";
 
 import { Navbar } from "@/components/hero-3d/Navbar";
@@ -40,10 +42,12 @@ export default function Home() {
         <AboutFlythrough />
         <SecuringHeadingZone />
         <StackingSteps />
+        <WhyKernelSection />
         <SolaisDashboardSection />
         <SolaisMarqueeSection />
         <SolaisIndustriesSection />
         <SolaisStatsSection />
+        <FinalCtaSection />
       </main>
       <SolaisFooter />
     </>

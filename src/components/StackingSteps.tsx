@@ -13,27 +13,68 @@ interface Step {
 const STEPS: Step[] = [
   {
     num: '01',
-    title: 'DEPLOY',
-    desc: 'Drop AgentPatrol into your infrastructure. No code changes. Kernel-level hooks attach automatically to your agent runtime.',
+    title: 'PRE-FLIGHT SCAN',
+    desc: 'Supply chain threats, hardcoded credentials, dangerous calls caught before agent runs. Signed PDF report generated before a single line of agent code executes.',
     bg: '#0a0a0a',
     accent: '#7f1d1d',
-    iconLines: ['$ agentpatrol install', '> attaching to runtime...', '> kernel hooks active'],
+    iconLines: [
+      '$ agentpatrol scan ./agent',
+      '→ scanning dependencies',
+      '→ 0 critical · 2 medium · 5 low',
+      '→ report: scan-2026.pdf ✓',
+    ],
   },
   {
     num: '02',
-    title: 'MONITOR',
-    desc: 'Every syscall, file access, network connection and permission request your agents make is captured and analysed in real time.',
+    title: 'RUNTIME SANDBOX',
+    desc: 'Kernel-level enforcement loaded before agent starts. Tetragon eBPF + seccomp-bpf control the environment. The agent runs inside a controlled environment it cannot escape.',
     bg: '#0f0606',
     accent: '#991b1b',
-    iconLines: ['[INFO] syscall: openat', '[INFO] net: connect 8.8.8.8', '[WARN] file: /etc/passwd'],
+    iconLines: [
+      '$ agentpatrol run python agent.py',
+      '→ loading eBPF hooks',
+      '→ seccomp-bpf filters active',
+      '→ sandbox armed',
+    ],
   },
   {
     num: '03',
-    title: 'ENFORCE',
-    desc: 'Policy violations get blocked before execution. Exfiltration, privilege escalation, unauthorised API calls — stopped at the kernel.',
+    title: 'LLM PROXY',
+    desc: 'Every OpenAI and Anthropic call routed through AgentPatrol first. Payload guard scans for data exfiltration. Every prompt, tool call, and response captured.',
+    bg: '#14080a',
+    accent: '#b91c1c',
+    iconLines: [
+      '[PROXY] POST api.openai.com/v1/chat',
+      '[SCAN] payload: clean',
+      '[SCAN] response: clean',
+      '[LOG] tokens: 1247',
+    ],
+  },
+  {
+    num: '04',
+    title: 'DETECT & BLOCK',
+    desc: 'OS-layer and reasoning-layer correlation. Threats stopped before completion — not after. Two streams correlated by Claude into a unified threat verdict.',
     bg: '#1a0a0a',
     accent: '#dc2626',
-    iconLines: ['[BLOCK] privilege escalation', '[BLOCK] data exfiltration', '[STATUS] threat neutralized'],
+    iconLines: [
+      '[BLOCK] read /etc/passwd',
+      '[BLOCK] connect 169.254.169.254',
+      '[BLOCK] AWS key exfiltration',
+      '[ENFORCED] 3 actions · 0.8ms',
+    ],
+  },
+  {
+    num: '05',
+    title: 'SESSION REPORT',
+    desc: 'Signed, tamper-evident PDF after every run. Every file accessed. Every network connection. Every LLM call. OWASP ASI mapped. Auditor-ready.',
+    bg: '#1f0c0e',
+    accent: '#ef4444',
+    iconLines: [
+      '→ generating signed report',
+      '→ events: 247 · blocked: 3',
+      '→ OWASP ASI: mapped',
+      '→ session-2026.pdf ✓ signed',
+    ],
   },
 ];
 
@@ -201,10 +242,10 @@ function CardInner({ step, idx, total, runId }: { step: Step; idx: number; total
             style={{
               color: 'white',
               fontFamily: 'monospace',
-              fontSize: 'clamp(60px, 9vw, 140px)',
+              fontSize: 'clamp(44px, 6.5vw, 96px)',
               fontWeight: 700,
-              letterSpacing: '-0.04em',
-              lineHeight: 0.95,
+              letterSpacing: '-0.03em',
+              lineHeight: 1.02,
               margin: '0 0 32px',
             }}
           >
@@ -239,12 +280,20 @@ function CardInner({ step, idx, total, runId }: { step: Step; idx: number; total
             const text = typedLines[i] || '';
             const hasDot = origLine.toLowerCase().includes('attaching');
             const isLast = i === step.iconLines.length - 1;
-            const color =
-              origLine.startsWith('[BLOCK]') || origLine.startsWith('[WARN]')
-                ? step.accent
-                : origLine.startsWith('[STATUS]')
-                ? '#22c55e'
-                : 'rgba(255,255,255,0.7)';
+            // Traffic-light coloring by bracket prefix:
+            //   red    → [BLOCK] / [WARN]    (card accent — danger)
+            //   green  → [STATUS] / [ENFORCED] (success)
+            //   amber  → [PROXY] / [SCAN] / [LOG] / [INFO] (informational)
+            const RED_PREFIXES = ['[BLOCK]', '[WARN]'];
+            const GREEN_PREFIXES = ['[STATUS]', '[ENFORCED]'];
+            const AMBER_PREFIXES = ['[PROXY]', '[SCAN]', '[LOG]', '[INFO]'];
+            const color = RED_PREFIXES.some((p) => origLine.startsWith(p))
+              ? step.accent
+              : GREEN_PREFIXES.some((p) => origLine.startsWith(p))
+              ? '#22c55e'
+              : AMBER_PREFIXES.some((p) => origLine.startsWith(p))
+              ? '#f59e0b'
+              : 'rgba(255,255,255,0.7)';
             return (
               <div key={i} style={{ color, minHeight: '2em' }}>
                 {hasDot && text.length > 0 && <span className="ss-pulse-dot" />}
