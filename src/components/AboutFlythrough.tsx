@@ -52,34 +52,9 @@ function fadeOut(p: number, start: number, end: number) {
   if (p >= end) return 0;
   return 1 - (p - start) / (end - start);
 }
-// Heading opacity — single source of truth for the dedicated
-// SecuringHeadingZone (a 100vh section sandwiched between AboutFlythrough
-// and the marquee). Crossfades with Stage 04's fade-out tail.
-//   < 0.85      → 0
-//   0.85 → 0.95 → 0 → 1  (covers full exit transition)
-//   ≥ 0.95      → 1
-export function headingOpacity(extendedProgress: number) {
-  const ep = extendedProgress;
-  if (ep < 0.85) return 0;
-  if (ep < 0.95) return (ep - 0.85) / 0.10;
-  return 1;
-}
-
-// Computes the same extendedProgress used by AboutFlythrough from any
-// component that can read the About section's rect — lets StackingSteps
-// drive its heading opacity off the exact same scroll metric without
-// needing to share React state across components.
-export function computeAboutExtendedProgress(): number {
-  if (typeof window === 'undefined') return 0;
-  const about = document.getElementById('about');
-  if (!about) return 0;
-  const rect = about.getBoundingClientRect();
-  const vh = window.innerHeight;
-  const aboutScrollable = rect.height - vh;
-  if (aboutScrollable <= 0) return 0;
-  const scrolled = -rect.top;
-  return Math.max(0, scrolled / aboutScrollable);
-}
+// Heading opacity / extendedProgress helpers were removed — the
+// SecuringHeadingZone now drives its own opacity from its own scroll
+// position so it doesn't have to import anything from this module.
 
 // ── Wireframe fragments ──────────────────────────────────────────────────────
 
@@ -786,50 +761,6 @@ function StageOverlay({ progress }: OverlayProps) {
   );
 }
 
-// ── Debug overlay ────────────────────────────────────────────────────────────
-
-function DebugOverlay({
-  progress,
-  streakProgress,
-  extendedProgress,
-}: {
-  progress: number;
-  streakProgress: number;
-  extendedProgress: number;
-}) {
-  const fragmentOp = fadeOut(progress, 0.85, 0.95);
-  const streakOp = fadeOut(streakProgress, 0.7, 1.0) * 0.5; // base 0.5
-  const stage04 = stageVisual(progress, 3).opacity;
-  const heading = headingOpacity(extendedProgress);
-  const f = (n: number) => n.toFixed(3);
-  return (
-    <div
-      style={{
-        position: 'fixed',
-        top: 12,
-        right: 12,
-        zIndex: 100,
-        fontFamily: 'ui-monospace, monospace',
-        fontSize: 11,
-        color: 'rgba(255,255,255,0.85)',
-        background: 'rgba(0,0,0,0.7)',
-        padding: '8px 10px',
-        border: '1px solid rgba(255,255,255,0.2)',
-        lineHeight: 1.5,
-        pointerEvents: 'none',
-      }}
-    >
-      <div>scroll progress:    {f(progress)}</div>
-      <div>extendedProgress:   {f(extendedProgress)}</div>
-      <div>streakProgress:     {f(streakProgress)}</div>
-      <div>fragment opacity:   {f(fragmentOp)}</div>
-      <div>streak opacity:     {f(streakOp)}</div>
-      <div>stage04 opacity:    {f(stage04)}</div>
-      <div>heading opacity:    {f(heading)}</div>
-    </div>
-  );
-}
-
 // ── Reduced-motion fallback ──────────────────────────────────────────────────
 
 function ReducedMotionFallback() {
@@ -884,8 +815,6 @@ export default function AboutFlythrough() {
   const streakProgressRef = useRef(0);
   const mouseRef = useRef({ x: 0, y: 0 });
   const [progress, setProgress] = useState(0);
-  const [extendedProgress, setExtendedProgress] = useState(0);
-  const [streakProgress, setStreakProgress] = useState(0);
   const [active, setActive] = useState(false);
   const [reduced, setReduced] = useState(false);
 
@@ -918,14 +847,10 @@ export default function AboutFlythrough() {
       progressRef.current = p;
       streakProgressRef.current = sp;
       setProgress(p);
-      setExtendedProgress(ep);
-      setStreakProgress(sp);
 
-      // Active when within range that needs the canvas mounted. Extended
-      // past the section so the phantom heading can finish its crossfade
-      // (phantomOpacity reaches 0 at extendedProgress 1.05) — we keep the
-      // overlay alive until ep ≈ 1.10 with a small safety margin, then
-      // unmount to free the GPU.
+      // Active when within range that needs the canvas mounted. Kept
+      // ~1.10 of extendedProgress as a safety margin past the section
+      // end so the streaks have room to fade out before unmounting.
       const isActive = scrolled > -vh && ep < 1.10;
       setActive(isActive);
     };
@@ -1004,12 +929,6 @@ export default function AboutFlythrough() {
 
         <StageOverlay progress={progress} />
       </div>
-
-      <DebugOverlay
-        progress={progress}
-        streakProgress={streakProgress}
-        extendedProgress={extendedProgress}
-      />
     </>
   );
 }

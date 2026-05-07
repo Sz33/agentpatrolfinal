@@ -86,6 +86,34 @@ const STYLES = `
   from { opacity: 0; }
   to   { opacity: 1; }
 }
+
+/* Responsive layout — stacked below 768 px, 3-column at desktop. */
+.ld-panels {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 56px;
+}
+.ld-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  transition: opacity 600ms ease-out;
+}
+@media (min-width: 768px) {
+  .ld-panels {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .ld-stats {
+    flex-direction: row;
+    justify-content: center;
+    gap: 48px;
+  }
+}
 `;
 
 // ── Component ───────────────────────────────────────────────────────
@@ -187,15 +215,9 @@ export default function LiveDemoSection() {
           credentials. AgentPatrol detects and blocks it before it completes.
         </p>
 
-        {/* 3 panels */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-            gap: 12,
-            marginTop: 56,
-          }}
-        >
+        {/* 3 panels — class-driven so the media query in STYLES can flip
+            the layout to vertical stacking below 768 px. */}
+        <div className="ld-panels">
           <Panel
             title="AGENT ACTIVITY"
             statusLabel={complete ? 'TERMINATED' : triggered ? 'RUNNING' : 'IDLE'}
@@ -289,19 +311,11 @@ export default function LiveDemoSection() {
           </button>
         </div>
 
-        {/* Stats — fade in once simulation completes */}
+        {/* Stats — fade in once simulation completes. Layout (row vs
+            stacked) handled by .ld-stats media query. */}
         <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: 48,
-            marginTop: 32,
-            paddingTop: 24,
-            borderTop: '1px solid rgba(255,255,255,0.08)',
-            flexWrap: 'wrap',
-            opacity: complete ? 1 : 0,
-            transition: 'opacity 600ms ease-out',
-          }}
+          className="ld-stats"
+          style={{ opacity: complete ? 1 : 0 }}
         >
           <Stat value="0.8ms" label="Block Time" />
           <Stat value="3" label="Actions" />
