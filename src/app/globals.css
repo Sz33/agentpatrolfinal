@@ -59,6 +59,30 @@
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) * 1.4);
+
+  /* Magic-UI ShimmerButton animations — drives AnimatedButton's perimeter
+     spark. Tailwind v4 auto-emits `animate-shimmer-slide` and
+     `animate-spin-around` utilities from these tokens. */
+  --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
+  --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
+
+  @keyframes shimmer-slide {
+    to { transform: translate(calc(100cqw - 100%), 0); }
+  }
+  @keyframes spin-around {
+    0%        { transform: translateZ(0) rotate(0); }
+    15%, 35%  { transform: translateZ(0) rotate(90deg); }
+    65%, 85%  { transform: translateZ(0) rotate(270deg); }
+    100%      { transform: translateZ(0) rotate(360deg); }
+  }
+
+  /* Magic-UI RetroGrid — drives the receding floor animation. */
+  --animate-grid: grid 20s linear infinite;
+
+  @keyframes grid {
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(calc(var(--cell-size) * 1)); }
+  }
 }
 
 :root {
@@ -764,4 +788,102 @@ nav a:hover::after {
 @keyframes patrolGlow {
   0%, 100% { filter: drop-shadow(0 0 16px rgba(239, 68, 68, 0.3)); }
   50%      { filter: drop-shadow(0 0 40px rgba(239, 68, 68, 0.7)) drop-shadow(0 0 80px rgba(239, 68, 68, 0.2)); }
+}
+
+/* === TEAM HERO + PROBLEM — scoped tokens, helpers, keyframes === */
+.team-hero-zone {
+  --green-deep:      #060810;
+  --green:           #0A0F1E;
+  --green-mid:       #0F1628;
+  --ink:             #080C18;
+  --surface-1:       #0F1628;
+  --surface-2:       #141D35;
+  --surface-3:       #1A2540;
+  --border-primary:  #1E2D4A;
+  --border-secondary:#253560;
+  --green-glow:      #0066FF;
+  --accent:          #0066FF;
+  --accent-hover:    #0052CC;
+  --accent-glow:     rgba(0,102,255,0.15);
+  --accent-2:        #4D9FFF;
+  --alert:           #E63946;
+  --amber:           #F5A623;
+  --success:         #00C896;
+  --neutral:         #4A5568;
+  --cream:           #E8ECF4;
+  --text-secondary:  #8892A4;
+  --text-tertiary:   #4A5568;
+  --text-accent:     #4D9FFF;
+  --code-bg:         #080C18;
+  --code-text:       #00FF88;
+  --code-label:      #4D9FFF;
+}
+
+/* HUD grid overlay (team-prefixed to avoid global collision) */
+.team-stage-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(0, 102, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 102, 255, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(80% 80% at 50% 50%, #000, transparent 80%);
+  -webkit-mask-image: radial-gradient(80% 80% at 50% 50%, #000, transparent 80%);
+  z-index: 5;
+}
+
+/* Scanlines + vignette */
+.team-stage-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 3px),
+    radial-gradient(80% 60% at 50% 110%, rgba(0, 0, 0, 0.5), transparent 60%);
+  z-index: 4;
+}
+
+/* Animations — all team-prefixed */
+@keyframes team-ring-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes team-ring-spin-rev {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(-360deg); }
+}
+@keyframes team-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+@keyframes team-blink {
+  50% { opacity: 0; }
+}
+@keyframes team-flicker {
+  0%, 100% { opacity: 1; }
+  45%      { opacity: 0.25; }
+  50%      { opacity: 0.9; }
+}
+@keyframes team-card-reveal {
+  0%   { opacity: 0; transform: translateY(48px) scale(0.94); filter: blur(10px); }
+  55%  { filter: blur(0px); }
+  100% { opacity: 1; transform: translateY(0) scale(1);       filter: blur(0px); }
+}
+@keyframes team-heading-reveal {
+  0%   { opacity: 0; transform: translateY(32px); filter: blur(8px); }
+  55%  { filter: blur(0px); }
+  100% { opacity: 1; transform: translateY(0);    filter: blur(0px); }
+}
+@keyframes team-closing-reveal {
+  from { opacity: 0; transform: translateY(16px); filter: blur(4px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0px); }
+}
+@keyframes team-dot-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.2; }
+}
+@keyframes team-spin-cw {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
