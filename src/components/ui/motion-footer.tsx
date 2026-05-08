@@ -53,7 +53,7 @@ const STYLES = `
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 }
 @media (min-width: 768px) {
-  .cinematic-footer__wrapper { height: 110vh; }
+  .cinematic-footer__wrapper { height: 100vh; }
 }
 
 /* Fixed inner footer — pinned to viewport bottom by default, revealed
@@ -300,38 +300,20 @@ function MagneticButton({
   );
 }
 
-// ── Static nav data
-const SECONDARY_LINKS = [
-  { label: 'Features', href: '#features' },
-  { label: 'How It Works', href: '#how-it-works' },
-  { label: 'Pre-Flight Scan', href: '#' },
-  { label: 'Session Reports', href: '#' },
-  { label: 'Privacy', href: '#' },
-  { label: 'Terms', href: '#' },
-];
 
 // ── CinematicFooter
 export function CinematicFooter() {
   useInjectStyles();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const giantTextRef = useRef<HTMLDivElement>(null);
-  const eyebrowRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const subheadRef = useRef<HTMLParagraphElement>(null);
-  const bodyRef = useRef<HTMLParagraphElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Staggered reveal on enter.
       gsap.fromTo(
-        [
-          eyebrowRef.current,
-          headingRef.current,
-          subheadRef.current,
-          bodyRef.current,
-          linksRef.current,
-        ],
+        [headingRef.current, linksRef.current],
         { y: 40, opacity: 0 },
         {
           y: 0,
@@ -384,156 +366,52 @@ export function CinematicFooter() {
             AGENTPATROL
           </div>
 
-          {/* Centered content — merged FinalCTA copy. */}
-          <div className="cinematic-footer__content">
-            {/* Eyebrow */}
-            <div
-              ref={eyebrowRef}
+          {/* Centered content — brand close + CTAs. */}
+          <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 w-full">
+
+            {/* Brand close statement */}
+            <h2
+              ref={headingRef}
+              className="footer-text-glow tracking-tighter text-center leading-[0.95] mb-12"
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 12,
-                marginBottom: 4,
+                fontFamily: 'var(--font-heading)',
+                fontSize: 'clamp(48px, 8vw, 120px)',
               }}
             >
-              <span
-                aria-hidden="true"
-                style={{
-                  display: 'inline-block',
-                  width: 8,
-                  height: 8,
-                  borderRadius: '50%',
-                  background: '#ef4444',
-                  boxShadow: '0 0 12px #ef4444',
-                }}
-              />
-              <span
-                style={{
-                  color: '#ef4444',
-                  fontFamily:
-                    'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-                  fontSize: 12,
-                  letterSpacing: '0.2em',
-                  textTransform: 'uppercase',
-                }}
-              >
-                // Get Started
-              </span>
-            </div>
-
-            {/* Headline */}
-            <h2 ref={headingRef} className="cinematic-footer__heading">
-              Your agents are running{' '}
-              <span className="cf-accent">right now.</span>
+              AGENTPATROL<br />
+              <span style={{ color: '#ef4444' }}>NEVER SLEEPS.</span>
             </h2>
 
-            {/* Subhead */}
-            <p
-              ref={subheadRef}
-              style={{
-                fontFamily: 'var(--font-heading), sans-serif',
-                color: 'rgba(255,255,255,0.85)',
-                fontSize: 'clamp(20px, 2.5vw, 28px)',
-                lineHeight: 1.3,
-                fontWeight: 400,
-                letterSpacing: '0.02em',
-                textTransform: 'uppercase',
-                margin: 0,
-                textAlign: 'center',
-              }}
-            >
-              Do you know what they are doing?
-            </p>
+            {/* CTAs */}
+            <div ref={linksRef} className="flex flex-col items-center gap-16 w-full">
 
-            {/* Body */}
-            <p
-              ref={bodyRef}
-              style={{
-                color: 'rgba(255,255,255,0.55)',
-                fontSize: 16,
-                lineHeight: 1.6,
-                maxWidth: 640,
-                margin: 0,
-                textAlign: 'center',
-              }}
-            >
-              AgentPatrol deploys in 90 seconds. Zero code changes. First
-              session report in under five minutes. See exactly what your
-              agent has been doing since the moment it first ran.
-            </p>
-
-            {/* Primary CTAs + secondary nav, grouped under linksRef so
-                they stagger together. */}
-            <div
-              ref={linksRef}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: 24,
-                width: '100%',
-              }}
-            >
-              {/* Primary CTAs — magnetic glass pills */}
-              <div
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  gap: 16,
-                  justifyContent: 'center',
-                }}
-              >
+              {/* Primary CTAs */}
+              <div className="flex flex-wrap justify-center gap-4">
                 <MagneticButton
                   as="a"
                   href="#early-access"
-                  className="footer-glass-pill footer-glass-pill--primary"
-                  style={{
-                    padding: '20px 40px',
-                    borderRadius: 9999,
-                    fontSize: 14,
-                    fontWeight: 500,
-                  }}
+                  className="footer-glass-pill px-10 py-5 rounded-full font-bold text-sm md:text-base tracking-wider uppercase"
+                  style={{ background: '#ef4444', color: '#ffffff', border: '1px solid rgba(255,255,255,0.15)' }}
                 >
                   Request Early Access →
                 </MagneticButton>
                 <MagneticButton
                   as="a"
                   href="#contact"
-                  className="footer-glass-pill"
-                  style={{
-                    padding: '20px 40px',
-                    borderRadius: 9999,
-                    fontSize: 14,
-                    fontWeight: 500,
-                  }}
+                  className="footer-glass-pill px-10 py-5 rounded-full text-foreground font-bold text-sm md:text-base tracking-wider uppercase"
                 >
                   Talk to a Founder
                 </MagneticButton>
               </div>
 
               {/* Secondary nav pills */}
-              <div
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  gap: 8,
-                  justifyContent: 'center',
-                }}
-              >
-                {SECONDARY_LINKS.map((l) => (
-                  <a
-                    key={l.label}
-                    href={l.href}
-                    className="footer-glass-pill"
-                    style={{
-                      padding: '10px 18px',
-                      borderRadius: 9999,
-                      fontSize: 11,
-                    }}
-                  >
-                    {l.label}
-                  </a>
-                ))}
+              <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+                <MagneticButton as="a" href="#features" className="footer-glass-pill px-5 py-2.5 rounded-full text-muted-foreground font-medium text-xs hover:text-foreground uppercase tracking-wider">Features</MagneticButton>
+                <MagneticButton as="a" href="#how-it-works" className="footer-glass-pill px-5 py-2.5 rounded-full text-muted-foreground font-medium text-xs hover:text-foreground uppercase tracking-wider">How It Works</MagneticButton>
+                <MagneticButton as="a" href="#pre-flight" className="footer-glass-pill px-5 py-2.5 rounded-full text-muted-foreground font-medium text-xs hover:text-foreground uppercase tracking-wider">Pre-Flight Scan</MagneticButton>
+                <MagneticButton as="a" href="#sessions" className="footer-glass-pill px-5 py-2.5 rounded-full text-muted-foreground font-medium text-xs hover:text-foreground uppercase tracking-wider">Session Reports</MagneticButton>
+                <MagneticButton as="a" href="#privacy" className="footer-glass-pill px-5 py-2.5 rounded-full text-muted-foreground font-medium text-xs hover:text-foreground uppercase tracking-wider">Privacy</MagneticButton>
+                <MagneticButton as="a" href="#terms" className="footer-glass-pill px-5 py-2.5 rounded-full text-muted-foreground font-medium text-xs hover:text-foreground uppercase tracking-wider">Terms</MagneticButton>
               </div>
             </div>
           </div>
