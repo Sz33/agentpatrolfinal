@@ -1,5 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
+import AnimatedButton from '@/components/AnimatedButton';
+import { GridScan } from './GridScan';
 
 // ── Event sequence ──────────────────────────────────────────────────
 // One entry per event. `delay` is the offset from "trigger" at which
@@ -114,6 +116,12 @@ const STYLES = `
     gap: 48px;
   }
 }
+
+/* Hide GridScan on mobile — 3 simultaneous WebGL canvases would
+   choke phones. Hero robot + AboutFlythrough are the other two. */
+@media (max-width: 767px) {
+  .live-demo-grid-scan { display: none; }
+}
 `;
 
 // ── Component ───────────────────────────────────────────────────────
@@ -169,11 +177,52 @@ export default function LiveDemoSection() {
         background: '#000',
         padding: '120px 24px 100px',
         position: 'relative',
+        overflow: 'hidden',
       }}
     >
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
 
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+      {/* GridScan background — red-tinted scanning grid. Mobile-hidden
+          (3rd WebGL canvas would choke phones). */}
+      <div
+        className="live-demo-grid-scan"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 0,
+          pointerEvents: 'none',
+        }}
+        aria-hidden="true"
+      >
+        <GridScan
+          sensitivity={0.55}
+          lineThickness={1}
+          linesColor="#1a0d0d"
+          gridScale={0.1}
+          scanColor="#ef4444"
+          scanOpacity={0.35}
+          enablePost
+          bloomIntensity={0.5}
+          chromaticAberration={0.001}
+          noiseIntensity={0.008}
+        />
+      </div>
+
+      {/* Top + bottom edge fades so the grid merges into adjacent
+          black sections instead of cutting hard. */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background:
+            'linear-gradient(to bottom, #000 0%, transparent 15%, transparent 85%, #000 100%)',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
+      />
+
+      <div style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto' }}>
         {/* Header */}
         <p
           style={{
@@ -336,33 +385,10 @@ export default function LiveDemoSection() {
           Run this simulation on your own agent.
         </p>
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 16 }}>
-          <a
-            href="#"
-            style={{
-              background: '#ef4444',
-              color: 'white',
-              padding: '12px 24px',
-              borderRadius: 6,
-              fontWeight: 500,
-              fontFamily:
-                'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-              fontSize: 13,
-              letterSpacing: '0.04em',
-              textDecoration: 'none',
-              border: '1px solid #ef4444',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-              transition: 'background 0.2s ease',
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background = '#dc2626';
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background = '#ef4444';
-            }}
-          >
-            Request Early Access <span style={{ fontWeight: 400 }}>→</span>
+          <a href="#" style={{ textDecoration: 'none' }}>
+            <AnimatedButton>
+              Request Early Access <span style={{ fontWeight: 400 }}>→</span>
+            </AnimatedButton>
           </a>
         </div>
       </div>
