@@ -22,14 +22,19 @@ function Robot() {
 
   useEffect(() => {
     const onScroll = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      scrollRef.current = max > 0 ? Math.min(1, window.scrollY / max) : 0;
-
       const problem = document.getElementById("problem");
       if (!problem) {
+        scrollRef.current = 0;
         alertMixRef.current = 0;
         return;
       }
+      // Scope rotation to the hero+problem zone only.
+      // Robot does a full 180° spin as user scrolls from hero (0) to
+      // bottom of problem section (1). After that, rotation locks at 1
+      // until the canvas fades out.
+      const zoneEnd = problem.offsetTop + problem.offsetHeight;
+      scrollRef.current = Math.max(0, Math.min(1, window.scrollY / zoneEnd));
+
       const triggerStart = problem.offsetTop - window.innerHeight * 0.45;
       const triggerRange = window.innerHeight * 0.55;
       const raw = (window.scrollY - triggerStart) / triggerRange;
@@ -125,8 +130,8 @@ function Robot() {
     if (!g) return;
 
     const t = state.clock.elapsedTime;
-    // Full scroll-driven rotation.
-    g.rotation.y = -scrollRef.current * Math.PI * 2;
+    // Scroll-driven 180° rotation across the hero+problem zone.
+    g.rotation.y = -scrollRef.current * Math.PI;
     g.position.y = -0.1 + Math.sin(t * 0.8) * 0.04;
 
     const mix = alertMixRef.current;
