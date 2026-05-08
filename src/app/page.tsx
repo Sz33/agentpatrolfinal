@@ -8,7 +8,6 @@ import StackingSteps from "@/components/StackingSteps";
 import FeaturesSection from "@/components/FeaturesSection";
 import WhyKernelSection from "@/components/WhyKernelSection";
 import LiveDemoSection from "@/components/LiveDemoSection";
-import SolaisStatsSection from "@/components/SolaisStatsSection";
 import { CinematicFooter } from "@/components/ui/motion-footer";
 
 import { Navbar } from "@/components/hero-3d/Navbar";
@@ -38,7 +37,6 @@ export default function Home() {
         <SolaisMarqueeSection />
         <WhyKernelSection />
         <LiveDemoSection />
-        <SolaisStatsSection />
       </main>
       <CinematicFooter />
     </>
