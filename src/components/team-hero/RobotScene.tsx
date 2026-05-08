@@ -28,11 +28,10 @@ function Robot() {
         alertMixRef.current = 0;
         return;
       }
-      // Spin completes when the robot is centered in viewport during
-      // problem section — about 40% of a viewport scrolled past the
-      // top of problem. After that, scrollRef stays clamped at 1, so
-      // the robot is locked front-facing while the eyes lerp cyan→red.
-      const spinEndScroll = problem.offsetTop + window.innerHeight * 0.4;
+      // Spin completes EXACTLY at the top of problem section.
+      // Measured: currentScrollY ≈ 893 at perfect moment,
+      //           problem.offsetTop = 901.
+      const spinEndScroll = problem.offsetTop;
       scrollRef.current = spinEndScroll > 0
         ? Math.max(0, Math.min(1, window.scrollY / spinEndScroll))
         : 0;
