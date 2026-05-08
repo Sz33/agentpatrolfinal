@@ -28,12 +28,15 @@ function Robot() {
         alertMixRef.current = 0;
         return;
       }
-      // Scope rotation to the hero+problem zone only.
-      // Robot does a full 180° spin as user scrolls from hero (0) to
-      // bottom of problem section (1). After that, rotation locks at 1
-      // until the canvas fades out.
-      const zoneEnd = problem.offsetTop + problem.offsetHeight;
-      scrollRef.current = Math.max(0, Math.min(1, window.scrollY / zoneEnd));
+      // Spin completes at TOP of problem section (= bottom of hero).
+      // Hero height = problem.offsetTop. Once user scrolls that distance,
+      // scrollRef = 1, rotation = -2π (full revolution, front-facing again).
+      // Inside the problem section scrollRef stays clamped at 1, so the
+      // robot is locked front-facing while the eyes lerp cyan→red.
+      const heroHeight = problem.offsetTop;
+      scrollRef.current = heroHeight > 0
+        ? Math.max(0, Math.min(1, window.scrollY / heroHeight))
+        : 0;
 
       const triggerStart = problem.offsetTop - window.innerHeight * 0.45;
       const triggerRange = window.innerHeight * 0.55;
@@ -130,8 +133,8 @@ function Robot() {
     if (!g) return;
 
     const t = state.clock.elapsedTime;
-    // Scroll-driven 180° rotation across the hero+problem zone.
-    g.rotation.y = -scrollRef.current * Math.PI;
+    // Full 360° scroll-driven rotation contained within the hero zone.
+    g.rotation.y = -scrollRef.current * Math.PI * 2;
     g.position.y = -0.1 + Math.sin(t * 0.8) * 0.04;
 
     const mix = alertMixRef.current;
