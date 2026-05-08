@@ -264,16 +264,10 @@ export function MagicCard({
   }, [initializeParticles]);
 
   useEffect(() => {
-    console.log('[MagicCard] shouldDisable=', shouldDisable, 'isMobile=', isMobile);
-    if (shouldDisable || !cardRef.current) {
-      console.log('[MagicCard] not wiring events. shouldDisable=', shouldDisable, 'ref=', cardRef.current);
-      return;
-    }
+    if (shouldDisable || !cardRef.current) return;
     const el = cardRef.current;
-    console.log('[MagicCard] wiring events on', el);
 
     const handleEnter = () => {
-      console.log('[MagicCard] mouseenter fired', cardRef.current);
       isHoveredRef.current = true;
       if (enableStars) animateParticles();
       if (enableTilt) {
@@ -282,7 +276,6 @@ export function MagicCard({
     };
 
     const handleLeave = () => {
-      console.log('[MagicCard] mouseleave');
       isHoveredRef.current = false;
       clearAllParticles();
       if (enableTilt) gsap.to(el, { rotateX: 0, rotateY: 0, duration: 0.3, ease: 'power2.out' });
@@ -290,7 +283,6 @@ export function MagicCard({
     };
 
     const handleMove = (e: MouseEvent) => {
-      console.log('[MagicCard] mousemove', e.clientX, e.clientY);
       if (!enableTilt && !enableMagnetism) return;
       const rect = el.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -313,7 +305,6 @@ export function MagicCard({
     };
 
     const handleClick = (e: MouseEvent) => {
-      console.log('[MagicCard] click', e.clientX, e.clientY);
       if (!clickEffect) return;
       const rect = el.getBoundingClientRect();
       const x = e.clientX - rect.left;
