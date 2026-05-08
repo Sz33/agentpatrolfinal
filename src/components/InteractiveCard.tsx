@@ -6,7 +6,7 @@ interface InteractiveCardProps {
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
-  /** RGB triple, e.g. "239, 68, 68" — drives the border glow gradient
+  /** RGB triple, e.g. "239, 68, 68" — drives the border-glow gradient
    *  via `rgba(var(--glow-color), …)` and the particle / ripple colours. */
   glowColor?: string;
   particleCount?: number;
@@ -19,31 +19,34 @@ interface InteractiveCardProps {
 
 const DEFAULT_GLOW_COLOR = '239, 68, 68'; // brand red
 
-// Self-contained CSS for the per-card visual chrome. Scoped to the
-// `.interactive-card` class so it cannot collide with MagicBento or any
-// other component. No layout / sizing rules — the parent grid and the
-// inline `style` prop control the card's box.
+// Self-contained CSS, scoped to `.interactive-card`. Three glow layers:
+//   ::before  — cursor-tracked bright neon RING along the card edge
+//                (radial gradient masked to the perimeter)
+//   ::after   — multi-layer box-shadow neon HALO projecting outside
+//                the card (30px + 60px blurs + 1px outline + soft inset)
+//   .spotlight child — soft INTERIOR radial highlight following cursor
 const STYLES = `
 .interactive-card {
   position: relative;
   overflow: hidden;
-  --glow-x: 50%;
-  --glow-y: 50%;
-  --glow-intensity: 0;
-  --glow-radius: 200px;
+  border-radius: 8px;
+  --mouse-x: 50%;
+  --mouse-y: 50%;
 }
-.interactive-card--border-glow::after {
+
+/* Cursor-tracked bright ring along the perimeter */
+.interactive-card::before {
   content: '';
   position: absolute;
   inset: 0;
-  padding: 6px;
-  background: radial-gradient(
-    var(--glow-radius) circle at var(--glow-x) var(--glow-y),
-    rgba(var(--glow-color), calc(var(--glow-intensity) * 0.8)) 0%,
-    rgba(var(--glow-color), calc(var(--glow-intensity) * 0.4)) 30%,
-    transparent 60%
-  );
+  padding: 1.5px;
   border-radius: inherit;
+  background: radial-gradient(
+    300px circle at var(--mouse-x) var(--mouse-y),
+    rgba(var(--glow-color), 0.9),
+    rgba(var(--glow-color), 0.3) 40%,
+    transparent 70%
+  );
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
@@ -53,15 +56,50 @@ const STYLES = `
     linear-gradient(#fff 0 0);
   mask-composite: exclude;
   pointer-events: none;
-  opacity: 1;
-  transition: opacity 0.3s ease;
+  opacity: 0;
+  transition: opacity 0.4s ease;
   z-index: 1;
 }
-.interactive-card--border-glow:hover {
-  box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.4),
-    0 0 30px rgba(var(--glow-color), 0.2);
+.interactive-card:hover::before { opacity: 1; }
+
+/* Multi-layer outer neon halo — box-shadow projects OUTSIDE the card
+   (overflow:hidden on this element does not clip its own box-shadow). */
+.interactive-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 1px rgba(var(--glow-color), 0);
+  transition: box-shadow 0.4s ease;
+  pointer-events: none;
+  z-index: 0;
 }
+.interactive-card:hover::after {
+  box-shadow:
+    0 0 0 1px rgba(var(--glow-color), 0.6),
+    0 0 30px rgba(var(--glow-color), 0.4),
+    0 0 60px rgba(var(--glow-color), 0.25),
+    inset 0 0 30px rgba(var(--glow-color), 0.1);
+}
+
+/* Soft interior spotlight following cursor */
+.interactive-card-spotlight {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    400px circle at var(--mouse-x) var(--mouse-y),
+    rgba(var(--glow-color), 0.15),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+.interactive-card:hover .interactive-card-spotlight { opacity: 1; }
+
+/* Tone-down ring around each ambient star particle */
 .interactive-card .particle::before {
   content: '';
   position: absolute;
@@ -69,7 +107,7 @@ const STYLES = `
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: rgba(var(--glow-color), 0.2);
+  background: rgba(var(--glow-color), 0.12);
   border-radius: 50%;
   z-index: -1;
 }
@@ -78,13 +116,15 @@ const STYLES = `
 const createParticle = (x: number, y: number, color: string): HTMLDivElement => {
   const el = document.createElement('div');
   el.className = 'particle';
+  // Toned-down: alpha 0.4 instead of 1.0, smaller blur halo. Particles
+  // stay subtle so they don't compete with the border-glow.
   el.style.cssText = `
     position: absolute;
-    width: 4px;
-    height: 4px;
+    width: 3px;
+    height: 3px;
     border-radius: 50%;
-    background: rgba(${color}, 1);
-    box-shadow: 0 0 6px rgba(${color}, 0.6);
+    background: rgba(${color}, 0.4);
+    box-shadow: 0 0 4px rgba(${color}, 0.25);
     pointer-events: none;
     z-index: 100;
     left: ${x}px;
@@ -121,7 +161,7 @@ export default function InteractiveCard({
   className,
   style,
   glowColor = DEFAULT_GLOW_COLOR,
-  particleCount = 12,
+  particleCount = 8,
   enableMagnetism = true,
   enableSpotlight = true,
   clickEffect = true,
@@ -170,10 +210,15 @@ export default function InteractiveCard({
         const clone = particle.cloneNode(true) as HTMLDivElement;
         cardRef.current.appendChild(clone);
         particlesRef.current.push(clone);
-        gsap.fromTo(clone, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(1.7)' });
+        gsap.fromTo(
+          clone,
+          { scale: 0, opacity: 0 },
+          { scale: 1, opacity: 0.6, duration: 0.4, ease: 'back.out(1.7)' },
+        );
+        // Drift radius reduced from ±50 → ±30 so particles stay inside.
         gsap.to(clone, {
-          x: (Math.random() - 0.5) * 100,
-          y: (Math.random() - 0.5) * 100,
+          x: (Math.random() - 0.5) * 60,
+          y: (Math.random() - 0.5) * 60,
           rotation: Math.random() * 360,
           duration: 2 + Math.random() * 2,
           ease: 'none',
@@ -181,7 +226,7 @@ export default function InteractiveCard({
           yoyo: true,
         });
         gsap.to(clone, {
-          opacity: 0.3,
+          opacity: 0.15,
           duration: 1.5,
           ease: 'power2.inOut',
           repeat: -1,
@@ -197,31 +242,25 @@ export default function InteractiveCard({
     const el = cardRef.current;
     if (!el) return;
 
-    const updateGlow = (e: MouseEvent) => {
-      const rect = el.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      el.style.setProperty('--glow-x', `${x}%`);
-      el.style.setProperty('--glow-y', `${y}%`);
-      el.style.setProperty('--glow-intensity', '1');
-      el.style.setProperty('--glow-radius', '200px');
-    };
-
     const onEnter = () => {
       animateParticles();
-      el.style.setProperty('--glow-intensity', '1');
     };
     const onLeave = () => {
       clearParticles();
-      el.style.setProperty('--glow-intensity', '0');
       if (enableMagnetism) {
         gsap.to(el, { x: 0, y: 0, duration: 0.3, ease: 'power2.out' });
       }
     };
     const onMove = (e: MouseEvent) => {
-      if (enableSpotlight) updateGlow(e);
+      const rect = el.getBoundingClientRect();
+      // Update CSS variables so the ::before ring + .spotlight follow the cursor.
+      if (enableSpotlight) {
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        el.style.setProperty('--mouse-x', `${x}%`);
+        el.style.setProperty('--mouse-y', `${y}%`);
+      }
       if (enableMagnetism) {
-        const rect = el.getBoundingClientRect();
         const cx = rect.width / 2;
         const cy = rect.height / 2;
         const mx = (e.clientX - rect.left - cx) * 0.05;
@@ -284,7 +323,7 @@ export default function InteractiveCard({
   return (
     <div
       ref={cardRef}
-      className={`interactive-card interactive-card--border-glow ${className ?? ''}`}
+      className={`interactive-card ${className ?? ''}`}
       style={
         {
           '--glow-color': glowColor,
@@ -294,7 +333,15 @@ export default function InteractiveCard({
         } as React.CSSProperties
       }
     >
-      {children}
+      {/* Soft interior spotlight that follows the cursor on hover. */}
+      <div className="interactive-card-spotlight" aria-hidden="true" />
+      {/* Card content sits above all glow layers. */}
+      <div
+        className="interactive-card-content"
+        style={{ position: 'relative', zIndex: 3, height: '100%' }}
+      >
+        {children}
+      </div>
     </div>
   );
 }
