@@ -40,14 +40,20 @@ const STYLES = `
   width: 100%;
 }
 
-/* The curtain wrapper — gives 100vh of scroll runway and clips its
-   contents so the fixed inner footer doesn't bleed elsewhere. */
+/* The curtain wrapper — gives 100vh of scroll runway on phones (where
+   the merged FinalCTA copy is stacked tighter) and 110vh on tablet+
+   so the fuller layout (eyebrow + headline + subhead + body + 2 CTAs
+   + 6 nav pills) doesn't squeeze. Clips contents so the fixed inner
+   footer doesn't bleed elsewhere. */
 .cinematic-footer__wrapper {
   position: relative;
   height: 100vh;
-  min-height: 700px;
+  min-height: 760px;
   overflow: hidden;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+@media (min-width: 768px) {
+  .cinematic-footer__wrapper { height: 110vh; }
 }
 
 /* Fixed inner footer — pinned to viewport bottom by default, revealed
@@ -119,7 +125,7 @@ const STYLES = `
   will-change: transform, opacity;
 }
 
-/* Centered content stack. */
+/* Centered content stack — eyebrow / headline / subhead / body / CTAs+nav. */
 .cinematic-footer__content {
   position: relative;
   z-index: 2;
@@ -127,10 +133,11 @@ const STYLES = `
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 40px;
-  padding: 24px;
+  gap: 24px;
+  padding: 24px 24px 96px;
   text-align: center;
   max-width: 900px;
+  width: 100%;
 }
 .cinematic-footer__heading {
   font-family: var(--font-heading), sans-serif;
@@ -308,15 +315,23 @@ export function CinematicFooter() {
   useInjectStyles();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const giantTextRef = useRef<HTMLDivElement>(null);
+  const eyebrowRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const primaryRef = useRef<HTMLDivElement>(null);
-  const secondaryRef = useRef<HTMLDivElement>(null);
+  const subheadRef = useRef<HTMLParagraphElement>(null);
+  const bodyRef = useRef<HTMLParagraphElement>(null);
+  const linksRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Staggered reveal on enter.
       gsap.fromTo(
-        [headingRef.current, primaryRef.current, secondaryRef.current],
+        [
+          eyebrowRef.current,
+          headingRef.current,
+          subheadRef.current,
+          bodyRef.current,
+          linksRef.current,
+        ],
         { y: 40, opacity: 0 },
         {
           y: 0,
@@ -369,64 +384,157 @@ export function CinematicFooter() {
             AGENTPATROL
           </div>
 
-          {/* Centered content */}
+          {/* Centered content — merged FinalCTA copy. */}
           <div className="cinematic-footer__content">
-            <h2 ref={headingRef} className="cinematic-footer__heading">
-              Patrol never <span className="cf-accent">sleeps.</span>
-            </h2>
-
-            {/* Primary CTAs — magnetic glass pills */}
+            {/* Eyebrow */}
             <div
-              ref={primaryRef}
-              style={{ display: 'flex', flexWrap: 'wrap', gap: 16, justifyContent: 'center' }}
+              ref={eyebrowRef}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 12,
+                marginBottom: 4,
+              }}
             >
-              <MagneticButton
-                as="a"
-                href="#early-access"
-                className="footer-glass-pill footer-glass-pill--primary"
+              <span
+                aria-hidden="true"
                 style={{
-                  padding: '20px 40px',
-                  borderRadius: 9999,
-                  fontSize: 14,
-                  fontWeight: 500,
+                  display: 'inline-block',
+                  width: 8,
+                  height: 8,
+                  borderRadius: '50%',
+                  background: '#ef4444',
+                  boxShadow: '0 0 12px #ef4444',
+                }}
+              />
+              <span
+                style={{
+                  color: '#ef4444',
+                  fontFamily:
+                    'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                  fontSize: 12,
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase',
                 }}
               >
-                Request Early Access
-              </MagneticButton>
-              <MagneticButton
-                as="a"
-                href="#contact"
-                className="footer-glass-pill"
-                style={{
-                  padding: '20px 40px',
-                  borderRadius: 9999,
-                  fontSize: 14,
-                  fontWeight: 500,
-                }}
-              >
-                Talk to a Founder
-              </MagneticButton>
+                // Get Started
+              </span>
             </div>
 
-            {/* Secondary nav pills */}
-            <div
-              ref={secondaryRef}
-              style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center' }}
+            {/* Headline */}
+            <h2 ref={headingRef} className="cinematic-footer__heading">
+              Your agents are running{' '}
+              <span className="cf-accent">right now.</span>
+            </h2>
+
+            {/* Subhead */}
+            <p
+              ref={subheadRef}
+              style={{
+                fontFamily: 'var(--font-heading), sans-serif',
+                color: 'rgba(255,255,255,0.85)',
+                fontSize: 'clamp(20px, 2.5vw, 28px)',
+                lineHeight: 1.3,
+                fontWeight: 400,
+                letterSpacing: '0.02em',
+                textTransform: 'uppercase',
+                margin: 0,
+                textAlign: 'center',
+              }}
             >
-              {SECONDARY_LINKS.map((l) => (
-                <a
-                  key={l.label}
-                  href={l.href}
-                  className="footer-glass-pill"
+              Do you know what they are doing?
+            </p>
+
+            {/* Body */}
+            <p
+              ref={bodyRef}
+              style={{
+                color: 'rgba(255,255,255,0.55)',
+                fontSize: 16,
+                lineHeight: 1.6,
+                maxWidth: 640,
+                margin: 0,
+                textAlign: 'center',
+              }}
+            >
+              AgentPatrol deploys in 90 seconds. Zero code changes. First
+              session report in under five minutes. See exactly what your
+              agent has been doing since the moment it first ran.
+            </p>
+
+            {/* Primary CTAs + secondary nav, grouped under linksRef so
+                they stagger together. */}
+            <div
+              ref={linksRef}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 24,
+                width: '100%',
+              }}
+            >
+              {/* Primary CTAs — magnetic glass pills */}
+              <div
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: 16,
+                  justifyContent: 'center',
+                }}
+              >
+                <MagneticButton
+                  as="a"
+                  href="#early-access"
+                  className="footer-glass-pill footer-glass-pill--primary"
                   style={{
-                    padding: '10px 18px',
+                    padding: '20px 40px',
                     borderRadius: 9999,
-                    fontSize: 11,
+                    fontSize: 14,
+                    fontWeight: 500,
                   }}
                 >
-                  {l.label}
-                </a>
-              ))}
+                  Request Early Access →
+                </MagneticButton>
+                <MagneticButton
+                  as="a"
+                  href="#contact"
+                  className="footer-glass-pill"
+                  style={{
+                    padding: '20px 40px',
+                    borderRadius: 9999,
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}
+                >
+                  Talk to a Founder
+                </MagneticButton>
+              </div>
+
+              {/* Secondary nav pills */}
+              <div
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: 8,
+                  justifyContent: 'center',
+                }}
+              >
+                {SECONDARY_LINKS.map((l) => (
+                  <a
+                    key={l.label}
+                    href={l.href}
+                    className="footer-glass-pill"
+                    style={{
+                      padding: '10px 18px',
+                      borderRadius: 9999,
+                      fontSize: 11,
+                    }}
+                  >
+                    {l.label}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
 

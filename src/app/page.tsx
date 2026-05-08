@@ -9,7 +9,6 @@ import StackingSteps from "@/components/StackingSteps";
 import FeaturesSection from "@/components/FeaturesSection";
 import WhyKernelSection from "@/components/WhyKernelSection";
 import LiveDemoSection from "@/components/LiveDemoSection";
-import FinalCtaSection from "@/components/FinalCtaSection";
 import { CinematicFooter } from "@/components/ui/motion-footer";
 
 import { Navbar } from "@/components/hero-3d/Navbar";
@@ -47,7 +46,6 @@ export default function Home() {
         <WhyKernelSection />
         <LiveDemoSection />
         <SolaisMarqueeSection />
-        <FinalCtaSection />
       </main>
       <CinematicFooter />
     </>
