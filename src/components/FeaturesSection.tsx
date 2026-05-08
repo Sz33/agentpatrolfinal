@@ -1,5 +1,5 @@
 'use client';
-import MagicCard from '@/components/MagicCard';
+import MagicCard, { MagicCardSpotlight } from '@/components/MagicCard';
 
 interface Feature {
   num: string;
@@ -86,7 +86,7 @@ const STYLES = `
   height: 100%;
   min-height: 360px;
   position: relative;
-  z-index: 0;
+  z-index: 1;
 }
 .feature-num {
   color: #ef4444;
@@ -129,6 +129,7 @@ export default function FeaturesSection() {
   return (
     <section
       id="features"
+      className="magic-bento-zone"
       style={{
         background: '#000',
         padding: '120px 0 100px',
@@ -170,22 +171,20 @@ export default function FeaturesSection() {
         </h2>
       </div>
 
+      <MagicCardSpotlight glowColor="239, 68, 68" spotlightRadius={400} />
+
       {/* Uniform 3×2 grid — every card identical, no nth-child overrides. */}
       <div className="features-grid">
         {FEATURES.map((f) => (
           <MagicCard
             key={f.num}
             glowColor="239, 68, 68"
+            particleCount={12}
             enableStars
-            enableSpotlight
             enableBorderGlow
             enableTilt={false}
             enableMagnetism
             clickEffect
-            spotlightRadius={400}
-            particleCount={12}
-            disableAnimations={false}
-            style={{ borderRadius: 8 }}
           >
             <div className="feature-card">
               <span className="feature-num">// {f.num}</span>

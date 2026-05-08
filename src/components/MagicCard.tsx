@@ -1,35 +1,14 @@
 'use client';
-// VERBATIM extraction of MagicBento's per-card effects:
-//   - ParticleCard component (lines 110-355 of magicui/MagicBento.tsx)
-//   - createParticleElement helper (lines 72-88)
-//   - updateCardGlowProperties helper (lines 99-108) — upstream sets
-//     these CSS vars from GlobalSpotlight; we call it from a local
-//     mousemove so each card is self-contained and no global tracker
-//     is needed.
-//   - The ::after border-glow gradient rule (verbatim from upstream
-//     MagicBento.css, post-red-patch — class renamed to `.magic-card`
-//     so upstream `.magic-bento-card:nth-child(N) { grid-column: span N }`
-//     layout overrides cannot match this wrapper.
-//
-// NOTHING in the effect logic was paraphrased, simplified, or retimed.
-// The wrapper is layout-transparent: width:100%, height:100%, no
-// padding, no background, no border. The parent grid + the children's
-// own card markup own all box geometry.
-
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useRef, useEffect, useCallback, useState, type ReactNode, type CSSProperties } from 'react';
 import { gsap } from 'gsap';
+import './MagicCard.css';
 
 const DEFAULT_PARTICLE_COUNT = 12;
-const DEFAULT_GLOW_COLOR = '239, 68, 68'; // brand red
+const DEFAULT_SPOTLIGHT_RADIUS = 300;
+const DEFAULT_GLOW_COLOR = '239, 68, 68';
 const MOBILE_BREAKPOINT = 768;
 
-// ── verbatim helpers from upstream MagicBento.tsx ────────────────────
-
-const createParticleElement = (
-  x: number,
-  y: number,
-  color: string = DEFAULT_GLOW_COLOR,
-): HTMLDivElement => {
+const createParticleElement = (x: number, y: number, color: string) => {
   const el = document.createElement('div');
   el.className = 'particle';
   el.style.cssText = `
@@ -47,95 +26,26 @@ const createParticleElement = (
   return el;
 };
 
+const calculateSpotlightValues = (radius: number) => ({
+  proximity: radius * 0.5,
+  fadeDistance: radius * 0.75,
+});
+
 const updateCardGlowProperties = (
   card: HTMLElement,
   mouseX: number,
   mouseY: number,
   glow: number,
-  radius: number,
+  radius: number
 ) => {
   const rect = card.getBoundingClientRect();
   const relativeX = ((mouseX - rect.left) / rect.width) * 100;
   const relativeY = ((mouseY - rect.top) / rect.height) * 100;
-
   card.style.setProperty('--glow-x', `${relativeX}%`);
   card.style.setProperty('--glow-y', `${relativeY}%`);
   card.style.setProperty('--glow-intensity', glow.toString());
   card.style.setProperty('--glow-radius', `${radius}px`);
 };
-
-// Verbatim border-glow CSS — copied from upstream magicui/MagicBento.css
-// (already patched to use `var(--glow-color)` rather than the hardcoded
-// upstream default). Class renamed `.magic-bento-card` → `.magic-card`
-// to avoid upstream layout overrides (aspect-ratio, nth-child grid spans).
-const STYLES = `
-.magic-card {
-  position: relative;
-  transform-style: preserve-3d;
-  --glow-x: 50%;
-  --glow-y: 50%;
-  --glow-intensity: 0;
-  --glow-radius: 200px;
-}
-.magic-card--border-glow::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  padding: 6px;
-  background: radial-gradient(
-    var(--glow-radius) circle at var(--glow-x) var(--glow-y),
-    rgba(var(--glow-color), calc(var(--glow-intensity) * 0.8)) 0%,
-    rgba(var(--glow-color), calc(var(--glow-intensity) * 0.4)) 30%,
-    transparent 60%
-  );
-  border-radius: inherit;
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 1;
-  transition: opacity 0.3s ease;
-  z-index: 2;
-  mix-blend-mode: screen;
-}
-.magic-card--border-glow:hover {
-  box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.4),
-    0 0 30px rgba(var(--glow-color), 0.2);
-}
-.magic-card .particle {
-  pointer-events: none;
-  mix-blend-mode: screen;
-}
-.magic-card .particle::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: rgba(var(--glow-color), 0.2);
-  border-radius: 50%;
-  z-index: -1;
-}
-`;
-
-let stylesInjected = false;
-function useInjectStyles() {
-  useEffect(() => {
-    if (stylesInjected || typeof document === 'undefined') return;
-    const tag = document.createElement('style');
-    tag.id = 'magic-card-styles';
-    tag.textContent = STYLES;
-    document.head.appendChild(tag);
-    stylesInjected = true;
-  }, []);
-}
 
 const useMobileDetection = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -148,57 +58,160 @@ const useMobileDetection = () => {
   return isMobile;
 };
 
-// ── verbatim ParticleCard, renamed to MagicCard ──────────────────────
+// Single GlobalSpotlight mounted once per page section.
+// Watches the entire .magic-bento-zone area and lights up cards near cursor.
+const GlobalSpotlight = ({
+  zoneSelector,
+  spotlightRadius,
+  glowColor,
+  enabled,
+}: {
+  zoneSelector: string;
+  spotlightRadius: number;
+  glowColor: string;
+  enabled: boolean;
+}) => {
+  useEffect(() => {
+    if (!enabled) return;
+    const spotlight = document.createElement('div');
+    spotlight.className = 'global-spotlight';
+    spotlight.style.cssText = `
+      position: fixed;
+      width: 800px;
+      height: 800px;
+      border-radius: 50%;
+      pointer-events: none;
+      background: radial-gradient(circle,
+        rgba(${glowColor}, 0.15) 0%,
+        rgba(${glowColor}, 0.08) 15%,
+        rgba(${glowColor}, 0.04) 25%,
+        rgba(${glowColor}, 0.02) 40%,
+        rgba(${glowColor}, 0.01) 65%,
+        transparent 70%
+      );
+      z-index: 200;
+      opacity: 0;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: screen;
+      will-change: transform, opacity;
+    `;
+    document.body.appendChild(spotlight);
 
-interface MagicCardProps {
-  children: React.ReactNode;
+    const handleMouseMove = (e: MouseEvent) => {
+      const zone = document.querySelector(zoneSelector) as HTMLElement | null;
+      if (!zone) return;
+      const rect = zone.getBoundingClientRect();
+      const inside =
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
+
+      const cards = zone.querySelectorAll<HTMLElement>('.magic-card');
+
+      if (!inside) {
+        gsap.to(spotlight, { opacity: 0, duration: 0.3, ease: 'power2.out' });
+        cards.forEach((c) => c.style.setProperty('--glow-intensity', '0'));
+        return;
+      }
+
+      const { proximity, fadeDistance } = calculateSpotlightValues(spotlightRadius);
+      let minDistance = Infinity;
+
+      cards.forEach((card) => {
+        const cr = card.getBoundingClientRect();
+        const cx = cr.left + cr.width / 2;
+        const cy = cr.top + cr.height / 2;
+        const distance = Math.hypot(e.clientX - cx, e.clientY - cy) - Math.max(cr.width, cr.height) / 2;
+        const eff = Math.max(0, distance);
+        minDistance = Math.min(minDistance, eff);
+
+        let glowIntensity = 0;
+        if (eff <= proximity) glowIntensity = 1;
+        else if (eff <= fadeDistance) glowIntensity = (fadeDistance - eff) / (fadeDistance - proximity);
+
+        updateCardGlowProperties(card, e.clientX, e.clientY, glowIntensity, spotlightRadius);
+      });
+
+      gsap.to(spotlight, { left: e.clientX, top: e.clientY, duration: 0.1, ease: 'power2.out' });
+      const targetOpacity =
+        minDistance <= proximity
+          ? 0.8
+          : minDistance <= fadeDistance
+          ? ((fadeDistance - minDistance) / (fadeDistance - proximity)) * 0.8
+          : 0;
+      gsap.to(spotlight, {
+        opacity: targetOpacity,
+        duration: targetOpacity > 0 ? 0.2 : 0.5,
+        ease: 'power2.out',
+      });
+    };
+
+    const handleMouseLeave = () => {
+      const zone = document.querySelector(zoneSelector) as HTMLElement | null;
+      zone?.querySelectorAll<HTMLElement>('.magic-card').forEach((c) =>
+        c.style.setProperty('--glow-intensity', '0')
+      );
+      gsap.to(spotlight, { opacity: 0, duration: 0.3, ease: 'power2.out' });
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseleave', handleMouseLeave);
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      spotlight.parentNode?.removeChild(spotlight);
+    };
+  }, [enabled, zoneSelector, spotlightRadius, glowColor]);
+
+  return null;
+};
+
+// The ParticleCard wrapper applied to every individual card.
+// Adds particles, tilt, magnetism, click ripple. Border glow uses
+// CSS variables set by GlobalSpotlight. Stars/particles spawn on hover.
+type MagicCardProps = {
+  children: ReactNode;
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   glowColor?: string;
   particleCount?: number;
-  enableTilt?: boolean;
-  clickEffect?: boolean;
-  enableMagnetism?: boolean;
   enableStars?: boolean;
-  enableSpotlight?: boolean;
   enableBorderGlow?: boolean;
-  spotlightRadius?: number;
+  enableTilt?: boolean;
+  enableMagnetism?: boolean;
+  clickEffect?: boolean;
   disableAnimations?: boolean;
-}
+};
 
-const MagicCard: React.FC<MagicCardProps> = ({
+export function MagicCard({
   children,
   className = '',
   style,
-  particleCount = DEFAULT_PARTICLE_COUNT,
   glowColor = DEFAULT_GLOW_COLOR,
-  enableTilt = false,
-  clickEffect = true,
-  enableMagnetism = true,
+  particleCount = DEFAULT_PARTICLE_COUNT,
   enableStars = true,
-  enableSpotlight = true,
   enableBorderGlow = true,
-  spotlightRadius = 400,
+  enableTilt = false,
+  enableMagnetism = true,
+  clickEffect = true,
   disableAnimations = false,
-}) => {
-  useInjectStyles();
+}: MagicCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const particlesRef = useRef<HTMLDivElement[]>([]);
+  const particlesRef = useRef<HTMLElement[]>([]);
   const timeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   const isHoveredRef = useRef(false);
-  const memoizedParticles = useRef<HTMLDivElement[]>([]);
+  const memoizedParticles = useRef<HTMLElement[]>([]);
   const particlesInitialized = useRef(false);
   const magnetismAnimationRef = useRef<gsap.core.Tween | null>(null);
   const isMobile = useMobileDetection();
   const shouldDisable = disableAnimations || isMobile;
 
-  // ── verbatim from upstream ParticleCard ────────────────────────────
   const initializeParticles = useCallback(() => {
     if (particlesInitialized.current || !cardRef.current) return;
-
     const { width, height } = cardRef.current.getBoundingClientRect();
     memoizedParticles.current = Array.from({ length: particleCount }, () =>
-      createParticleElement(Math.random() * width, Math.random() * height, glowColor),
+      createParticleElement(Math.random() * width, Math.random() * height, glowColor)
     );
     particlesInitialized.current = true;
   }, [particleCount, glowColor]);
@@ -207,16 +220,13 @@ const MagicCard: React.FC<MagicCardProps> = ({
     timeoutsRef.current.forEach(clearTimeout);
     timeoutsRef.current = [];
     magnetismAnimationRef.current?.kill();
-
-    particlesRef.current.forEach((particle) => {
-      gsap.to(particle, {
+    particlesRef.current.forEach((p) => {
+      gsap.to(p, {
         scale: 0,
         opacity: 0,
         duration: 0.3,
         ease: 'back.in(1.7)',
-        onComplete: () => {
-          particle.parentNode?.removeChild(particle);
-        },
+        onComplete: () => p.parentNode?.removeChild(p),
       });
     });
     particlesRef.current = [];
@@ -224,26 +234,14 @@ const MagicCard: React.FC<MagicCardProps> = ({
 
   const animateParticles = useCallback(() => {
     if (!cardRef.current || !isHoveredRef.current) return;
-    if (!enableStars) return;
-
-    if (!particlesInitialized.current) {
-      initializeParticles();
-    }
-
-    memoizedParticles.current.forEach((particle, index) => {
-      const timeoutId = setTimeout(() => {
+    if (!particlesInitialized.current) initializeParticles();
+    memoizedParticles.current.forEach((particle, i) => {
+      const id = setTimeout(() => {
         if (!isHoveredRef.current || !cardRef.current) return;
-
-        const clone = particle.cloneNode(true) as HTMLDivElement;
+        const clone = particle.cloneNode(true) as HTMLElement;
         cardRef.current.appendChild(clone);
         particlesRef.current.push(clone);
-
-        gsap.fromTo(
-          clone,
-          { scale: 0, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(1.7)' },
-        );
-
+        gsap.fromTo(clone, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(1.7)' });
         gsap.to(clone, {
           x: (Math.random() - 0.5) * 100,
           y: (Math.random() - 0.5) * 100,
@@ -253,7 +251,6 @@ const MagicCard: React.FC<MagicCardProps> = ({
           repeat: -1,
           yoyo: true,
         });
-
         gsap.to(clone, {
           opacity: 0.3,
           duration: 1.5,
@@ -261,96 +258,46 @@ const MagicCard: React.FC<MagicCardProps> = ({
           repeat: -1,
           yoyo: true,
         });
-      }, index * 100);
-
-      timeoutsRef.current.push(timeoutId);
+      }, i * 100);
+      timeoutsRef.current.push(id);
     });
-  }, [initializeParticles, enableStars]);
+  }, [initializeParticles]);
 
   useEffect(() => {
     if (shouldDisable || !cardRef.current) return;
+    const el = cardRef.current;
 
-    const element = cardRef.current;
-
-    const handleMouseEnter = () => {
+    const handleEnter = () => {
       isHoveredRef.current = true;
-      animateParticles();
-
+      if (enableStars) animateParticles();
       if (enableTilt) {
-        gsap.to(element, {
-          rotateX: 5,
-          rotateY: 5,
-          duration: 0.3,
-          ease: 'power2.out',
-          transformPerspective: 1000,
-        });
+        gsap.to(el, { rotateX: 5, rotateY: 5, duration: 0.3, ease: 'power2.out', transformPerspective: 1000 });
       }
     };
 
-    const handleMouseLeave = () => {
+    const handleLeave = () => {
       isHoveredRef.current = false;
       clearAllParticles();
-
-      if (enableSpotlight) {
-        // GlobalSpotlight zeros the intensity on mouseleave; we do the
-        // same locally so the border-glow fades out cleanly.
-        element.style.setProperty('--glow-intensity', '0');
-      }
-
-      if (enableTilt) {
-        gsap.to(element, {
-          rotateX: 0,
-          rotateY: 0,
-          duration: 0.3,
-          ease: 'power2.out',
-        });
-      }
-
-      if (enableMagnetism) {
-        gsap.to(element, {
-          x: 0,
-          y: 0,
-          duration: 0.3,
-          ease: 'power2.out',
-        });
-      }
+      if (enableTilt) gsap.to(el, { rotateX: 0, rotateY: 0, duration: 0.3, ease: 'power2.out' });
+      if (enableMagnetism) gsap.to(el, { x: 0, y: 0, duration: 0.3, ease: 'power2.out' });
     };
 
-    const handleMouseMove = (e: MouseEvent) => {
-      // Spotlight = upstream updateCardGlowProperties helper, called
-      // verbatim with full intensity (1) since cursor is over the card.
-      if (enableSpotlight) {
-        updateCardGlowProperties(element, e.clientX, e.clientY, 1, spotlightRadius);
-      }
-
+    const handleMove = (e: MouseEvent) => {
       if (!enableTilt && !enableMagnetism) return;
-
-      const rect = element.getBoundingClientRect();
+      const rect = el.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
       if (enableTilt) {
-        const rotateX = ((y - centerY) / centerY) * -10;
-        const rotateY = ((x - centerX) / centerX) * 10;
-
-        gsap.to(element, {
-          rotateX,
-          rotateY,
-          duration: 0.1,
-          ease: 'power2.out',
-          transformPerspective: 1000,
-        });
+        const rx = ((y - cy) / cy) * -10;
+        const ry = ((x - cx) / cx) * 10;
+        gsap.to(el, { rotateX: rx, rotateY: ry, duration: 0.1, ease: 'power2.out', transformPerspective: 1000 });
       }
-
       if (enableMagnetism) {
-        const magnetX = (x - centerX) * 0.05;
-        const magnetY = (y - centerY) * 0.05;
-
-        magnetismAnimationRef.current = gsap.to(element, {
-          x: magnetX,
-          y: magnetY,
+        magnetismAnimationRef.current = gsap.to(el, {
+          x: (x - cx) * 0.05,
+          y: (y - cy) * 0.05,
           duration: 0.3,
           ease: 'power2.out',
         });
@@ -359,18 +306,15 @@ const MagicCard: React.FC<MagicCardProps> = ({
 
     const handleClick = (e: MouseEvent) => {
       if (!clickEffect) return;
-
-      const rect = element.getBoundingClientRect();
+      const rect = el.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-
       const maxDistance = Math.max(
         Math.hypot(x, y),
         Math.hypot(x - rect.width, y),
         Math.hypot(x, y - rect.height),
-        Math.hypot(x - rect.width, y - rect.height),
+        Math.hypot(x - rect.width, y - rect.height)
       );
-
       const ripple = document.createElement('div');
       ripple.style.cssText = `
         position: absolute;
@@ -383,70 +327,62 @@ const MagicCard: React.FC<MagicCardProps> = ({
         pointer-events: none;
         z-index: 1000;
       `;
-
-      element.appendChild(ripple);
-
+      el.appendChild(ripple);
       gsap.fromTo(
         ripple,
-        {
-          scale: 0,
-          opacity: 1,
-        },
-        {
-          scale: 1,
-          opacity: 0,
-          duration: 0.8,
-          ease: 'power2.out',
-          onComplete: () => ripple.remove(),
-        },
+        { scale: 0, opacity: 1 },
+        { scale: 1, opacity: 0, duration: 0.8, ease: 'power2.out', onComplete: () => ripple.remove() }
       );
     };
 
-    element.addEventListener('mouseenter', handleMouseEnter);
-    element.addEventListener('mouseleave', handleMouseLeave);
-    element.addEventListener('mousemove', handleMouseMove);
-    element.addEventListener('click', handleClick);
+    el.addEventListener('mouseenter', handleEnter);
+    el.addEventListener('mouseleave', handleLeave);
+    el.addEventListener('mousemove', handleMove);
+    el.addEventListener('click', handleClick);
 
     return () => {
       isHoveredRef.current = false;
-      element.removeEventListener('mouseenter', handleMouseEnter);
-      element.removeEventListener('mouseleave', handleMouseLeave);
-      element.removeEventListener('mousemove', handleMouseMove);
-      element.removeEventListener('click', handleClick);
+      el.removeEventListener('mouseenter', handleEnter);
+      el.removeEventListener('mouseleave', handleLeave);
+      el.removeEventListener('mousemove', handleMove);
+      el.removeEventListener('click', handleClick);
       clearAllParticles();
     };
-  }, [
-    animateParticles,
-    clearAllParticles,
-    shouldDisable,
-    enableTilt,
-    enableMagnetism,
-    enableSpotlight,
-    clickEffect,
-    glowColor,
-    spotlightRadius,
-  ]);
+  }, [animateParticles, clearAllParticles, shouldDisable, enableStars, enableTilt, enableMagnetism, clickEffect, glowColor]);
 
-  const baseClass = `magic-card particle-container${enableBorderGlow ? ' magic-card--border-glow' : ''}`;
-
+  const cls = `magic-card${enableBorderGlow ? ' magic-card--border-glow' : ''} ${className}`.trim();
   return (
     <div
       ref={cardRef}
-      className={`${baseClass} ${className}`.trim()}
-      style={
-        {
-          // Layout-transparent — parent grid sizes us.
-          width: '100%',
-          height: '100%',
-          // Drive the verbatim CSS rules.
-          '--glow-color': glowColor,
-          ...style,
-        } as React.CSSProperties
-      }
+      className={cls}
+      style={{ ...style, '--glow-color': glowColor } as CSSProperties}
     >
       {children}
     </div>
   );
-};
+}
+
+// Mounted ONCE in FeaturesSection — drives the cursor-tracked spotlight.
+export function MagicCardSpotlight({
+  zoneSelector = '.magic-bento-zone',
+  spotlightRadius = DEFAULT_SPOTLIGHT_RADIUS,
+  glowColor = DEFAULT_GLOW_COLOR,
+  enabled = true,
+}: {
+  zoneSelector?: string;
+  spotlightRadius?: number;
+  glowColor?: string;
+  enabled?: boolean;
+}) {
+  const isMobile = useMobileDetection();
+  return (
+    <GlobalSpotlight
+      zoneSelector={zoneSelector}
+      spotlightRadius={spotlightRadius}
+      glowColor={glowColor}
+      enabled={enabled && !isMobile}
+    />
+  );
+}
 
 export default MagicCard;
