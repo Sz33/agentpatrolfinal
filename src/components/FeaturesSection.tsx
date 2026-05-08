@@ -1,5 +1,5 @@
 'use client';
-import InteractiveCard from '@/components/InteractiveCard';
+import MagicCard from '@/components/MagicCard';
 
 interface Feature {
   num: string;
@@ -172,14 +172,18 @@ export default function FeaturesSection() {
       {/* Uniform 3×2 grid — every card identical, no nth-child overrides. */}
       <div className="features-grid">
         {FEATURES.map((f) => (
-          <InteractiveCard
+          <MagicCard
             key={f.num}
             glowColor="239, 68, 68"
-            particleCount={12}
-            enableSpotlight
             enableStars
+            enableSpotlight
+            enableBorderGlow
+            enableTilt={false}
             enableMagnetism
             clickEffect
+            spotlightRadius={400}
+            particleCount={12}
+            disableAnimations={false}
             style={{ borderRadius: 8 }}
           >
             <div className="feature-card">
@@ -191,7 +195,7 @@ export default function FeaturesSection() {
               <p className="feature-body">{f.body}</p>
               <span className="feature-tag">→ {f.tag}</span>
             </div>
-          </InteractiveCard>
+          </MagicCard>
         ))}
       </div>
     </section>
