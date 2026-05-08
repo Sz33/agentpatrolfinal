@@ -71,7 +71,7 @@ const updateCardGlowProperties = (
 const STYLES = `
 .magic-card {
   position: relative;
-  overflow: hidden;
+  transform-style: preserve-3d;
   --glow-x: 50%;
   --glow-y: 50%;
   --glow-intensity: 0;
@@ -100,12 +100,17 @@ const STYLES = `
   pointer-events: none;
   opacity: 1;
   transition: opacity 0.3s ease;
-  z-index: 1;
+  z-index: 2;
+  mix-blend-mode: screen;
 }
 .magic-card--border-glow:hover {
   box-shadow:
     0 4px 20px rgba(0, 0, 0, 0.4),
     0 0 30px rgba(var(--glow-color), 0.2);
+}
+.magic-card .particle {
+  pointer-events: none;
+  mix-blend-mode: screen;
 }
 .magic-card .particle::before {
   content: '';

@@ -62,6 +62,7 @@ const STYLES = `
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
+  perspective: 1000px;
 }
 @media (min-width: 768px) {
   .features-grid {
@@ -85,7 +86,7 @@ const STYLES = `
   height: 100%;
   min-height: 360px;
   position: relative;
-  z-index: 2;
+  z-index: 0;
 }
 .feature-num {
   color: #ef4444;
