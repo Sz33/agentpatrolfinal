@@ -515,9 +515,20 @@ interface Stage {
   pillLabel: string;
   heading: string;
   desc: string;
+  isIntro?: boolean;
+  /** Intro-only label rendered in `// LABEL` form instead of the pill. */
+  label?: string;
 }
 
 const STAGES: Stage[] = [
+  {
+    num: '00',
+    pillLabel: 'INTRO',
+    label: 'INTRODUCING AGENTPATROL',
+    heading: 'The security layer your AI agents have been missing.',
+    desc: '',
+    isIntro: true,
+  },
   {
     num: '01',
     pillLabel: 'KERNEL',
@@ -544,26 +555,60 @@ const STAGES: Stage[] = [
   },
 ];
 
-// Stages 1-3 each occupy 0.25 of progress; stage 4 has an extended hold so it
-// can crossfade with the next-section heading per spec.
+// Uneven bands now — Stage 0 (intro) gets a wider 0.30 band so the big
+// hero headline can fade in slowly, hold long, and fade out smoothly.
+// Stages 1-3 each occupy a narrower 0.1625 band. Stage 4 keeps its
+// custom fade-in/hold/fade-out timing for the SecuringHeadingZone
+// handoff and chrome/atmosphere fade-out compatibility.
+//
+//   Stage 0 INTRO     0.0000 → 0.3000   (fade-out extends to 0.32 for crossfade)
+//   Stage 1 KERNEL    0.3000 → 0.4625
+//   Stage 2 INTERCEPT 0.4625 → 0.6250
+//   Stage 3 CORRELATE 0.6250 → 0.7875
+//   Stage 4 INTEGRATE 0.7875 → 0.9500
+//
+// Stage 0's fade-out (ending 0.32) overlaps with Stage 1's fade-in
+// (starting 0.30) so the handoff crossfades instead of cutting hard.
+
+const STAGE_STARTS = [0, 0.30, 0.4625, 0.625, 0.7875];
+const STAGE_ENDS = [0.30, 0.4625, 0.625, 0.7875, 0.95];
+
 function stageVisual(progress: number, stageIdx: number) {
-  if (stageIdx === 3) {
-    // Stage 4 — must hand off cleanly to the phantom heading at 0.92:
-    //   fade in 0.70 → 0.75
-    //   hold     0.75 → 0.85
-    //   fade out 0.85 → 0.92  (ends exactly when phantom starts)
-    if (progress < 0.70) return { opacity: 0, shiftY: 0 };
-    if (progress < 0.75) return { opacity: (progress - 0.70) / 0.05, shiftY: 0 };
-    if (progress < 0.85) return { opacity: 1, shiftY: 0 };
-    if (progress < 0.92) {
-      const t = (progress - 0.85) / 0.07;
+  if (stageIdx === 0) {
+    // Intro — wider band (0.30) with bespoke timing per spec.
+    //   fade in  0.00 → 0.08   (slow, gentle materialize)
+    //   hold     0.08 → 0.20   (long read window)
+    //   fade out 0.20 → 0.32   (extends 0.02 past band end → crossfade)
+    if (progress <= 0) return { opacity: 0, shiftY: 0 };
+    if (progress < 0.08) return { opacity: progress / 0.08, shiftY: 0 };
+    if (progress < 0.20) return { opacity: 1, shiftY: 0 };
+    if (progress < 0.32) {
+      const t = (progress - 0.20) / 0.12;
       return { opacity: 1 - t, shiftY: -t * 16 };
     }
     return { opacity: 0, shiftY: -16 };
   }
-  // Stages 1-3 — equal 0.25 bands ending at 0.75
-  const start = stageIdx * 0.25;
-  const local = (progress - start) / 0.25;
+  if (stageIdx === 4) {
+    // INTEGRATE — band 0.7875 → 0.95. Fade-in widened to fill the band
+    // start; hold/fade-out windows preserved verbatim for chrome and
+    // SecuringHeadingZone compatibility.
+    //   fade in  0.7875 → 0.85
+    //   hold     0.85   → 0.88
+    //   fade out 0.88   → 0.95
+    if (progress < 0.7875) return { opacity: 0, shiftY: 0 };
+    if (progress < 0.85) return { opacity: (progress - 0.7875) / 0.0625, shiftY: 0 };
+    if (progress < 0.88) return { opacity: 1, shiftY: 0 };
+    if (progress < 0.95) {
+      const t = (progress - 0.88) / 0.07;
+      return { opacity: 1 - t, shiftY: -t * 16 };
+    }
+    return { opacity: 0, shiftY: -16 };
+  }
+  // Stages 1-3 — narrow 0.1625 bands with proportional 10% / 80% / 10%
+  // fade-in / hold / fade-out (same proportions as the old 0.20 design).
+  const start = STAGE_STARTS[stageIdx];
+  const width = STAGE_ENDS[stageIdx] - start; // = 0.1625
+  const local = (progress - start) / width;
   if (local < 0 || local > 1) return { opacity: 0, shiftY: 0 };
   if (local < 0.1) return { opacity: local / 0.1, shiftY: 0 };
   if (local < 0.9) return { opacity: 1, shiftY: 0 };
@@ -645,54 +690,103 @@ function StageOverlay({ progress }: OverlayProps) {
                 transform: `translate(-50%, calc(-50% + ${shiftY}px))`,
                 opacity: o,
                 transition: 'opacity 0.18s linear, transform 0.18s linear',
-                maxWidth: '720px',
+                maxWidth: s.isIntro ? '900px' : '720px',
                 width: 'calc(100% - 48px)',
                 textAlign: 'center',
               }}
             >
-              <div
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  border: '0.5px solid #ef4444',
-                  borderRadius: 2,
-                  fontSize: 10,
-                  letterSpacing: '0.2em',
-                  marginBottom: 22,
-                  overflow: 'hidden',
-                }}
-              >
-                <span style={{ background: 'rgba(239,68,68,0.25)', color: 'white', padding: '6px 10px' }}>{s.num}</span>
-                <span style={{ color: 'rgba(239,68,68,0.55)', padding: '6px 8px' }}>│</span>
-                <span style={{ background: 'rgba(239,68,68,0.08)', color: '#ef4444', padding: '6px 12px' }}>{s.pillLabel}</span>
-                <span style={{ color: 'rgba(239,68,68,0.45)', padding: '6px 10px' }}>||</span>
-              </div>
-              <h2
-                style={{
-                  color: 'white',
-                  fontWeight: 500,
-                  fontSize: 'clamp(36px, 5.2vw, 56px)',
-                  letterSpacing: '-0.005em',
-                  lineHeight: 1.05,
-                  margin: '0 0 22px',
-                  textShadow: '0 0 30px rgba(239,68,68,0.3), 0 2px 20px rgba(0,0,0,0.85)',
-                  textTransform: 'uppercase',
-                }}
-              >
-                {s.heading}
-              </h2>
-              <p
-                style={{
-                  color: 'rgba(255,255,255,0.7)',
-                  fontSize: 'clamp(12px, 1vw, 14px)',
-                  lineHeight: 1.65,
-                  maxWidth: 520,
-                  margin: '0 auto',
-                  textShadow: '0 2px 12px rgba(0,0,0,0.9)',
-                }}
-              >
-                {s.desc}
-              </p>
+              {s.isIntro ? (
+                <>
+                  {/* Intro stage — small red label + big hero headline */}
+                  <p
+                    style={{
+                      color: '#ef4444',
+                      fontFamily:
+                        'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                      fontSize: 12,
+                      letterSpacing: '0.2em',
+                      textTransform: 'uppercase',
+                      margin: '0 0 24px',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 10,
+                    }}
+                  >
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        display: 'inline-block',
+                        width: 6,
+                        height: 6,
+                        borderRadius: '50%',
+                        background: '#ef4444',
+                        boxShadow: '0 0 10px #ef4444',
+                      }}
+                    />
+                    // {s.label}
+                  </p>
+                  <h2
+                    style={{
+                      color: 'white',
+                      fontFamily: 'var(--font-heading), sans-serif',
+                      fontWeight: 400,
+                      fontSize: 'clamp(40px, 6vw, 80px)',
+                      letterSpacing: '-0.01em',
+                      lineHeight: 1.1,
+                      margin: 0,
+                      textShadow: '0 2px 24px rgba(0,0,0,0.85)',
+                    }}
+                  >
+                    {s.heading}
+                  </h2>
+                </>
+              ) : (
+                <>
+                  <div
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      border: '0.5px solid #ef4444',
+                      borderRadius: 2,
+                      fontSize: 10,
+                      letterSpacing: '0.2em',
+                      marginBottom: 22,
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <span style={{ background: 'rgba(239,68,68,0.25)', color: 'white', padding: '6px 10px' }}>{s.num}</span>
+                    <span style={{ color: 'rgba(239,68,68,0.55)', padding: '6px 8px' }}>│</span>
+                    <span style={{ background: 'rgba(239,68,68,0.08)', color: '#ef4444', padding: '6px 12px' }}>{s.pillLabel}</span>
+                    <span style={{ color: 'rgba(239,68,68,0.45)', padding: '6px 10px' }}>||</span>
+                  </div>
+                  <h2
+                    style={{
+                      color: 'white',
+                      fontWeight: 500,
+                      fontSize: 'clamp(36px, 5.2vw, 56px)',
+                      letterSpacing: '-0.005em',
+                      lineHeight: 1.05,
+                      margin: '0 0 22px',
+                      textShadow: '0 0 30px rgba(239,68,68,0.3), 0 2px 20px rgba(0,0,0,0.85)',
+                      textTransform: 'uppercase',
+                    }}
+                  >
+                    {s.heading}
+                  </h2>
+                  <p
+                    style={{
+                      color: 'rgba(255,255,255,0.7)',
+                      fontSize: 'clamp(12px, 1vw, 14px)',
+                      lineHeight: 1.65,
+                      maxWidth: 520,
+                      margin: '0 auto',
+                      textShadow: '0 2px 12px rgba(0,0,0,0.9)',
+                    }}
+                  >
+                    {s.desc}
+                  </p>
+                </>
+              )}
             </div>
           );
         })}
@@ -729,7 +823,8 @@ function StageOverlay({ progress }: OverlayProps) {
           }}
         >
           {STAGES.map((_, i) => {
-            const active = progress >= i * 0.25 && progress < (i + 1) * 0.25;
+            // Active while user is inside this stage's band (uneven widths).
+            const active = progress >= STAGE_STARTS[i] && progress < STAGE_ENDS[i];
             return (
               <React.Fragment key={i}>
                 <span
@@ -747,7 +842,8 @@ function StageOverlay({ progress }: OverlayProps) {
                     style={{
                       width: 1,
                       height: 18,
-                      background: progress > (i + 1) * 0.25 ? '#ef4444' : 'rgba(255,255,255,0.1)',
+                      // Connector lights up once user has scrolled past this stage's end.
+                      background: progress > STAGE_ENDS[i] ? '#ef4444' : 'rgba(255,255,255,0.1)',
                       transition: 'background 0.2s linear',
                     }}
                   />
@@ -871,14 +967,14 @@ export default function AboutFlythrough() {
 
   return (
     <>
-      {/* Scroll runway — provides 500vh of scroll height. The Canvas itself
-          is fixed-positioned (below) so it persists across the section
-          boundary. */}
+      {/* Scroll runway — 750vh to give Stage 0's wider 0.30 band proper
+          read time. Canvas is fixed-positioned (below) so it persists
+          across the section boundary. */}
       <section
         ref={sectionRef}
         id="about"
         style={{
-          height: '500vh',
+          height: '750vh',
           position: 'relative',
           background: '#000',
         }}
@@ -917,7 +1013,7 @@ export default function AboutFlythrough() {
           camera={{ position: [0, 0, 0], fov: 75, near: 0.1, far: 200 }}
           gl={{ powerPreference: 'high-performance', antialias: true, alpha: true }}
           dpr={[1, 2]}
-          style={{ position: 'absolute', inset: 0 }}
+          style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
         >
           <fog attach="fog" args={['#000000', 6, 60]} />
           <Fragments progressRef={progressRef} />

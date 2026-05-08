@@ -212,7 +212,7 @@ export default function RobotScene() {
       gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
       shadows
       dpr={[1, 1.5]}
-      style={{ background: "transparent" }}
+      style={{ background: "transparent", pointerEvents: "none" }}
       onCreated={({ gl, camera }) => {
         gl.outputColorSpace = THREE.SRGBColorSpace;
         gl.toneMapping = THREE.ACESFilmicToneMapping;
