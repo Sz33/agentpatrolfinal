@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import AnimatedButton from "@/components/AnimatedButton";
 
 function SlotMachineDigit({ targetDigit, delay }: { targetDigit: number; delay: number }) {
   const [currentOffset, setCurrentOffset] = useState(0);
@@ -97,20 +98,14 @@ export default function SolaisStatsSection() {
               AI agents already have access to your systems. AgentPatrol gives you full visibility and control before something goes wrong.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 reveal">
-              <a
-                href="#"
-                className="btn-glow cta-shimmer inline-flex items-center gap-3 px-7 py-3 text-white text-sm tracking-wide"
-                style={{
-                  background:
-                    "linear-gradient(90deg, rgb(60,9,30), rgb(90,15,45), rgb(60,9,30))",
-                  fontFamily: "var(--font-heading, sans-serif)",
-                }}
-              >
-                Request Early Access
-                <svg width="12" height="12" viewBox="0 0 24 25" fill="none">
-                  <path d="M2.68 20.211V4.058H0V21.34L3.354 24.748H20.484V22.024H4.464L2.68 20.211Z" fill="currentColor"/>
-                  <path d="M21.145 0.749H8.907V3.475H18.973L5.945 16.718L7.84 18.644L21.06 5.206V15.734H23.74V3.387L21.145 0.749Z" fill="currentColor"/>
-                </svg>
+              <a href="#" style={{ textDecoration: 'none' }}>
+                <AnimatedButton className="inline-flex items-center gap-3">
+                  Request Early Access
+                  <svg width="12" height="12" viewBox="0 0 24 25" fill="none">
+                    <path d="M2.68 20.211V4.058H0V21.34L3.354 24.748H20.484V22.024H4.464L2.68 20.211Z" fill="currentColor"/>
+                    <path d="M21.145 0.749H8.907V3.475H18.973L5.945 16.718L7.84 18.644L21.06 5.206V15.734H23.74V3.387L21.145 0.749Z" fill="currentColor"/>
+                  </svg>
+                </AnimatedButton>
               </a>
               <a
                 href="#how-it-works"

@@ -1,4 +1,6 @@
 'use client';
+import AnimatedButton from '@/components/AnimatedButton';
+import { RetroGrid } from '@/components/magicui/retro-grid';
 
 // Final conversion section. Sits directly above the footer; replaces
 // the email-capture block that previously lived inside SolaisFooter.
@@ -8,12 +10,43 @@ export default function FinalCtaSection() {
       id="get-started"
       style={{
         position: 'relative',
+        overflow: 'hidden',
         padding: '140px 24px 100px',
         background:
           'radial-gradient(ellipse at center, rgba(239,68,68,0.05) 0%, rgba(0,0,0,0) 60%), #000',
       }}
     >
-      <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
+      {/* Receding-floor grid — sits behind all content. */}
+      <RetroGrid
+        angle={65}
+        cellSize={60}
+        opacity={0.15}
+        lightLineColor="rgba(239,68,68,0.4)"
+        darkLineColor="rgba(239,68,68,0.4)"
+      />
+      {/* Top-edge radial fade so the grid emerges from darkness instead
+          of hard-cutting into the section above. */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background:
+            'radial-gradient(ellipse 80% 50% at 50% 0%, #000 60%, transparent 100%)',
+          pointerEvents: 'none',
+          zIndex: 1,
+        }}
+      />
+
+      <div
+        style={{
+          position: 'relative',
+          zIndex: 2,
+          maxWidth: 900,
+          margin: '0 auto',
+          textAlign: 'center',
+        }}
+      >
         {/* Eyebrow */}
         <p
           style={{
@@ -83,41 +116,19 @@ export default function FinalCtaSection() {
             marginTop: 40,
           }}
         >
-          <a
-            href="#"
-            style={{
-              background: '#ef4444',
-              color: 'white',
-              padding: '14px 28px',
-              borderRadius: 6,
-              fontWeight: 500,
-              fontFamily: 'var(--font-heading), sans-serif',
-              textDecoration: 'none',
-              fontSize: 14,
-              letterSpacing: '0.04em',
-              transition: 'background 0.2s ease',
-              border: '1px solid #ef4444',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background = '#dc2626';
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background = '#ef4444';
-            }}
-          >
-            Request Early Access{' '}
-            <span
-              style={{
-                fontFamily:
-                  'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-                fontWeight: 400,
-              }}
-            >
-              →
-            </span>
+          <a href="#" style={{ textDecoration: 'none' }}>
+            <AnimatedButton className="px-7 py-[14px]">
+              Request Early Access{' '}
+              <span
+                style={{
+                  fontFamily:
+                    'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                  fontWeight: 400,
+                }}
+              >
+                →
+              </span>
+            </AnimatedButton>
           </a>
           <a
             href="#"

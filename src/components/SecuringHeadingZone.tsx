@@ -103,7 +103,7 @@ export default function SecuringHeadingZone() {
               margin: '0 0 16px',
             }}
           >
-            SECURING
+            HOW IT WORKS
           </p>
           <h2
             style={{
@@ -117,7 +117,7 @@ export default function SecuringHeadingZone() {
               textShadow: '0 0 30px rgba(0,0,0,0.85)',
             }}
           >
-            YOUR AGENT STACK
+            DEFENSE IN DEPTH
           </h2>
         </div>
       </div>

@@ -372,14 +372,26 @@ export function CinematicFooter() {
             {/* Brand close statement */}
             <h2
               ref={headingRef}
-              className="footer-text-glow tracking-tighter text-center leading-[0.95] mb-12"
+              className="tracking-tighter text-center leading-[0.95] mb-12"
               style={{
                 fontFamily: 'var(--font-heading)',
                 fontSize: 'clamp(48px, 8vw, 120px)',
               }}
             >
-              AGENTPATROL<br />
-              <span style={{ color: '#ef4444' }}>NEVER SLEEPS.</span>
+              <span style={{
+                display: 'block',
+                color: '#ffffff',
+                textShadow: '0 0 40px rgba(255,255,255,0.15), 0 0 80px rgba(255,255,255,0.08)',
+              }}>
+                AGENTPATROL
+              </span>
+              <span style={{
+                display: 'block',
+                color: '#ef4444',
+                textShadow: '0 0 40px rgba(239,68,68,0.3), 0 0 80px rgba(239,68,68,0.15)',
+              }}>
+                NEVER SLEEPS<span style={{ letterSpacing: 0, marginLeft: '-8px' }}>.</span>
+              </span>
             </h2>
 
             {/* CTAs */}

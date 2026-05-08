@@ -1,6 +1,7 @@
 'use client';
 import dynamic from 'next/dynamic';
 import { ParallaxLayer } from '@/components/MouseParallax';
+import AnimatedButton from '@/components/AnimatedButton';
 const Mascot3D = dynamic(() => import('@/components/Mascot3D'), { ssr: false });
 
 export default function SolaisHeroSection() {
@@ -91,20 +92,14 @@ export default function SolaisHeroSection() {
 
             {/* CTA */}
             <div className="hero-load-cta flex flex-col sm:flex-row items-start gap-4 mt-10">
-              <a
-                href="#"
-                className="btn-glow inline-flex items-center gap-3 px-7 py-3 text-sm tracking-wide"
-                style={{
-                  background: "#7f1d1d",
-                  color: "#ffffff",
-                  fontFamily: "var(--font-heading, sans-serif)",
-                }}
-              >
-                Request Early Access
-                <svg width="14" height="14" viewBox="0 0 24 25" fill="none">
-                  <path d="M2.68 20.211V4.058H0V21.34L3.354 24.748H20.484V22.024H4.464L2.68 20.211Z" fill="currentColor"/>
-                  <path d="M21.145 0.749H8.907V3.475H18.973L5.945 16.718L7.84 18.644L21.06 5.206V15.734H23.74V3.387L21.145 0.749Z" fill="currentColor"/>
-                </svg>
+              <a href="#" style={{ textDecoration: 'none' }}>
+                <AnimatedButton className="inline-flex items-center gap-3">
+                  Request Early Access
+                  <svg width="14" height="14" viewBox="0 0 24 25" fill="none">
+                    <path d="M2.68 20.211V4.058H0V21.34L3.354 24.748H20.484V22.024H4.464L2.68 20.211Z" fill="currentColor"/>
+                    <path d="M21.145 0.749H8.907V3.475H18.973L5.945 16.718L7.84 18.644L21.06 5.206V15.734H23.74V3.387L21.145 0.749Z" fill="currentColor"/>
+                  </svg>
+                </AnimatedButton>
               </a>
               <a
                 href="#how-it-works"

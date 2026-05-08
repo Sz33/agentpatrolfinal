@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 const NAV_LINKS = [
   { label: "About", href: "#about" },
   { label: "How it works", href: "#how-it-works" },
-  { label: "Advantage", href: "#advantage" },
-  { label: "Industries", href: "#industries" },
+  { label: "FEATURES", href: "#features" },
+  { label: "LIVE DEMO", href: "#live-demo" },
 ];
 
 export default function SolaisNavbar() {

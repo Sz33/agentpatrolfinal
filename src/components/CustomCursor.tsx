@@ -30,6 +30,7 @@ export default function CustomCursor() {
       rafId = requestAnimationFrame(() => {
         cursor.style.left = e.clientX + "px";
         cursor.style.top = e.clientY + "px";
+        cursor.style.opacity = "1";
       });
     };
 
@@ -55,5 +56,5 @@ export default function CustomCursor() {
 
   if (!outsideHero) return null;
 
-  return <div ref={cursorRef} className="custom-cursor" aria-hidden="true" />;
+  return <div ref={cursorRef} className="custom-cursor" aria-hidden="true" style={{ opacity: 0 }} />;
 }

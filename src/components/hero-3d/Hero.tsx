@@ -1,4 +1,5 @@
 'use client'
+import AnimatedButton from '@/components/AnimatedButton'
 import { SceneWrapper } from './SceneWrapper'
 
 export function Hero() {
@@ -239,8 +240,10 @@ export function Hero() {
             zIndex: 5,
           }}
         >
-          <a href="#" className="btn btn-primary">
-            Request Early Access <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontWeight: 400 }}>→</span>
+          <a href="#" style={{ textDecoration: 'none' }}>
+            <AnimatedButton className="px-7 py-4 text-[12px] tracking-[0.2em]">
+              Request Early Access <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontWeight: 400 }}>→</span>
+            </AnimatedButton>
           </a>
         </div>
 

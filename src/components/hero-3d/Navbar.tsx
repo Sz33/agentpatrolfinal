@@ -1,4 +1,5 @@
 'use client'
+import AnimatedButton from '@/components/AnimatedButton'
 
 export function Navbar() {
   return (
@@ -40,8 +41,8 @@ export function Navbar() {
         {[
           { label: 'About', href: '#about' },
           { label: 'How it works', href: '#how-it-works' },
-          { label: 'Advantage', href: '#advantage' },
-          { label: 'Industries', href: '#industries' },
+          { label: 'Features', href: '#features' },
+          { label: 'Live Demo', href: '#live-demo' },
         ].map(({ label, href }) => (
           <a
             key={href}
@@ -65,27 +66,10 @@ export function Navbar() {
 
       {/* CTA button */}
       <div>
-        <a
-          href="#"
-          style={{
-            color: 'var(--bg)',
-            background: 'var(--amber)',
-            fontWeight: 700,
-            padding: '10px 16px',
-            border: '1px solid var(--amber)',
-            boxShadow: '0 0 0 1px rgba(239, 68, 68,.2), 0 0 24px rgba(239, 68, 68,.18)',
-            textDecoration: 'none',
-            fontSize: 12,
-            letterSpacing: '.22em',
-            textTransform: 'uppercase',
-            borderRadius: 6,
-            transition: 'background .2s, color .2s',
-            fontFamily: 'inherit',
-          }}
-          onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'var(--amber-2)'; }}
-          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'var(--amber)'; }}
-        >
-          Request Early Access <span style={{ fontWeight: 400 }}>→</span>
+        <a href="#" style={{ textDecoration: 'none' }}>
+          <AnimatedButton>
+            Request Early Access <span style={{ fontWeight: 400 }}>→</span>
+          </AnimatedButton>
         </a>
       </div>
     </header>
