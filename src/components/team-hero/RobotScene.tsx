@@ -31,7 +31,7 @@ function Robot() {
       // Spin completes EXACTLY at the top of problem section.
       // Measured: currentScrollY ≈ 893 at perfect moment,
       //           problem.offsetTop = 901.
-      const spinEndScroll = problem.offsetTop;
+      const spinEndScroll = problem.offsetTop * 0.93;
       scrollRef.current = spinEndScroll > 0
         ? Math.max(0, Math.min(1, window.scrollY / spinEndScroll))
         : 0;
