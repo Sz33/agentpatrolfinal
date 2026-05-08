@@ -3,14 +3,14 @@ import ScrollRevealInit from "@/components/ScrollRevealInit";
 import CustomCursor from "@/components/CustomCursor";
 import AboutFlythrough from "@/components/AboutFlythrough";
 import SecuringHeadingZone from "@/components/SecuringHeadingZone";
+import ProblemSection from "@/components/ProblemSection";
 import SolaisMarqueeSection from "@/components/SolaisMarqueeSection";
 import StackingSteps from "@/components/StackingSteps";
+import FeaturesSection from "@/components/FeaturesSection";
 import WhyKernelSection from "@/components/WhyKernelSection";
 import LiveDemoSection from "@/components/LiveDemoSection";
-import SolaisIndustriesSection from "@/components/SolaisIndustriesSection";
-import SolaisStatsSection from "@/components/SolaisStatsSection";
 import FinalCtaSection from "@/components/FinalCtaSection";
-import SolaisFooter from "@/components/SolaisFooter";
+import { CinematicFooter } from "@/components/ui/motion-footer";
 
 import { Navbar } from "@/components/hero-3d/Navbar";
 import { Hero } from "@/components/hero-3d/Hero";
@@ -40,16 +40,16 @@ export default function Home() {
 
       <main>
         <AboutFlythrough />
+        <ProblemSection />
         <SecuringHeadingZone />
         <StackingSteps />
+        <FeaturesSection />
         <WhyKernelSection />
         <LiveDemoSection />
         <SolaisMarqueeSection />
-        <SolaisIndustriesSection />
-        <SolaisStatsSection />
         <FinalCtaSection />
       </main>
-      <SolaisFooter />
+      <CinematicFooter />
     </>
   );
 }
