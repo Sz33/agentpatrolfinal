@@ -178,17 +178,20 @@ export default function RobotScene() {
       // Fade-out — once user scrolls past the problem section, fade
       // the fixed canvas to 0 so it doesn't bleed onto sections below.
       const problemBottom = problem.offsetTop + problem.offsetHeight;
-      const scrollY = window.scrollY + window.innerHeight;
-      const fadeStart = problemBottom - window.innerHeight * 0.5;
-      const fadeEnd = problemBottom + window.innerHeight * 0.3;
+      // Fade only AFTER user scrolls past the problem section.
+      // Use raw scrollY (top of viewport), not viewport bottom, so
+      // the canvas stays fully visible while problem section is on screen.
+      const fadeStart = problemBottom - window.innerHeight * 0.15;  // start fading when problem is almost out of view
+      const fadeEnd   = problemBottom + window.innerHeight * 0.25;  // fully gone shortly after
+
       let opacity = 1;
-      if (scrollY > fadeStart) {
-        opacity = 1 - Math.min(1, (scrollY - fadeStart) / (fadeEnd - fadeStart));
+      if (window.scrollY > fadeStart) {
+        opacity = 1 - Math.min(1, (window.scrollY - fadeStart) / (fadeEnd - fadeStart));
       }
+
       const canvasWrapper = document.getElementById("team-hero-3d-wrapper");
       if (canvasWrapper) {
         canvasWrapper.style.opacity = String(opacity);
-        canvasWrapper.style.pointerEvents = "none";
       }
     };
 
