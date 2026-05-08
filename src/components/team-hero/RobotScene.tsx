@@ -28,14 +28,13 @@ function Robot() {
         alertMixRef.current = 0;
         return;
       }
-      // Spin completes at TOP of problem section (= bottom of hero).
-      // Hero height = problem.offsetTop. Once user scrolls that distance,
-      // scrollRef = 1, rotation = -2π (full revolution, front-facing again).
-      // Inside the problem section scrollRef stays clamped at 1, so the
-      // robot is locked front-facing while the eyes lerp cyan→red.
-      const heroHeight = problem.offsetTop;
-      scrollRef.current = heroHeight > 0
-        ? Math.max(0, Math.min(1, window.scrollY / heroHeight))
+      // Spin completes when the robot is centered in viewport during
+      // problem section — about 40% of a viewport scrolled past the
+      // top of problem. After that, scrollRef stays clamped at 1, so
+      // the robot is locked front-facing while the eyes lerp cyan→red.
+      const spinEndScroll = problem.offsetTop + window.innerHeight * 0.4;
+      scrollRef.current = spinEndScroll > 0
+        ? Math.max(0, Math.min(1, window.scrollY / spinEndScroll))
         : 0;
 
       const triggerStart = problem.offsetTop - window.innerHeight * 0.45;
