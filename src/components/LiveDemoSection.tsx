@@ -387,7 +387,7 @@ export default function LiveDemoSection() {
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 16 }}>
           <a href="#" style={{ textDecoration: 'none' }}>
             <AnimatedButton>
-              Request Early Access <span style={{ fontWeight: 400 }}>→</span>
+              Try on your agent <span style={{ fontWeight: 400 }}>→</span>
             </AnimatedButton>
           </a>
         </div>

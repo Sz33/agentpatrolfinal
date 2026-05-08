@@ -43,9 +43,9 @@ export default function Home() {
         <SecuringHeadingZone />
         <StackingSteps />
         <FeaturesSection />
+        <SolaisMarqueeSection />
         <WhyKernelSection />
         <LiveDemoSection />
-        <SolaisMarqueeSection />
       </main>
       <CinematicFooter />
     </>
