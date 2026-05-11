@@ -122,7 +122,7 @@ const STYLES = `
   background: white;
   margin-right: 8px;
   vertical-align: middle;
-  animation: ss-pulse-dot 1.2s ease-in-out infinite;
+  animation: ss-pulse-dot 1.2s linear(0, 0.7 25%, 1, 0.7 75%, 0) infinite;
 }
 .ss-cursor {
   display: inline-block;

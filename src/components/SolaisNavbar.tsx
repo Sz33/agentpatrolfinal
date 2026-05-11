@@ -25,6 +25,7 @@ export default function SolaisNavbar() {
         backgroundColor: scrolled ? "rgba(5,5,5,0.92)" : "transparent",
         backdropFilter: scrolled ? "blur(12px)" : "none",
         borderBottom: scrolled ? "1px solid rgb(53,53,57)" : "none",
+        transition: "backdrop-filter 0.3s ease, background-color 0.3s ease",
       }}
     >
       <div className="max-w-[1440px] mx-auto px-6 lg:px-10 flex items-center justify-between h-[92px]">

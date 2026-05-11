@@ -324,7 +324,7 @@
 }
 .cta-shimmer {
   background-size: 200% auto;
-  animation: ctaShimmer 3s linear infinite;
+  animation: ctaShimmer 60s linear infinite;
 }
 
 /* ── ENHANCE §3: Page load animations ───────────────────────────── */
@@ -415,7 +415,7 @@ img[src].error { display: none; }
   text-align: center;
   gap: 8px;
   position: relative;
-  animation: spin-slow 20s linear infinite;
+  animation: spin-slow 90s linear infinite;
 }
 
 /* ── Section visual placeholder ──────────────────────────────────── */
@@ -475,8 +475,8 @@ img[src].error { display: none; }
 
 /* ── Hero load staggered reveal ─────────────────────────────────── */
 @keyframes heroFadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(20px); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0); filter: blur(0px); }
 }
 
 .hero-section [class*="eyebrow"], .hero-section [class*="label"] {
@@ -757,7 +757,7 @@ nav a:hover::after {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: shimmerHero 5s linear infinite, patrolGlow 3s ease-in-out infinite;
+  animation: shimmerHero 5s linear infinite, patrolGlow 8s ease-in-out infinite;
 }
 
 /* HUD label glow */

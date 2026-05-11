@@ -241,7 +241,7 @@ export function MagicCard({
         const clone = particle.cloneNode(true) as HTMLElement;
         cardRef.current.appendChild(clone);
         particlesRef.current.push(clone);
-        gsap.fromTo(clone, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(1.7)' });
+        gsap.fromTo(clone, { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(1.7)' });
         gsap.to(clone, {
           x: (Math.random() - 0.5) * 100,
           y: (Math.random() - 0.5) * 100,
@@ -330,7 +330,7 @@ export function MagicCard({
       el.appendChild(ripple);
       gsap.fromTo(
         ripple,
-        { scale: 0, opacity: 1 },
+        { scale: 0.8, opacity: 1 },
         { scale: 1, opacity: 0, duration: 0.8, ease: 'power2.out', onComplete: () => ripple.remove() }
       );
     };

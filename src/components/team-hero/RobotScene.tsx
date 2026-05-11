@@ -33,6 +33,9 @@ function Robot() {
   const { actions }   = useAnimations(animations, groupRef);
   const { pointer }   = useThree();
 
+  const prefersReducedMotion = typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   useEffect(() => {
     Object.values(actions).forEach((action) => action?.play());
   }, [actions]);
@@ -292,6 +295,14 @@ function Robot() {
   }, [scene]);
 
   useFrame((_state, delta) => {
+    if (prefersReducedMotion) {
+      if (groupRef.current) {
+        groupRef.current.rotation.y = 0;
+        groupRef.current.rotation.x = 0;
+        groupRef.current.position.y = -0.35;
+      }
+      return;
+    }
     const g = groupRef.current;
     if (!g) return;
 

@@ -180,7 +180,7 @@ const ParticleCard: React.FC<{
         cardRef.current.appendChild(clone);
         particlesRef.current.push(clone);
 
-        gsap.fromTo(clone, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(1.7)' });
+        gsap.fromTo(clone, { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(1.7)' });
 
         gsap.to(clone, {
           x: (Math.random() - 0.5) * 100,
@@ -315,7 +315,7 @@ const ParticleCard: React.FC<{
       gsap.fromTo(
         ripple,
         {
-          scale: 0,
+          scale: 0.8,
           opacity: 1
         },
         {
@@ -676,7 +676,7 @@ const MagicBento: React.FC<BentoProps> = ({
                   gsap.fromTo(
                     ripple,
                     {
-                      scale: 0,
+                      scale: 0.8,
                       opacity: 1
                     },
                     {

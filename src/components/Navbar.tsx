@@ -108,7 +108,7 @@ export default function Navbar() {
           backgroundColor: scrolled ? "rgba(10,9,15,0.95)" : "rgb(10,9,15)",
           backdropFilter: scrolled ? "blur(12px)" : "none",
           borderBottom: scrolled ? "1px solid transparent" : "1px solid rgb(53,53,57)",
-          transition: "background-color 0.3s, border-color 0.3s",
+          transition: "backdrop-filter 0.3s ease, background-color 0.3s ease, border-color 0.3s ease",
         }}
       >
         <div

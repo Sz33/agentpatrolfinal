@@ -44,11 +44,12 @@ export default function ScrollRevealInit() {
 
             gsap.fromTo(
               el,
-              { opacity: 0, y: 40 },
+              { opacity: 0, y: 8, filter: "blur(4px)" },
               {
                 opacity: 1,
                 y: 0,
-                duration: 0.9,
+                filter: "blur(0px)",
+                duration: 0.55,
                 ease: "power2.out",
                 delay: isNaN(delay) ? 0 : delay / 1000,
                 force3D: true,
@@ -71,7 +72,7 @@ export default function ScrollRevealInit() {
             );
             if (items.length === 0) return;
 
-            gsap.set(items, { opacity: 0, y: 50 });
+            gsap.set(items, { opacity: 0, y: 8, filter: "blur(4px)" });
 
             ScrollTrigger.create({
               trigger: group,
@@ -81,7 +82,8 @@ export default function ScrollRevealInit() {
                 gsap.to(items, {
                   opacity: 1,
                   y: 0,
-                  duration: 0.85,
+                  filter: "blur(0px)",
+                  duration: 0.55,
                   ease: "power3.out",
                   stagger: 0.12,
                   force3D: true,
