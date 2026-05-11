@@ -1,25 +1,42 @@
 "use client";
 
-import { Canvas, useFrame } from "@react-three/fiber";
-import { useGLTF, useAnimations } from "@react-three/drei";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useGLTF, useAnimations, Environment } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
-import { Suspense, useRef, useEffect, useState } from "react";
+import { Suspense, useRef, useEffect } from "react";
 import * as THREE from "three";
+import { EyeTracker } from "./EyeTracker";
+
+const ROBOT_PATH = "/3d/flyingrobot.glb";
+
+const isTouchDevice =
+  typeof window !== "undefined" &&
+  ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+
+// Pre-allocated — avoid per-frame GC pressure
+const CYAN = new THREE.Color("#00AAFF");
+const RED_EYE = new THREE.Color("#FF2020");
+
+const smoothstep = (x: number, min: number, max: number) => {
+  const t = Math.max(0, Math.min(1, (x - min) / (max - min)));
+  return t * t * (3 - 2 * t);
+};
 
 function Robot() {
-  const { scene, animations } = useGLTF("/3d/flyingrobot.glb");
-  const groupRef = useRef<THREE.Group>(null);
-  const { actions } = useAnimations(animations, groupRef);
-  const scrollRef = useRef(0);
-  const alertMixRef = useRef(0);
-  const glowMatsRef = useRef<Array<THREE.MeshStandardMaterial | THREE.MeshPhysicalMaterial>>([]);
+  const groupRef      = useRef<THREE.Group>(null);
+  const headBoneRef   = useRef<THREE.Object3D | null>(null);
+  const eyeMeshesRef  = useRef<THREE.Mesh[]>([]);
+  const scrollRef     = useRef(0);
+  const alertMixRef   = useRef(0);
+  const { scene, animations } = useGLTF(ROBOT_PATH);
+  const { actions }   = useAnimations(animations, groupRef);
+  const { pointer }   = useThree();
 
   useEffect(() => {
-    Object.values(actions).forEach((action) => {
-      if (action) action.play();
-    });
+    Object.values(actions).forEach((action) => action?.play());
   }, [actions]);
 
+  // Scroll handler — drives scrollRef (spin) and alertMixRef (eye color)
   useEffect(() => {
     const onScroll = () => {
       const problem = document.getElementById("problem");
@@ -28,14 +45,11 @@ function Robot() {
         alertMixRef.current = 0;
         return;
       }
-      // Spin completes EXACTLY at the top of problem section.
-      // Measured: currentScrollY ≈ 893 at perfect moment,
-      //           problem.offsetTop = 901.
       const spinEndScroll = problem.offsetTop * 0.93;
-      scrollRef.current = spinEndScroll > 0
-        ? Math.max(0, Math.min(1, window.scrollY / spinEndScroll))
-        : 0;
-
+      scrollRef.current =
+        spinEndScroll > 0
+          ? Math.max(0, Math.min(1, window.scrollY / spinEndScroll))
+          : 0;
       const triggerStart = problem.offsetTop - window.innerHeight * 0.45;
       const triggerRange = window.innerHeight * 0.55;
       const raw = (window.scrollY - triggerStart) / triggerRange;
@@ -46,161 +60,261 @@ function Robot() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Material setup — FIX 1-5 from team Robot.tsx + eyeMeshesRef tracking
   useEffect(() => {
-    // Material overrides
-    glowMatsRef.current = [];
+    eyeMeshesRef.current = [];
+
     scene.traverse((child) => {
       if (!(child instanceof THREE.Mesh)) return;
-      const sourceMat = child.material as THREE.MeshStandardMaterial | THREE.MeshPhysicalMaterial;
-      if (!sourceMat || !("color" in sourceMat)) return;
-      child.material = sourceMat.clone();
-      const m = child.material as THREE.MeshStandardMaterial | THREE.MeshPhysicalMaterial;
 
-      if (m.map) m.map.colorSpace = THREE.SRGBColorSpace;
-      if (m.emissiveMap) m.emissiveMap.colorSpace = THREE.SRGBColorSpace;
-      if (m.normalMap) m.normalMap.colorSpace = THREE.LinearSRGBColorSpace;
-      if (m.roughnessMap) m.roughnessMap.colorSpace = THREE.LinearSRGBColorSpace;
-      if (m.metalnessMap) m.metalnessMap.colorSpace = THREE.LinearSRGBColorSpace;
+      child.castShadow = true;
+      child.receiveShadow = true;
 
-      const name = child.name.toLowerCase();
-      m.color.set("#060a12");
-      m.emissive.set("#000000");
-      m.emissiveIntensity = 0;
-      m.metalness = 0.5;
-      m.roughness = 0.22;
-      m.envMapIntensity = 0.45;
+      const mat = child.material as THREE.MeshStandardMaterial;
 
-      if ("clearcoat" in m) {
-        m.clearcoat = 0.55;
-        m.clearcoatRoughness = 0.2;
+      if (mat) {
+        if (mat.map)          { mat.map.colorSpace = THREE.SRGBColorSpace;                mat.map.needsUpdate = true; }
+        if (mat.emissiveMap)  { mat.emissiveMap.colorSpace = THREE.SRGBColorSpace;        mat.emissiveMap.needsUpdate = true; }
+        if (mat.envMap)       { mat.envMap.colorSpace = THREE.SRGBColorSpace;             mat.envMap.needsUpdate = true; }
+        if (mat.normalMap)    { mat.normalMap.colorSpace = THREE.LinearSRGBColorSpace;    mat.normalMap.needsUpdate = true; }
+        if (mat.roughnessMap) { mat.roughnessMap.colorSpace = THREE.LinearSRGBColorSpace; mat.roughnessMap.needsUpdate = true; }
+        if (mat.metalnessMap) { mat.metalnessMap.colorSpace = THREE.LinearSRGBColorSpace; mat.metalnessMap.needsUpdate = true; }
+        mat.needsUpdate = true;
       }
 
-      // Dark panels / body pieces
-      if (/body|torso|head|face|helmet|arm|leg|shoulder|panel|shell/.test(name)) {
-        m.color.set("#04070d");
-        m.metalness = 0.58;
-        m.roughness = 0.2;
+      const n = child.name.toLowerCase();
+
+      // FIX 5 — Police / chest text → subtle embossed dark
+      if (
+        n.includes("police") || n.includes("text") ||
+        n.includes("logo")   || n.includes("chest_text") ||
+        n.includes("label")  || n.includes("decal")
+      ) {
+        child.material = new THREE.MeshStandardMaterial({
+          color: new THREE.Color("#0f0d1a"),
+          metalness: 0.8,
+          roughness: 0.4,
+          envMapIntensity: 1.0,
+        });
         return;
       }
 
-      // Face indicators in glowing blue
-      if (/eye|eyelid|retina|pupil|face_light|expression/.test(name)) {
-        m.color.set("#0a2f5a");
-        m.emissive.set("#57c7ff");
-        m.emissiveIntensity = 1.5;
-        m.metalness = 0.04;
-        m.roughness = 0.08;
-        m.toneMapped = false;
-        glowMatsRef.current.push(m);
+      // FIX 1a — Gun accent / barrel → glowing amber trim
+      if (
+        n.includes("barrel")      || n.includes("gun_accent") ||
+        n.includes("weapon_trim") || n.includes("muzzle") ||
+        n.includes("scope")
+      ) {
+        child.material = new THREE.MeshStandardMaterial({
+          color: new THREE.Color("#EF9F27"),
+          emissive: new THREE.Color("#EF9F27"),
+          emissiveIntensity: 1.0,
+          metalness: 0.3,
+          roughness: 0.1,
+        });
         return;
       }
 
-      // Cyan LEDs / glow trims
-      if (/led|light|neon|strip|trim|accent|line|ring|screen|visor|sensor|lamp/.test(name)) {
-        m.color.set("#072846");
-        m.emissive.set("#69d5ff");
-        m.emissiveIntensity = 2.1;
-        m.metalness = 0.1;
-        m.roughness = 0.12;
-        m.toneMapped = false;
-        glowMatsRef.current.push(m);
+      // FIX 1b — Gun body → dark gunmetal
+      if (
+        n.includes("gun")    || n.includes("weapon") ||
+        n.includes("rifle")  || n.includes("pistol") ||
+        n.includes("cannon") || n.includes("shotgun")
+      ) {
+        child.material = new THREE.MeshStandardMaterial({
+          color: new THREE.Color("#1a1a2e"),
+          metalness: 0.9,
+          roughness: 0.35,
+          envMapIntensity: 0.5,
+        });
         return;
       }
 
-      // Feet and lower silhouettes get stronger blue edge
-      if (/foot|feet|shoe|sole|base|bottom|wheel/.test(name)) {
-        m.color.set("#051022");
-        m.emissive.set("#47c8ff");
-        m.emissiveIntensity = 1.45;
-        m.metalness = 0.4;
-        m.roughness = 0.15;
-        m.toneMapped = false;
-        glowMatsRef.current.push(m);
+      // FIX 2 — Yellow accent lights → bright gold emissive
+      if (
+        n.includes("yellow")       || n.includes("gold") ||
+        n.includes("accent")       || n.includes("stripe") ||
+        n.includes("trim")         || n.includes("band") ||
+        n.includes("highlight")    || n.includes("led") ||
+        n.includes("panel_light")  || n.includes("shoulder_light") ||
+        n.includes("detail_light") || n.includes("neon")
+      ) {
+        child.material = new THREE.MeshStandardMaterial({
+          color: new THREE.Color("#FFD700"),
+          emissive: new THREE.Color("#FFD700"),
+          emissiveIntensity: 2.0,
+          metalness: 0.0,
+          roughness: 0.0,
+          toneMapped: false,
+        });
         return;
       }
 
-      // Catch-all keeps a deep glossy black style
-      m.color.set("#070b13");
-      m.metalness = 0.48;
-      m.roughness = 0.24;
+      // FIX 3 — Red dot / indicator → vivid glowing red
+      if (
+        n.includes("red")       || n.includes("dot") ||
+        n.includes("indicator") || n.includes("alert") ||
+        n.includes("warning")   || n.includes("signal")
+      ) {
+        child.material = new THREE.MeshStandardMaterial({
+          color: new THREE.Color("#FF0000"),
+          emissive: new THREE.Color("#FF2020"),
+          emissiveIntensity: 1.5,
+          metalness: 0.0,
+          roughness: 0.0,
+        });
+        return;
+      }
+
+      // FIX 4 — Eyes / visor → glowing blue emissive (tracked for cyan→red lerp)
+      if (
+        n.includes("eye")        || n.includes("lens") ||
+        n.includes("visor")      || n.includes("screen") ||
+        n.includes("glass")      || n.includes("glow") ||
+        n.includes("lamp")       || n.includes("sensor") ||
+        n.includes("camera")     || n.includes("optic") ||
+        n.includes("face_light") || n.includes("head_light") ||
+        n.includes("retina")     || n.includes("pupil")
+      ) {
+        child.material = new THREE.MeshStandardMaterial({
+          color: new THREE.Color("#00AAFF"),
+          emissive: new THREE.Color("#0088FF"),
+          emissiveIntensity: 2.5,
+          metalness: 0.0,
+          roughness: 0.0,
+          toneMapped: false,
+        });
+        eyeMeshesRef.current.push(child);
+        return;
+      }
+
+      // Fallback — color-based detection for generic mesh names
+      if (mat?.color) {
+        const r = mat.color.r;
+        const g = mat.color.g;
+        const b = mat.color.b;
+        const isYellow    = r > 0.6 && g > 0.5 && b < 0.3;
+        const isOrangeRed = r > 0.7 && g < 0.4 && b < 0.2;
+        const isGrey      = !mat.map && Math.abs(r - g) < 0.15 && Math.abs(g - b) < 0.15 && r > 0.15;
+
+        if (isYellow) {
+          child.material = new THREE.MeshStandardMaterial({
+            color: new THREE.Color("#FFD700"),
+            emissive: new THREE.Color("#FFD700"),
+            emissiveIntensity: 2.0,
+            metalness: 0.0,
+            roughness: 0.0,
+            toneMapped: false,
+          });
+        } else if (isOrangeRed) {
+          child.material = new THREE.MeshStandardMaterial({
+            color: new THREE.Color("#FF4500"),
+            emissive: new THREE.Color("#FF4500"),
+            emissiveIntensity: 2.0,
+            metalness: 0.0,
+            roughness: 0.0,
+            toneMapped: false,
+          });
+        } else if (isGrey) {
+          child.material = new THREE.MeshStandardMaterial({
+            color: new THREE.Color("#141420"),
+            metalness: 0.75,
+            roughness: 0.55,
+          });
+        }
+      }
+
+      // Default — floor roughness to reduce specular hot spots
+      if (mat && mat.roughness < 0.45) {
+        mat.roughness = 0.45;
+        mat.needsUpdate = true;
+      }
+    });
+
+    // Find head bone by common rig naming conventions
+    headBoneRef.current = null;
+    scene.traverse((child) => {
+      if (headBoneRef.current) return;
+      const n = child.name.toLowerCase();
+      if (
+        n === "head"          || n === "mixamorighead" ||
+        n === "bip_head"      || n === "bip01_head" ||
+        n === "head_jnt"      || n.endsWith("_head") ||
+        (n.includes("head") && !n.includes("headlight"))
+      ) {
+        headBoneRef.current = child;
+      }
     });
   }, [scene]);
 
-  useFrame((state) => {
+  useFrame(() => {
     const g = groupRef.current;
     if (!g) return;
 
-    const t = state.clock.elapsedTime;
-    // Full 360° scroll-driven rotation contained within the hero zone.
-    g.rotation.y = -scrollRef.current * Math.PI * 2;
-    g.position.y = -0.1 + Math.sin(t * 0.8) * 0.04;
+    const problemEl  = document.getElementById("problem");
+    const inHeroZone = !problemEl || window.scrollY < problemEl.offsetTop;
 
-    const mix = alertMixRef.current;
-    const blue = new THREE.Color("#57c7ff");
-    const red = new THREE.Color("#ff0000");
-    const darkRedBase = new THREE.Color("#2a0000");
-    const neutralBase = new THREE.Color("#0a2f5a");
-    const redMix = THREE.MathUtils.smoothstep(mix, 0.35, 1);
-    const hardMix = redMix > 0.85 ? 1 : redMix;
-    const glowColor = blue.clone().lerp(red, hardMix);
-    const baseColor = neutralBase.clone().lerp(darkRedBase, hardMix);
-    for (const mat of glowMatsRef.current) {
-      mat.emissive.copy(glowColor);
-      mat.color.copy(baseColor);
-      mat.emissiveIntensity = THREE.MathUtils.lerp(1.8, 2.8, hardMix);
+    if (isTouchDevice) {
+      g.rotation.y += 0.004;
+    } else if (inHeroZone) {
+      // Hero zone: scroll-driven 360° spin with ease
+      const t      = scrollRef.current;
+      const eased  = t < 0.5
+        ? 4 * t * t * t
+        : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      const targetY = -eased * Math.PI * 2;
+      g.rotation.y += (targetY - g.rotation.y) * 0.08;
+      g.rotation.x += (0 - g.rotation.x) * 0.08;
+    } else {
+      // Problem zone: mouse-tracking body + head bone
+      g.rotation.y += (pointer.x * 0.7  - g.rotation.y) * 0.06;
+      g.rotation.x += (-pointer.y * 0.35 - g.rotation.x) * 0.06;
+      if (headBoneRef.current) {
+        headBoneRef.current.rotation.y += (pointer.x * 0.5  - headBoneRef.current.rotation.y) * 0.08;
+        headBoneRef.current.rotation.x += (-pointer.y * 0.3 - headBoneRef.current.rotation.x) * 0.08;
+      }
     }
+
+    // Eye color: cyan → red, driven by scroll into problem section (always active)
+    const hardMix = smoothstep(alertMixRef.current, 0.4, 0.85);
+    for (const mesh of eyeMeshesRef.current) {
+      const mat = mesh.material as THREE.MeshStandardMaterial;
+      if (mat) {
+        mat.color.lerpColors(CYAN, RED_EYE, hardMix);
+        mat.emissive.lerpColors(CYAN, RED_EYE, hardMix);
+        mat.emissiveIntensity = THREE.MathUtils.lerp(2.5, 3.5, hardMix);
+        mat.needsUpdate = true;
+      }
+    }
+
+    g.position.y = -0.35;
   });
 
   return (
-    <group ref={groupRef} scale={[2, 2, 2]} position={[0, -0.1, 0]}>
+    <group ref={groupRef} position={[0, -0.35, 0]} scale={[2, 2, 2]}>
       <primitive object={scene} />
     </group>
   );
 }
 
-useGLTF.preload("/3d/flyingrobot.glb");
+useGLTF.preload(ROBOT_PATH);
 
 export default function RobotScene() {
-  const [underLightColor, setUnderLightColor] = useState("#51d2ff");
-
+  // Canvas fade-out: dissolves robot once problem section scrolls away
   useEffect(() => {
     const onScroll = () => {
       const problem = document.getElementById("problem");
-      if (!problem) {
-        setUnderLightColor("#51d2ff");
-        return;
-      }
-
-      // Eye-color trigger — drives the under-light color cyan→red
-      const triggerStart = problem.offsetTop - window.innerHeight * 0.45;
-      const triggerRange = window.innerHeight * 0.55;
-      const raw = (window.scrollY - triggerStart) / triggerRange;
-      const mix = THREE.MathUtils.clamp(raw, 0, 1);
-      const redMix = THREE.MathUtils.smoothstep(mix, 0.35, 1);
-      const t = redMix > 0.85 ? 1 : redMix;
-      const color = new THREE.Color("#51d2ff").lerp(new THREE.Color("#ff0000"), t);
-      setUnderLightColor(`#${color.getHexString()}`);
-
-      // Fade-out — once user scrolls past the problem section, fade
-      // the fixed canvas to 0 so it doesn't bleed onto sections below.
+      if (!problem) return;
       const problemBottom = problem.offsetTop + problem.offsetHeight;
-      // Fade only AFTER user scrolls past the problem section.
-      // Use raw scrollY (top of viewport), not viewport bottom, so
-      // the canvas stays fully visible while problem section is on screen.
-      const fadeStart = problemBottom - window.innerHeight * 0.15;  // start fading when problem is almost out of view
-      const fadeEnd   = problemBottom + window.innerHeight * 0.25;  // fully gone shortly after
-
+      const fadeStart = problemBottom - window.innerHeight * 0.15;
+      const fadeEnd   = problemBottom + window.innerHeight * 0.25;
       let opacity = 1;
       if (window.scrollY > fadeStart) {
         opacity = 1 - Math.min(1, (window.scrollY - fadeStart) / (fadeEnd - fadeStart));
       }
-
       const canvasWrapper = document.getElementById("team-hero-3d-wrapper");
-      if (canvasWrapper) {
-        canvasWrapper.style.opacity = String(opacity);
-      }
+      if (canvasWrapper) canvasWrapper.style.opacity = String(opacity);
     };
-
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
@@ -210,34 +324,37 @@ export default function RobotScene() {
     <Canvas
       camera={{ position: [0, 2, 4], fov: 40 }}
       gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
-      shadows
-      dpr={[1, 1.5]}
-      style={{ background: "transparent", pointerEvents: "none" }}
-      onCreated={({ gl, camera }) => {
+      onCreated={({ gl, scene, camera }) => {
+        gl.setClearColor(0x000000, 0);
+        scene.background = null;
         gl.outputColorSpace = THREE.SRGBColorSpace;
         gl.toneMapping = THREE.ACESFilmicToneMapping;
-        gl.toneMappingExposure = 0.38;
-        gl.setClearColor(0x000000, 0);
+        gl.toneMappingExposure = 0.55;
         camera.lookAt(0, 1, 0);
       }}
+      shadows
+      dpr={[1, 1.5]}
+      performance={{ min: 0.5 }}
+      style={{ width: "100%", height: "100%", background: "transparent", pointerEvents: "none" }}
     >
       <Suspense fallback={null}>
-        <ambientLight intensity={0.13} color="#5f93be" />
-        <hemisphereLight args={["#5ac9ff", "#02040b", 0.22]} />
-        <pointLight position={[0, 1.2, 6]} color="#8cd9ff" intensity={2.3} distance={12} decay={2} />
-        <pointLight position={[-4, 0.5, 2.6]} color="#2ca3ff" intensity={1.35} distance={10} decay={2} />
-        <pointLight position={[4, 0.5, 2.6]} color="#2ca3ff" intensity={1.35} distance={10} decay={2} />
-        <pointLight position={[0, -2, 2.5]} color={underLightColor} intensity={0.24} distance={6} decay={2} />
+        <ambientLight intensity={0.07} color="#ffffff" />
+        <pointLight position={[0, 0, 6]}  color="#ffffff" intensity={0.3}  distance={15} decay={1.5} />
+        <pointLight position={[-4, 0, 3]} color="#ffffff" intensity={0.25} distance={12} decay={1.5} />
+        <pointLight position={[4, 0, 3]}  color="#ffffff" intensity={0.15} distance={12} decay={1.5} />
 
         <Robot />
+        <EyeTracker />
+
+        <Environment preset="studio" background={false} environmentIntensity={0.06} blur={1} />
 
         <EffectComposer>
           <Bloom
-            luminanceThreshold={0.74}
-            luminanceSmoothing={0.88}
-            intensity={0.22}
+            luminanceThreshold={0.88}
+            luminanceSmoothing={0.9}
+            intensity={0.35}
             mipmapBlur
-            radius={0.26}
+            radius={0.5}
           />
         </EffectComposer>
       </Suspense>
