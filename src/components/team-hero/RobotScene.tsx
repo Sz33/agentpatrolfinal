@@ -212,6 +212,9 @@ function Robot() {
         const isYellow    = r > 0.6 && g > 0.5 && b < 0.3;
         const isOrangeRed = r > 0.7 && g < 0.4 && b < 0.2;
         const isGrey      = !mat.map && Math.abs(r - g) < 0.15 && Math.abs(g - b) < 0.15 && r > 0.15;
+        const isBlue      = b > 0.5 && b > r * 1.5 && b > g * 0.8;
+        const isCyanEmissive = mat?.emissive &&
+          (mat.emissive.b > 0.3 || (mat.emissive.r < 0.1 && mat.emissive.g > 0.1));
 
         if (isYellow) {
           child.material = new THREE.MeshStandardMaterial({
@@ -237,6 +240,17 @@ function Robot() {
             metalness: 0.75,
             roughness: 0.55,
           });
+        } else if (isBlue || isCyanEmissive) {
+          child.material = new THREE.MeshStandardMaterial({
+            color: new THREE.Color("#00AAFF"),
+            emissive: new THREE.Color("#0088FF"),
+            emissiveIntensity: 2.5,
+            metalness: 0.0,
+            roughness: 0.0,
+            toneMapped: false,
+          });
+          eyeMeshesRef.current.push(child);
+          return;
         }
       }
 
@@ -261,6 +275,19 @@ function Robot() {
         headBoneRef.current = child;
       }
     });
+
+    // Second pass — catch any remaining blue/cyan emissive meshes missed by name-based rules
+    scene.traverse((child) => {
+      if (!(child instanceof THREE.Mesh)) return;
+      if (eyeMeshesRef.current.includes(child)) return;
+      const mat = child.material as THREE.MeshStandardMaterial;
+      if (!mat?.emissive) return;
+      if (mat.emissive.b > 0.2 && mat.emissive.b > mat.emissive.r) {
+        eyeMeshesRef.current.push(child);
+      }
+    });
+
+    console.log("[mascot] eyeMeshesRef count:", eyeMeshesRef.current.length);
   }, [scene]);
 
   useFrame(() => {
@@ -302,7 +329,7 @@ function Robot() {
       if (mat) {
         mat.color.lerpColors(CYAN, RED_EYE, hardMix);
         mat.emissive.lerpColors(CYAN, RED_EYE, hardMix);
-        mat.emissiveIntensity = THREE.MathUtils.lerp(2.5, 3.5, hardMix);
+        mat.emissiveIntensity = THREE.MathUtils.lerp(2.5, 4.0, hardMix);
         mat.needsUpdate = true;
       }
     }
