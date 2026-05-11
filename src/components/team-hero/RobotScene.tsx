@@ -268,13 +268,14 @@ function Robot() {
     if (!g) return;
 
     const problemEl  = document.getElementById("problem");
-    const inHeroZone = !problemEl || window.scrollY < problemEl.offsetTop;
+    const problemTop = problemEl?.offsetTop ?? 999999;
+    const inHeroZone = window.scrollY < problemTop;
 
     if (isTouchDevice) {
       g.rotation.y += 0.004;
     } else if (inHeroZone) {
       // Hero zone: scroll-driven 360° spin with ease
-      const t      = scrollRef.current;
+      const t      = Math.max(0, Math.min(1, scrollRef.current));
       const eased  = t < 0.5
         ? 4 * t * t * t
         : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -282,9 +283,12 @@ function Robot() {
       g.rotation.y += (targetY - g.rotation.y) * 0.08;
       g.rotation.x += (0 - g.rotation.x) * 0.08;
     } else {
-      // Problem zone: mouse-tracking body + head bone
-      g.rotation.y += (pointer.x * 0.7  - g.rotation.y) * 0.06;
-      g.rotation.x += (-pointer.y * 0.35 - g.rotation.x) * 0.06;
+      // Problem zone — base locked at completed spin (front-facing), mouse adds small offset
+      const baseY        = -Math.PI * 2;
+      const mouseTargetY = baseY + pointer.x * 0.4;
+      const mouseTargetX = -pointer.y * 0.2;
+      g.rotation.y += (mouseTargetY - g.rotation.y) * 0.06;
+      g.rotation.x += (mouseTargetX - g.rotation.x) * 0.06;
       if (headBoneRef.current) {
         headBoneRef.current.rotation.y += (pointer.x * 0.5  - headBoneRef.current.rotation.y) * 0.08;
         headBoneRef.current.rotation.x += (-pointer.y * 0.3 - headBoneRef.current.rotation.x) * 0.08;
