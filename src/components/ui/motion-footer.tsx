@@ -107,7 +107,7 @@ const STYLES = `
   transform: translateX(-50%);
   font-family: var(--font-heading), sans-serif;
   font-weight: 900;
-  font-size: clamp(120px, 22vw, 380px);
+  font-size: clamp(80px, 14vw, 220px);
   line-height: 0.82;
   letter-spacing: -0.04em;
   white-space: nowrap;
