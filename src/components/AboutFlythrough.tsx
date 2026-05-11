@@ -762,6 +762,7 @@ function StageOverlay({ progress }: OverlayProps) {
                   <h2
                     style={{
                       color: 'white',
+                      fontFamily: 'var(--font-heading), sans-serif',
                       fontWeight: 500,
                       fontSize: 'clamp(36px, 5.2vw, 56px)',
                       letterSpacing: '-0.005em',

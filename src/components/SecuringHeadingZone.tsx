@@ -108,7 +108,7 @@ export default function SecuringHeadingZone() {
           <h2
             style={{
               color: 'white',
-              fontFamily: 'monospace',
+              fontFamily: 'var(--font-heading), sans-serif',
               fontSize: 'clamp(40px, 6vw, 80px)',
               fontWeight: 700,
               letterSpacing: '-0.02em',

@@ -241,7 +241,7 @@ function CardInner({ step, idx, total, runId }: { step: Step; idx: number; total
             className={runId > 0 ? 'ss-glitch' : ''}
             style={{
               color: 'white',
-              fontFamily: 'monospace',
+              fontFamily: 'var(--font-heading), sans-serif',
               fontSize: 'clamp(44px, 6.5vw, 96px)',
               fontWeight: 700,
               letterSpacing: '-0.03em',
