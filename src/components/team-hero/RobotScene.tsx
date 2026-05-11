@@ -36,24 +36,40 @@ function Robot() {
     Object.values(actions).forEach((action) => action?.play());
   }, [actions]);
 
-  // Scroll handler — drives scrollRef (spin) and alertMixRef (eye color)
+  // Unified scroll handler — spin progress, eye color, canvas fade-out
   useEffect(() => {
     const onScroll = () => {
-      const problem = document.getElementById("problem");
-      if (!problem) {
-        scrollRef.current = 0;
-        alertMixRef.current = 0;
-        return;
+      const problemEl = document.getElementById("problem");
+
+      // 360 spin progress — scoped to hero zone
+      if (problemEl) {
+        const spinEnd = problemEl.offsetTop * 0.93;
+        scrollRef.current =
+          spinEnd > 0
+            ? Math.max(0, Math.min(1, window.scrollY / spinEnd))
+            : 0;
       }
-      const spinEndScroll = problem.offsetTop * 0.93;
-      scrollRef.current =
-        spinEndScroll > 0
-          ? Math.max(0, Math.min(1, window.scrollY / spinEndScroll))
-          : 0;
-      const triggerStart = problem.offsetTop - window.innerHeight * 0.45;
-      const triggerRange = window.innerHeight * 0.55;
-      const raw = (window.scrollY - triggerStart) / triggerRange;
-      alertMixRef.current = THREE.MathUtils.clamp(raw, 0, 1);
+
+      // Eye color trigger
+      if (problemEl) {
+        const triggerStart = problemEl.offsetTop - window.innerHeight * 0.45;
+        const triggerRange = window.innerHeight * 0.55;
+        const raw = (window.scrollY - triggerStart) / triggerRange;
+        alertMixRef.current = Math.max(0, Math.min(1, raw));
+      }
+
+      // Canvas fade-out past problem section
+      if (problemEl) {
+        const problemBottom = problemEl.offsetTop + problemEl.offsetHeight;
+        const fadeStart = problemBottom - window.innerHeight * 0.15;
+        const fadeEnd   = problemBottom + window.innerHeight * 0.25;
+        let opacity = 1;
+        if (window.scrollY > fadeStart) {
+          opacity = 1 - Math.min(1, (window.scrollY - fadeStart) / (fadeEnd - fadeStart));
+        }
+        const wrapper = document.getElementById("team-hero-3d-wrapper");
+        if (wrapper) wrapper.style.opacity = String(opacity);
+      }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
@@ -300,26 +316,6 @@ function Robot() {
 useGLTF.preload(ROBOT_PATH);
 
 export default function RobotScene() {
-  // Canvas fade-out: dissolves robot once problem section scrolls away
-  useEffect(() => {
-    const onScroll = () => {
-      const problem = document.getElementById("problem");
-      if (!problem) return;
-      const problemBottom = problem.offsetTop + problem.offsetHeight;
-      const fadeStart = problemBottom - window.innerHeight * 0.15;
-      const fadeEnd   = problemBottom + window.innerHeight * 0.25;
-      let opacity = 1;
-      if (window.scrollY > fadeStart) {
-        opacity = 1 - Math.min(1, (window.scrollY - fadeStart) / (fadeEnd - fadeStart));
-      }
-      const canvasWrapper = document.getElementById("team-hero-3d-wrapper");
-      if (canvasWrapper) canvasWrapper.style.opacity = String(opacity);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
     <Canvas
       camera={{ position: [0, 2, 4], fov: 40 }}
