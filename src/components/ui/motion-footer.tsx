@@ -107,9 +107,9 @@ const STYLES = `
   transform: translateX(-50%);
   font-family: var(--font-heading), sans-serif;
   font-weight: 900;
-  font-size: clamp(80px, 14vw, 220px);
-  line-height: 0.82;
-  letter-spacing: -0.04em;
+  font-size: 14vw;
+  line-height: 1;
+  letter-spacing: -0.02em;
   white-space: nowrap;
   background: linear-gradient(180deg,
     rgba(255,255,255,0.10) 0%,
@@ -348,6 +348,25 @@ export function CinematicFooter() {
       }
     }, wrapperRef);
     return () => ctx.revert();
+  }, []);
+
+  // Fit giant text to exactly span viewport width edge-to-edge.
+  useEffect(() => {
+    const el = giantTextRef.current;
+    if (!el) return;
+
+    const fit = () => {
+      el.style.fontSize = '';
+      const fs = parseFloat(getComputedStyle(el).fontSize);
+      const tw = el.scrollWidth;
+      if (!tw) return;
+      el.style.fontSize = (fs * (window.innerWidth / tw)) + 'px';
+    };
+
+    fit();
+    document.fonts.ready.then(fit);
+    window.addEventListener('resize', fit);
+    return () => window.removeEventListener('resize', fit);
   }, []);
 
   const onTopClick = (e: MouseEvent<HTMLButtonElement>) => {
