@@ -28,6 +28,7 @@ function Robot() {
   const eyeMeshesRef  = useRef<THREE.Mesh[]>([]);
   const scrollRef     = useRef(0);
   const alertMixRef   = useRef(0);
+  const smoothYRef    = useRef(0);
   const { scene, animations } = useGLTF(ROBOT_PATH);
   const { actions }   = useAnimations(animations, groupRef);
   const { pointer }   = useThree();
@@ -290,7 +291,7 @@ function Robot() {
     console.log("[mascot] eyeMeshesRef count:", eyeMeshesRef.current.length);
   }, [scene]);
 
-  useFrame(() => {
+  useFrame((_state, delta) => {
     const g = groupRef.current;
     if (!g) return;
 
@@ -301,14 +302,16 @@ function Robot() {
     if (isTouchDevice) {
       g.rotation.y += 0.004;
     } else if (inHeroZone) {
-      // Hero zone: scroll-driven 360° spin with ease
+      // Hero zone: scroll-driven 360° spin with weighted damping
       const t      = Math.max(0, Math.min(1, scrollRef.current));
       const eased  = t < 0.5
         ? 4 * t * t * t
         : 1 - Math.pow(-2 * t + 2, 3) / 2;
-      const targetY = -eased * Math.PI * 2;
-      g.rotation.y += (targetY - g.rotation.y) * 0.08;
-      g.rotation.x += (0 - g.rotation.x) * 0.08;
+      const targetY    = -eased * Math.PI * 2;
+      const lerpFactor = 1 - Math.pow(0.012, delta);
+      smoothYRef.current = THREE.MathUtils.lerp(smoothYRef.current, targetY, lerpFactor);
+      g.rotation.y = smoothYRef.current;
+      g.rotation.x = THREE.MathUtils.lerp(g.rotation.x, 0, lerpFactor);
     } else {
       // Problem zone — base locked at completed spin (front-facing), mouse adds small offset
       const baseY        = -Math.PI * 2;
