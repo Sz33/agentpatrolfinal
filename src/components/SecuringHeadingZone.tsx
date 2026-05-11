@@ -5,27 +5,24 @@ import { useEffect, useRef, useState } from 'react';
 // StackingSteps. Owns its own scroll calculation — no imports from
 // AboutFlythrough.
 //
-// Layout strategy (tight scroll-range sticky):
-//   <section height: 120vh>
+// Layout strategy (extended sticky):
+//   <section height: 180vh>
 //     <div sticky height:100vh>           ← heading pinned at viewport centre
-//     <div height:20vh spacer>            ← release runway before StackingSteps
+//     <div height:80vh spacer>            ← release runway before StackingSteps
 //   </section>
 //
-// The 100vh sticky stays pinned while the section's first 100vh is in
-// scroll. The trailing 20vh spacer ensures the parent block ends BEFORE
+// The 100vh sticky stays pinned for 80vh of scroll (vs old 20vh).
+// The trailing 80vh spacer ensures the parent block ends BEFORE
 // StackingSteps' first card sticks at top:0, preventing overlap.
 //
-// Opacity timeline (driven by THIS section's scroll progress, not
-// AboutFlythrough's):
-//   progress < 0      → 0   (section hasn't entered viewport yet)
-//   0   → 0.5         → 0 → 1   fade in as section enters
-//   0.5 → 1.0         → 1       fully visible while sticky pins it
-//   1.0 → 1.2         → 1 → 0   fade out as section releases
-//   ≥ 1.2             → 0   gone
+// Progress is normalized over el.offsetHeight so thresholds are always
+// expressed as fractions of the section's total scroll range (0 → 1).
 //
-// "progress" here = (viewportHeight − sectionTop) / viewportHeight, so
-// progress = 0 the instant the section's top crosses the viewport
-// bottom, progress = 1 when the section's top is at the viewport top.
+// Opacity timeline:
+//   0     → 0.15    fade in  (section entering viewport)
+//   0.15  → 0.75    hold     (fully visible — covers entire sticky phase)
+//   0.75  → 0.90    fade out (heading exits while still pinned)
+//   ≥ 0.90          gone
 
 export default function SecuringHeadingZone() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -37,17 +34,17 @@ export default function SecuringHeadingZone() {
       if (!el) return;
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      const progress = (vh - rect.top) / vh;
+      const progress = (vh - rect.top) / el.offsetHeight;
 
       let next: number;
       if (progress < 0) {
         next = 0;
-      } else if (progress < 0.5) {
-        next = progress / 0.5; // fade in
-      } else if (progress < 1.0) {
-        next = 1;
-      } else if (progress < 1.2) {
-        next = 1 - (progress - 1.0) / 0.2; // fade out
+      } else if (progress < 0.15) {
+        next = progress / 0.15; // fade in
+      } else if (progress < 0.75) {
+        next = 1; // hold
+      } else if (progress < 0.90) {
+        next = 1 - (progress - 0.75) / 0.15; // fade out
       } else {
         next = 0;
       }
@@ -68,7 +65,7 @@ export default function SecuringHeadingZone() {
       ref={sectionRef}
       id="securing-heading-zone"
       style={{
-        height: '120vh',
+        height: '180vh',
         position: 'relative',
         background: '#000',
       }}
@@ -122,9 +119,9 @@ export default function SecuringHeadingZone() {
         </div>
       </div>
 
-      {/* Release runway — 20vh of empty scroll so the sticky parent ends
+      {/* Release runway — 80vh of empty scroll so the sticky parent ends
           before StackingSteps' first card pins at top:0. */}
-      <div style={{ height: '20vh' }} aria-hidden="true" />
+      <div style={{ height: '80vh' }} aria-hidden="true" />
     </section>
   );
 }
