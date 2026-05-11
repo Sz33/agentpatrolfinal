@@ -296,7 +296,7 @@
 #smooth-content { will-change: transform; }
 
 /* ── ENHANCE §1: Scroll reveal — GSAP-driven now, neutralize legacy CSS ── */
-.reveal { opacity: 1; transform: none; transition: none; }
+.reveal { opacity: 1; transform: none; transition: none; filter: blur(0px); }
 .reveal.visible { opacity: 1; transform: none; }
 
 /* ── ENHANCE §2: Micro animations ───────────────────────────────── */
@@ -338,6 +338,7 @@
 }
 /* Navbar fires immediately; hero elements staggered after ~2s loading screen */
 .navbar-load   { animation: fadeDown  0.5s ease 0.1s  both; }
+.navbar-blur-transition { transition: backdrop-filter 0.4s ease, background-color 0.4s ease, border-color 0.4s ease !important; }
 .hero-label    { animation: fadeInUp  0.6s ease 2.25s both; }
 .hero-heading  { animation: fadeInUp  0.6s ease 2.45s both; }
 .hero-load-sub { animation: fadeInUp  0.6s ease 2.65s both; }
@@ -475,8 +476,12 @@ img[src].error { display: none; }
 
 /* ── Hero load staggered reveal ─────────────────────────────────── */
 @keyframes heroFadeUp {
-  from { opacity: 0; transform: translateY(20px); filter: blur(6px); }
-  to   { opacity: 1; transform: translateY(0); filter: blur(0px); }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroBlurIn {
+  from { filter: blur(6px); }
+  to   { filter: blur(0px); }
 }
 
 .hero-section [class*="eyebrow"], .hero-section [class*="label"] {
@@ -499,6 +504,10 @@ img[src].error { display: none; }
 }
 .hero-section [class*="navbar"], header {
   animation: heroFadeUp 0.5s ease-out 0s both;
+}
+.hero-content-wrapper {
+  animation: heroFadeUp 0.7s ease-out 0.3s both,
+             heroBlurIn 0.8s ease-out 0.3s both;
 }
 
 /* ── Button active + focus states ───────────────────────────────── */

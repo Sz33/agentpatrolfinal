@@ -316,7 +316,7 @@ export default function TeamHero() {
       </div>
 
       {/* Headline */}
-      <div style={{ position: "absolute", left: 56, bottom: 88, zIndex: 20, color: "var(--cream)" }}>
+      <div className="hero-content-wrapper" style={{ position: "absolute", left: 56, bottom: 88, zIndex: 20, color: "var(--cream)" }}>
         <div
           style={{
             fontFamily: MONO,

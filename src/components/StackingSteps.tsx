@@ -122,7 +122,7 @@ const STYLES = `
   background: white;
   margin-right: 8px;
   vertical-align: middle;
-  animation: ss-pulse-dot 1.2s linear(0, 0.7 25%, 1, 0.7 75%, 0) infinite;
+  animation: ss-pulse-dot 1.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 .ss-cursor {
   display: inline-block;
@@ -278,7 +278,7 @@ function CardInner({ step, idx, total, runId }: { step: Step; idx: number; total
           </div>
           {step.iconLines.map((origLine, i) => {
             const text = typedLines[i] || '';
-            const hasDot = origLine.toLowerCase().includes('attaching');
+            const hasDot = origLine.startsWith('→');
             const isLast = i === step.iconLines.length - 1;
             // Traffic-light coloring by bracket prefix:
             //   red    → [BLOCK] / [WARN]    (card accent — danger)

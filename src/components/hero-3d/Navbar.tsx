@@ -4,6 +4,7 @@ import AnimatedButton from '@/components/AnimatedButton'
 export function Navbar() {
   return (
     <header
+      className="navbar-blur-transition"
       style={{
         position: 'fixed',
         top: 0,
