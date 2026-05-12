@@ -1,27 +1,8 @@
 "use client";
 
-import React from "react";
 import Hero3D from "./Hero3D";
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
-
-const bits = [
-  { text: "10011000_", style: { top: "22%", left: "14%", color: "rgba(0,102,255,.55)", animationDelay: "0s" } },
-  { text: "00101010", style: { top: "36%", right: "18%", color: "rgba(0,102,255,.4)", animationDelay: ".6s" } },
-  { text: "10011100", style: { top: "62%", left: "40%", color: "rgba(77,159,255,.5)", animationDelay: "1.4s" } },
-  { text: "000000", style: { top: "78%", right: "28%", color: "rgba(230,57,70,.5)", animationDelay: "2.1s" } },
-  { text: "110100_", style: { top: "30%", left: "62%", color: "rgba(0,102,255,.32)", animationDelay: ".9s" } },
-  { text: "01001 // index", style: { top: "14%", right: "6%", color: "rgba(77,159,255,.38)", animationDelay: "1.7s" } },
-];
-
-function Crosshair({ style }: { style: React.CSSProperties }) {
-  return (
-    <div style={{ position: "absolute", width: 14, height: 14, zIndex: 25, color: "var(--accent)", ...style }}>
-      <span style={{ position: "absolute", left: 0, right: 0, top: 6, height: 1, background: "currentColor" }} />
-      <span style={{ position: "absolute", top: 0, bottom: 0, left: 6, width: 1, background: "currentColor" }} />
-    </div>
-  );
-}
 
 type ChipVariant = "default" | "light" | "alert";
 
@@ -133,70 +114,6 @@ export default function TeamHero() {
       <div className="team-stage-grid" />
       <div className="team-stage-scanlines" />
 
-      {/* Binary scatter */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ zIndex: 6, fontFamily: MONO, fontSize: 13, letterSpacing: "0.18em" }}
-      >
-        {bits.map((b, i) => (
-          <span
-            key={i}
-            className="absolute"
-            style={{ animation: `team-flicker 4s ease-in-out ${b.style.animationDelay} infinite`, ...b.style }}
-          >
-            {b.text}
-          </span>
-        ))}
-      </div>
-
-      {/* Side rails */}
-      <div
-        className="absolute flex flex-col justify-between items-center"
-        style={{
-          top: 120,
-          bottom: 120,
-          left: 18,
-          width: 48,
-          zIndex: 20,
-          fontSize: 10,
-          letterSpacing: "0.3em",
-          fontFamily: MONO,
-          color: "rgba(77,159,255,.55)",
-        }}
-      >
-        <span>S—01</span>
-        <span style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}>
-          AGENTPATROL · 2026 · INDEX 0.42
-        </span>
-        <span>EN</span>
-      </div>
-      <div
-        className="absolute flex flex-col justify-between items-center"
-        style={{
-          top: 120,
-          bottom: 120,
-          right: 18,
-          width: 48,
-          zIndex: 20,
-          fontSize: 10,
-          letterSpacing: "0.3em",
-          fontFamily: MONO,
-          color: "rgba(77,159,255,.55)",
-        }}
-      >
-        <span>v3.1</span>
-        <span style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}>
-          LIVE · PATROLS ACTIVE · 24/7
-        </span>
-        <span>↘</span>
-      </div>
-
-      {/* Corner crosshairs */}
-      <Crosshair style={{ top: 24, left: 24, opacity: 0.55 }} />
-      <Crosshair style={{ top: 24, right: 24, opacity: 0.55 }} />
-      <Crosshair style={{ bottom: 60, left: 64, opacity: 0.45 }} />
-      <Crosshair style={{ bottom: 60, right: 24, opacity: 0.45 }} />
-
       {/* HUD rings */}
       <div
         style={{
@@ -289,30 +206,6 @@ export default function TeamHero() {
           valueColor="#E63946"
           animDelay="-4s"
         />
-      </div>
-
-      {/* Corner "N" indicator */}
-      <div
-        style={{
-          position: "absolute",
-          left: 24,
-          bottom: 60,
-          zIndex: 30,
-          width: 34,
-          height: 34,
-          borderRadius: 6,
-          background: "rgba(0,102,255,.1)",
-          color: "var(--accent)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontFamily: MONO,
-          fontSize: 13,
-          fontWeight: 600,
-          border: "1px solid rgba(0,102,255,.4)",
-        }}
-      >
-        N
       </div>
 
       {/* Headline */}
