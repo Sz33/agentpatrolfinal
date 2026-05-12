@@ -14,42 +14,42 @@ const FEATURES: Feature[] = [
     num: '01',
     titleLine1: 'Kernel-Level',
     titleLine2: 'Enforcement',
-    body: 'seccomp-bpf syscall filters and Tetragon eBPF sit between your agent and the operating system. An agent that tries to read credentials, spawn an unauthorized shell, or connect to an unexpected endpoint gets stopped before the action completes. Not logged after. Stopped before.',
+    body: 'seccomp-bpf and Tetragon eBPF sit between your agent and the OS. Unauthorized syscalls — credential reads, shell spawns, unexpected endpoints — stopped before they complete.',
     tag: 'OWASP ASI04',
   },
   {
     num: '02',
     titleLine1: 'LLM Proxy',
     titleLine2: 'Intercept',
-    body: 'Your agent thinks it is talking directly to OpenAI or Anthropic. It is actually talking to AgentPatrol first. Every prompt is inspected for data exfiltration. Every tool call is logged. Every response captured. The complete reasoning chain visible for every session.',
+    body: "Your agent thinks it's talking to OpenAI or Anthropic. It's talking to AgentPatrol first. Every prompt, tool call, and response intercepted and logged.",
     tag: 'REASONING LAYER VISIBILITY',
   },
   {
     num: '03',
     titleLine1: 'Pre-Flight',
     titleLine2: 'Gate',
-    body: 'Run agentpatrol scan on any agent codebase before it touches production. Dependency vulnerabilities, hardcoded secrets, dangerous code patterns, and unexpected capabilities all caught before deployment. Works on your own agent code and on code written by others.',
+    body: 'Scan any agent codebase before production. Dependency vulnerabilities, hardcoded secrets, and dangerous patterns caught before deployment.',
     tag: 'SUPPLY CHAIN PROTECTION',
   },
   {
     num: '04',
     titleLine1: 'AI Detection',
     titleLine2: 'Engine',
-    body: 'Two streams run simultaneously. Stream A captures what the agent did at the OS layer. Stream B captures what the agent was reasoning. Both correlated by Claude to produce a unified threat verdict no single-layer tool can replicate.',
+    body: 'Two streams run simultaneously — OS-layer actions and agent reasoning. Both correlated to produce a threat verdict no single-layer tool can replicate.',
     tag: 'DUAL-STREAM CORRELATION',
   },
   {
     num: '05',
     titleLine1: 'Behavioral',
     titleLine2: 'Baseline',
-    body: 'AgentPatrol learns what normal looks like for each individual agent over time. When behavior deviates, new file paths accessed, unusual network destinations, oversized LLM payloads, you know immediately. Slow-burn attacks spanning multiple sessions are caught.',
+    body: "AgentPatrol learns each agent's normal behavior. Deviations — unusual paths, unexpected destinations, oversized payloads — flagged immediately. Slow-burn attacks caught across sessions.",
     tag: 'ANOMALY DETECTION',
   },
   {
     num: '06',
     titleLine1: 'Signed Session',
     titleLine2: 'Report',
-    body: 'Every agent run produces a signed compliance report. Tamper-evident. Cryptographically sealed. Every action mapped to OWASP Agentic AI Top 10 categories. Show it to your auditor. Attach it to your SOC-2 evidence package. Send it to your enterprise client.',
+    body: 'Every run produces a signed, tamper-evident report. Every action mapped to OWASP Agentic AI Top 10. Ready for your auditor, SOC-2 package, or enterprise client.',
     tag: 'AUDIT READY',
   },
 ];
@@ -80,22 +80,15 @@ const STYLES = `
   background: #0a0a0a;
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 8px;
-  padding: 28px 24px;
+  padding: 24px 24px 20px;
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 360px;
   position: relative;
   z-index: 1;
 }
-.feature-num {
-  color: #ef4444;
-  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-}
 .feature-title-block {
-  margin-top: 80px;
+  margin-top: 0;
 }
 .feature-title-line1,
 .feature-title-line2 {
@@ -112,7 +105,7 @@ const STYLES = `
   color: rgba(255,255,255,0.55);
   font-size: 13px;
   line-height: 1.7;
-  margin-top: 16px;
+  margin-top: 12px;
 }
 .feature-tag {
   color: #ef4444;
@@ -187,7 +180,6 @@ export default function FeaturesSection() {
             clickEffect
           >
             <div className="feature-card">
-              <span className="feature-num">// {f.num}</span>
               <div className="feature-title-block">
                 <h3 className="feature-title-line1">{f.titleLine1}</h3>
                 <h3 className="feature-title-line2">{f.titleLine2}</h3>
