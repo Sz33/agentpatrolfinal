@@ -370,7 +370,7 @@ function makeTextSprite(
   const fontPx = 26;
   const padding = 12;
   const measure = document.createElement('canvas').getContext('2d')!;
-  measure.font = `${fontPx}px ui-monospace, SFMono-Regular, Menlo, monospace`;
+  measure.font = `${fontPx}px 'JetBrains Mono', ui-monospace, monospace`;
   const textWidth = measure.measureText(text).width;
   const w = Math.ceil(textWidth + padding * 2);
   const h = fontPx + padding * 2;
@@ -380,7 +380,7 @@ function makeTextSprite(
   canvas.height = h * dpr;
   const ctx = canvas.getContext('2d')!;
   ctx.scale(dpr, dpr);
-  ctx.font = `${fontPx}px ui-monospace, SFMono-Regular, Menlo, monospace`;
+  ctx.font = `${fontPx}px 'JetBrains Mono', ui-monospace, monospace`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillStyle = accent ? 'rgba(239,68,68,0.55)' : 'rgba(255,255,255,0.45)';
@@ -674,7 +674,7 @@ function StageOverlay({ progress }: OverlayProps) {
           pointerEvents: 'none',
           color: 'white',
           fontFamily:
-            'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+            'var(--font-mono, ui-monospace), monospace',
         }}
       >
         {STAGES.map((s, i) => {
@@ -702,7 +702,7 @@ function StageOverlay({ progress }: OverlayProps) {
                     style={{
                       color: '#ef4444',
                       fontFamily:
-                        'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                        'var(--font-mono, ui-monospace), monospace',
                       fontSize: 12,
                       letterSpacing: '0.2em',
                       textTransform: 'uppercase',
@@ -868,7 +868,7 @@ function ReducedMotionFallback() {
         background: '#000',
         color: 'white',
         padding: '120px 24px',
-        fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+        fontFamily: 'var(--font-mono, ui-monospace), monospace',
       }}
     >
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>

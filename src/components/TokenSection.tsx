@@ -91,7 +91,7 @@ export default function TokenSection() {
                   style={{
                     fontSize: "clamp(28px, 3vw, 40px)",
                     fontWeight: 700,
-                    fontFamily: "var(--font-roboto-mono), 'Roboto Mono', monospace",
+                    fontFamily: "var(--font-mono, ui-monospace), monospace",
                     margin: "0 0 4px",
                     lineHeight: 1,
                   }}

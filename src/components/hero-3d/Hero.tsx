@@ -61,7 +61,7 @@ export function Hero() {
             maxWidth: 760,
             margin: '28px auto 0',
             color: 'var(--ink-dim)',
-            fontFamily: 'var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace',
+            fontFamily: 'var(--font-mono, ui-monospace), monospace',
             fontSize: 16,
             lineHeight: 1.7,
             letterSpacing: '.02em',
@@ -92,7 +92,7 @@ export function Hero() {
             className="hud-glow"
             style={{
               position: 'absolute',
-              fontFamily: 'var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace',
+              fontFamily: 'var(--font-mono, ui-monospace), monospace',
               fontSize: 10,
               letterSpacing: '.2em',
               color: 'var(--amber)',
@@ -108,7 +108,7 @@ export function Hero() {
             className="hud-glow"
             style={{
               position: 'absolute',
-              fontFamily: 'var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace',
+              fontFamily: 'var(--font-mono, ui-monospace), monospace',
               fontSize: 10,
               letterSpacing: '.2em',
               color: 'var(--amber)',
@@ -126,7 +126,7 @@ export function Hero() {
             className="hud-glow"
             style={{
               position: 'absolute',
-              fontFamily: 'var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace',
+              fontFamily: 'var(--font-mono, ui-monospace), monospace',
               fontSize: 10,
               letterSpacing: '.2em',
               color: 'var(--amber)',
@@ -242,7 +242,7 @@ export function Hero() {
         >
           <a href="#" style={{ textDecoration: 'none' }}>
             <AnimatedButton className="px-7 py-4 text-[12px] tracking-[0.2em]">
-              Request Early Access <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontWeight: 400 }}>→</span>
+              Request Early Access <span style={{ fontFamily: 'var(--font-mono, ui-monospace), monospace', fontWeight: 400 }}>→</span>
             </AnimatedButton>
           </a>
         </div>
@@ -256,7 +256,7 @@ export function Hero() {
             gap: 48,
             marginTop: 48,
             flexWrap: 'wrap',
-            fontFamily: 'var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace',
+            fontFamily: 'var(--font-mono, ui-monospace), monospace',
             fontSize: 11,
             letterSpacing: '.16em',
             textTransform: 'uppercase',

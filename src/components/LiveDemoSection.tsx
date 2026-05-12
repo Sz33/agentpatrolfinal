@@ -227,14 +227,14 @@ export default function LiveDemoSection() {
         <p
           style={{
             color: '#ef4444',
-            fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+            fontFamily: 'var(--font-mono, ui-monospace), monospace',
             fontSize: 12,
             letterSpacing: '0.18em',
             textTransform: 'uppercase',
             margin: 0,
           }}
         >
-          // See It In Action
+          See It In Action
         </p>
         <h2
           style={{
@@ -310,7 +310,7 @@ export default function LiveDemoSection() {
                     color: 'white',
                     textDecoration: 'none',
                     fontFamily:
-                      'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                      'var(--font-mono, ui-monospace), monospace',
                     fontSize: 11,
                     letterSpacing: '0.08em',
                     textTransform: 'uppercase',
@@ -341,7 +341,7 @@ export default function LiveDemoSection() {
               border: 'none',
               color: 'rgba(255,255,255,0.5)',
               fontFamily:
-                'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                'var(--font-mono, ui-monospace), monospace',
               fontSize: 11,
               letterSpacing: '0.08em',
               textTransform: 'uppercase',
@@ -426,7 +426,7 @@ function Panel({
         display: 'flex',
         flexDirection: 'column',
         fontFamily:
-          'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+          'var(--font-mono, ui-monospace), monospace',
       }}
     >
       {/* Header — traffic dots + status label */}
@@ -510,7 +510,7 @@ function Stat({ value, label }: { value: string; label: string }) {
         style={{
           color: 'rgba(255,255,255,0.4)',
           fontFamily:
-            'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+            'var(--font-mono, ui-monospace), monospace',
           fontSize: 11,
           letterSpacing: '0.12em',
           textTransform: 'uppercase',

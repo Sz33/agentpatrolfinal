@@ -223,7 +223,7 @@ function CardInner({ step, idx, total, runId }: { step: Step; idx: number; total
             key={`label-${runId}`}
             style={{
               color: step.accent,
-              fontFamily: 'monospace',
+              fontFamily: 'var(--font-mono, ui-monospace), monospace',
               fontSize: '13px',
               letterSpacing: '0.3em',
               marginBottom: '24px',
@@ -265,7 +265,7 @@ function CardInner({ step, idx, total, runId }: { step: Step; idx: number; total
             border: `1px solid ${step.accent}40`,
             borderRadius: '12px',
             padding: '32px',
-            fontFamily: 'monospace',
+            fontFamily: 'var(--font-mono, ui-monospace), monospace',
             fontSize: '14px',
             lineHeight: 2,
             minHeight: '220px',
@@ -310,7 +310,7 @@ function CardInner({ step, idx, total, runId }: { step: Step; idx: number; total
           position: 'absolute',
           bottom: '32px',
           right: '40px',
-          fontFamily: 'monospace',
+          fontFamily: 'var(--font-mono, ui-monospace), monospace',
           fontSize: '11px',
           letterSpacing: '0.25em',
           color: step.accent,

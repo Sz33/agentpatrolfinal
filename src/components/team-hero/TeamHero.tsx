@@ -2,7 +2,7 @@
 
 import Hero3D from "./Hero3D";
 
-const MONO = "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
+const MONO = "var(--font-mono, ui-monospace), monospace";
 
 type ChipVariant = "default" | "light" | "alert";
 
@@ -29,7 +29,7 @@ function Chip({
     alert: "rgba(26,6,8,.90)",
   };
   const border: Record<ChipVariant, string> = {
-    default: "1px solid rgba(0,102,255,.4)",
+    default: "1px solid rgba(239,68,68,.4)",
     light: "1px solid rgba(77,159,255,.4)",
     alert: "1px solid rgba(230,57,70,.45)",
   };
@@ -44,7 +44,7 @@ function Chip({
         borderRadius: 6,
         fontSize: 13,
         lineHeight: 1.35,
-        boxShadow: "0 20px 50px rgba(0,0,0,.45), inset 0 0 30px rgba(0,102,255,.05)",
+        boxShadow: "0 20px 50px rgba(0,0,0,.45), inset 0 0 30px rgba(239,68,68,.05)",
         minWidth: 240,
         animation: `team-bob 7s ease-in-out ${animDelay} infinite`,
         fontFamily: "var(--font-heading)",
@@ -248,7 +248,6 @@ export default function TeamHero() {
         >
           GOVERN
           <span style={{ display: "block" }}>
-            <span style={{ color: "var(--accent)", textShadow: "0 0 40px rgba(0,102,255,.6)" }}>—</span>
             YOUR AGENTS
           </span>
         </h1>

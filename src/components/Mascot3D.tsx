@@ -72,7 +72,7 @@ export default function Mascot3D() {
           <Html center>
             <div style={{
               color: 'rgba(255,255,255,0.4)',
-              fontFamily: 'monospace',
+              fontFamily: 'var(--font-mono, ui-monospace), monospace',
               fontSize: '11px',
               letterSpacing: '0.15em',
               animation: 'pulse 1.5s ease-in-out infinite',

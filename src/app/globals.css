@@ -7,7 +7,7 @@
 @theme inline {
   /* Fonts */
   --font-sans: var(--font-body, ui-sans-serif, system-ui, sans-serif);
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-mono: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
   --font-heading: var(--font-heading, sans-serif);
 
   /* Solais brand colors */
@@ -128,15 +128,43 @@
     background-color: #3c091e;
     color: #ffffff;
     font-family: var(--font-body, ui-sans-serif), sans-serif;
+    font-weight: 400;
     font-size: 16px;
-    line-height: 1.6;
+    line-height: 1.65;
+    letter-spacing: 0;
     overflow-x: clip; /* clip (not hidden) — does NOT break position:sticky */
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading, sans-serif);
-    font-weight: 400;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+  h2, h3 {
+    line-height: 1.2;
+  }
+  h1, .display {
     line-height: 1.05;
   }
+  code, pre, kbd, samp, .mono {
+    font-family: var(--font-mono, ui-monospace), monospace;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.6;
+  }
+}
+
+/* ── Typography utilities ─────────────────────────────────────────── */
+.body-medium {
+  font-weight: 500;
+}
+
+.label {
+  font-family: var(--font-body, ui-sans-serif), sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
 }
 
 /* ── Typography Scale (matching solais.ai is-h* classes) ─────────── */
@@ -624,7 +652,7 @@ nav a:hover::after {
   --red: #ef4444;
   --green: #22c55e;
   --cyan: #7ad7ff;
-  --font-jetbrains-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-jetbrains-mono: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
   --font-orbitron: var(--font-heading);
 
   position: relative;
@@ -678,7 +706,7 @@ nav a:hover::after {
   gap: 10px;
   justify-content: center;
   color: var(--amber);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: var(--font-mono, ui-monospace), monospace;
   font-size: 12px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -698,7 +726,7 @@ nav a:hover::after {
 /* Spec readouts */
 #hero-zone .spec-row-left {
   display: flex; align-items: center; gap: 8px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: var(--font-mono, ui-monospace), monospace;
   font-size: 11px; color: var(--ink-mute); letter-spacing: 0.06em;
 }
 #hero-zone .spec-row-left::before {
@@ -707,7 +735,7 @@ nav a:hover::after {
 }
 #hero-zone .spec-row-right {
   display: flex; align-items: center; gap: 8px; flex-direction: row-reverse;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: var(--font-mono, ui-monospace), monospace;
   font-size: 11px; color: var(--ink-mute); letter-spacing: 0.06em;
 }
 #hero-zone .spec-row-right::after {

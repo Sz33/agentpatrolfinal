@@ -109,7 +109,7 @@ const STYLES = `
 }
 .feature-tag {
   color: #ef4444;
-  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
+  font-family: var(--font-mono, ui-monospace), monospace;
   font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -137,7 +137,7 @@ export default function FeaturesSection() {
           style={{
             color: '#ef4444',
             fontFamily:
-              'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+              'var(--font-mono, ui-monospace), monospace',
             fontSize: 12,
             letterSpacing: '0.18em',
             textTransform: 'uppercase',

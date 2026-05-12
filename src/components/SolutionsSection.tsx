@@ -145,7 +145,7 @@ export default function SolutionsSection() {
                 <span
                   style={{
                     fontSize: 12,
-                    fontFamily: "var(--font-roboto-mono), monospace",
+                    fontFamily: "var(--font-mono, ui-monospace), monospace",
                     color:
                       i === active
                         ? "rgb(252,103,86)"
@@ -191,7 +191,7 @@ export default function SolutionsSection() {
                 fontWeight: 800,
                 lineHeight: 1,
                 color: "rgba(239,239,229,0.04)",
-                fontFamily: "var(--font-roboto-mono), monospace",
+                fontFamily: "var(--font-mono, ui-monospace), monospace",
                 userSelect: "none",
               }}
             >

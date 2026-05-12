@@ -53,7 +53,7 @@ export default function ProblemSection() {
           style={{
             color: '#ef4444',
             fontFamily:
-              'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+              'var(--font-mono, ui-monospace), monospace',
             fontSize: 12,
             letterSpacing: '0.18em',
             textTransform: 'uppercase',
@@ -97,7 +97,7 @@ export default function ProblemSection() {
                 style={{
                   color: '#ef4444',
                   fontFamily:
-                    'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                    'var(--font-mono, ui-monospace), monospace',
                   fontSize: 11,
                   letterSpacing: '0.12em',
                   margin: '0 0 16px',

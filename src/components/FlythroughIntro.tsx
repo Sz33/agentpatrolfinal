@@ -144,7 +144,7 @@ export default function FlythroughIntro() {
             style={{
               color: '#ef4444',
               fontFamily:
-                'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                'var(--font-mono, ui-monospace), monospace',
               fontSize: 12,
               letterSpacing: '0.2em',
               textTransform: 'uppercase',

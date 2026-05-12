@@ -199,7 +199,7 @@ const STYLES = `
   gap: 16px;
   padding: 20px 32px;
   border-top: 1px solid var(--cf-border);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: var(--font-mono, ui-monospace), monospace;
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;

@@ -51,7 +51,7 @@ export default function FinalCtaSection() {
         <p
           style={{
             color: '#ef4444',
-            fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+            fontFamily: 'var(--font-mono, ui-monospace), monospace',
             fontSize: 12,
             letterSpacing: '0.18em',
             textTransform: 'uppercase',
@@ -122,7 +122,7 @@ export default function FinalCtaSection() {
               <span
                 style={{
                   fontFamily:
-                    'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                    'var(--font-mono, ui-monospace), monospace',
                   fontWeight: 400,
                 }}
               >

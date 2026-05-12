@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 
-const MONO = "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
+const MONO = "var(--font-mono, ui-monospace), monospace";
 
 const CARDS = [
   { pos: { top: "22%", left: "2%", right: "auto" }, num: "01", status: "CRITICAL", accent: "#E63946", delay: 0.15, title: "NO VISIBILITY\nAT RUNTIME", body: "Your agent runs as a black box once deployed. You have no way to see what it's actually doing during each run." },

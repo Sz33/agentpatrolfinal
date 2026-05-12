@@ -18,7 +18,7 @@ export default function WhyKernelSection() {
         <p
           style={{
             color: '#ef4444',
-            fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+            fontFamily: 'var(--font-mono, ui-monospace), monospace',
             fontSize: 12,
             letterSpacing: '0.18em',
             textTransform: 'uppercase',
@@ -69,7 +69,7 @@ export default function WhyKernelSection() {
             <p
               style={{
                 color: 'rgba(255,255,255,0.85)',
-                fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                fontFamily: 'var(--font-mono, ui-monospace), monospace',
                 fontSize: 11,
                 letterSpacing: '0.2em',
                 textTransform: 'uppercase',
@@ -104,7 +104,7 @@ export default function WhyKernelSection() {
             <p
               style={{
                 color: '#ef4444',
-                fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                fontFamily: 'var(--font-mono, ui-monospace), monospace',
                 fontSize: 11,
                 letterSpacing: '0.2em',
                 textTransform: 'uppercase',
@@ -143,7 +143,7 @@ export default function WhyKernelSection() {
             An agent reading{' '}
             <code
               style={{
-                fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                fontFamily: 'var(--font-mono, ui-monospace), monospace',
                 color: 'rgba(255,255,255,0.7)',
                 fontSize: '0.9em',
               }}
@@ -153,7 +153,7 @@ export default function WhyKernelSection() {
             gets{' '}
             <code
               style={{
-                fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                fontFamily: 'var(--font-mono, ui-monospace), monospace',
                 color: 'rgba(255,255,255,0.7)',
                 fontSize: '0.9em',
               }}

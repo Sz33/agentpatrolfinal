@@ -1,18 +1,26 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import { Inter } from "next/font/google";
+import { Manrope, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import GsapAnimations from "@/components/GsapAnimations";
 
+const manrope = Manrope({
+  subsets: ["latin"],
+  weight: ["600", "800"],
+  variable: "--font-heading",
+  display: "swap",
+});
+
 const inter = Inter({
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
   variable: "--font-body",
   display: "swap",
 });
 
-const teknolog = localFont({
-  src: "./fonts/nb_architekt_bold.woff2",
-  variable: "--font-heading",
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -40,7 +48,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${teknolog.variable} antialiased`}
+      className={`${manrope.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
     >
       <body className="min-h-full flex flex-col">
         {children}

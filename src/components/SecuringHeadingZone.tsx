@@ -94,7 +94,7 @@ export default function SecuringHeadingZone() {
             style={{
               color: 'rgba(255,255,255,0.4)',
               fontFamily:
-                'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                'var(--font-mono, ui-monospace), monospace',
               fontSize: 11,
               letterSpacing: '0.3em',
               margin: '0 0 16px',

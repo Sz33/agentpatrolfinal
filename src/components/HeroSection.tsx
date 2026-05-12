@@ -40,7 +40,7 @@ export default function HeroSection() {
       >
         <p
           style={{
-            fontFamily: "var(--font-roboto-mono), 'Roboto Mono', monospace",
+            fontFamily: "var(--font-mono, ui-monospace), monospace",
             fontSize: 12,
             letterSpacing: "0.05em",
             color: "rgba(239,239,229,0.65)",
