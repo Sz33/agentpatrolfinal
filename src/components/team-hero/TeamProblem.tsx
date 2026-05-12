@@ -266,7 +266,7 @@ export default function TeamProblem() {
           animationPlayState: "paused",
         } as React.CSSProperties}
       >
-        <div style={{ color: "var(--text-secondary)" }}>// THIS ISN&apos;T A FUTURE RISK.</div>
+        <div style={{ color: "var(--text-secondary)" }}>THIS ISN&apos;T A FUTURE RISK.</div>
         <div style={{ color: "rgba(230,57,70,.7)" }}>
           IT&apos;S THE CURRENT STATE OF AI AGENT DEPLOYMENT — RIGHT NOW.
         </div>

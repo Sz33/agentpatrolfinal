@@ -60,7 +60,7 @@ export default function ProblemSection() {
             margin: 0,
           }}
         >
-          // Sound Familiar?
+          Sound Familiar?
         </p>
 
         {/* Headline */}

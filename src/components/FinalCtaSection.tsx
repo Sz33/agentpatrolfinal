@@ -58,7 +58,7 @@ export default function FinalCtaSection() {
             margin: 0,
           }}
         >
-          // Get Started
+          Get Started
         </p>
 
         {/* Headline */}

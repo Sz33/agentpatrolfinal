@@ -25,7 +25,7 @@ export default function WhyKernelSection() {
             margin: 0,
           }}
         >
-          // The Technical Difference
+          The Technical Difference
         </p>
 
         {/* Lead headline — two clauses, second clause emphasised */}

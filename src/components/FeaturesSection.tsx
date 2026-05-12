@@ -144,7 +144,7 @@ export default function FeaturesSection() {
             margin: 0,
           }}
         >
-          // What AgentPatrol Does
+          What AgentPatrol Does
         </p>
         {/* Headline */}
         <h2
