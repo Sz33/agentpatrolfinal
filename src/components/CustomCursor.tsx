@@ -1,25 +1,10 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
-  const [outsideHero, setOutsideHero] = useState(false);
-
-  // Inverse of EvilCursor: active everywhere EXCEPT inside the hero zone.
-  useEffect(() => {
-    const sentinel = document.getElementById("hero-zone-end");
-    if (!sentinel) return;
-    setOutsideHero(sentinel.getBoundingClientRect().top <= 0);
-    const obs = new IntersectionObserver(
-      ([entry]) => setOutsideHero(entry.boundingClientRect.top <= 0),
-      { rootMargin: "0px", threshold: 0 },
-    );
-    obs.observe(sentinel);
-    return () => obs.disconnect();
-  }, []);
 
   useEffect(() => {
-    if (!outsideHero) return;
     const cursor = cursorRef.current;
     if (!cursor || window.matchMedia("(pointer: coarse)").matches) return;
 
@@ -52,9 +37,7 @@ export default function CustomCursor() {
       cancelAnimationFrame(rafId);
       mutObs.disconnect();
     };
-  }, [outsideHero]);
-
-  if (!outsideHero) return null;
+  }, []);
 
   return <div ref={cursorRef} className="custom-cursor" aria-hidden="true" style={{ opacity: 0 }} />;
 }
