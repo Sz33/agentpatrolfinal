@@ -161,7 +161,10 @@ export default function FeaturesSection() {
             textTransform: 'uppercase',
           }}
         >
-          Every layer of your agent monitored and enforced.
+          Every layer of your agent{' '}
+          <span style={{ color: 'var(--brand)' }}>monitored</span>
+          {' '}and{' '}
+          <span style={{ color: 'var(--brand)' }}>enforced</span>.
         </h2>
       </div>
 

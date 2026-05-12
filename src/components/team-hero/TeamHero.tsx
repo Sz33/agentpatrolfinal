@@ -94,10 +94,7 @@ export default function TeamHero() {
         height: "100vh",
         fontFamily: "var(--font-heading)",
         color: "var(--cream)",
-        background: `
-          radial-gradient(120% 100% at 100% 100%, rgba(0,102,255,.14) 0%, rgba(0,102,255,0) 55%),
-          linear-gradient(180deg, #060810 0%, #0A0F1E 60%, #060810 100%)
-        `,
+        background: "radial-gradient(120% 100% at 100% 100%, rgba(0,102,255,.06) 0%, rgba(0,102,255,0) 55%)",
       }}
     >
       <div
@@ -106,7 +103,7 @@ export default function TeamHero() {
           inset: 0,
           pointerEvents: "none",
           zIndex: 1,
-          background: "radial-gradient(60% 80% at 50% 40%, rgba(0,102,255,.16) 0%, rgba(0,102,255,0) 60%)",
+          background: "radial-gradient(60% 80% at 50% 40%, rgba(0,102,255,.08) 0%, rgba(0,102,255,0) 60%)",
         }}
       />
 
@@ -123,7 +120,7 @@ export default function TeamHero() {
           width: 920,
           height: 920,
           borderRadius: "50%",
-          border: "1px dotted rgba(0,102,255,.1)",
+          border: "1px dotted rgba(0,102,255,.05)",
           zIndex: 8,
           animation: "team-ring-spin 90s linear infinite",
         }}
@@ -136,7 +133,7 @@ export default function TeamHero() {
           width: 720,
           height: 720,
           borderRadius: "50%",
-          border: "1px dashed rgba(0,102,255,.2)",
+          border: "1px dashed rgba(0,102,255,.1)",
           zIndex: 8,
           animation: "team-ring-spin-rev 60s linear infinite",
         }}

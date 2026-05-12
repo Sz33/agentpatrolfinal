@@ -59,8 +59,7 @@ export default function TeamProblem() {
         color: "var(--cream)",
         background: `
           radial-gradient(ellipse 80% 60% at 50% 0%,   rgba(0,102,255,.06)  0%, transparent 60%),
-          radial-gradient(ellipse 60% 50% at 80% 80%,  rgba(0,102,255,.06)  0%, transparent 55%),
-          linear-gradient(180deg, #060810 0%, #0A0F1E 50%, #060810 100%)
+          radial-gradient(ellipse 60% 50% at 80% 80%,  rgba(0,102,255,.06)  0%, transparent 55%)
         `,
       }}
     >
@@ -82,7 +81,7 @@ export default function TeamProblem() {
           left: 0,
           right: 0,
           height: 1,
-          background: "linear-gradient(90deg,transparent,rgba(0,102,255,.35) 30%,rgba(0,102,255,.35) 70%,transparent)",
+          background: "linear-gradient(90deg,transparent,rgba(0,102,255,.15) 30%,rgba(0,102,255,.15) 70%,transparent)",
         }}
       />
 
@@ -150,7 +149,7 @@ export default function TeamProblem() {
             position: "absolute",
             inset: 0,
             borderRadius: "50%",
-            border: "1px solid rgba(0,102,255,.08)",
+            border: "1px solid rgba(0,102,255,.04)",
             animation: "team-spin-cw 40s linear infinite",
           }}
         />

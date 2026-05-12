@@ -43,9 +43,8 @@ export default function WhyKernelSection() {
         >
           Application-layer monitoring sees what the agent reports.
           <br />
-          <span style={{ color: 'var(--danger)' }}>
-            Kernel-level monitoring sees what the agent does.
-          </span>
+          <span style={{ color: 'var(--brand)' }}>Kernel-level</span>
+          {' '}monitoring sees what the agent does.
         </h2>
 
         {/* Two-column comparison */}

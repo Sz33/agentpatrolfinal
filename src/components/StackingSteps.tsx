@@ -15,7 +15,7 @@ const STEPS: Step[] = [
     num: '01',
     title: 'PRE-FLIGHT SCAN',
     desc: 'Supply chain threats, hardcoded credentials, dangerous calls caught before agent runs. Signed PDF report generated before a single line of agent code executes.',
-    bg: '#0a0a0a',
+    bg: '#0a090d',
     accent: '#7f1d1d',
     iconLines: [
       '$ agentpatrol scan ./agent',
@@ -28,7 +28,7 @@ const STEPS: Step[] = [
     num: '02',
     title: 'RUNTIME SANDBOX',
     desc: 'Kernel-level enforcement loaded before agent starts. Tetragon eBPF + seccomp-bpf control the environment. The agent runs inside a controlled environment it cannot escape.',
-    bg: '#0f0606',
+    bg: '#0b0910',
     accent: '#991b1b',
     iconLines: [
       '$ agentpatrol run python agent.py',
@@ -41,7 +41,7 @@ const STEPS: Step[] = [
     num: '03',
     title: 'LLM PROXY',
     desc: 'Every external LLM call routed through AgentPatrol first. Payload guard scans for data exfiltration. Every prompt, tool call, and response captured.',
-    bg: '#14080a',
+    bg: '#0d0b15',
     accent: '#b91c1c',
     iconLines: [
       '[PROXY] POST api.[your_llm].com/v1/chat',
@@ -54,7 +54,7 @@ const STEPS: Step[] = [
     num: '04',
     title: 'DETECT & BLOCK',
     desc: 'OS-layer and reasoning-layer correlation. Threats stopped before completion, not after. Two streams correlated by an LLM into a unified threat verdict.',
-    bg: '#1a0a0a',
+    bg: '#0f0a1a',
     accent: '#dc2626',
     iconLines: [
       '[BLOCK] read /etc/passwd',
@@ -67,7 +67,7 @@ const STEPS: Step[] = [
     num: '05',
     title: 'SESSION REPORT',
     desc: 'Signed, tamper-evident PDF after every run. Every file accessed. Every network connection. Every LLM call. OWASP ASI mapped. Auditor-ready.',
-    bg: '#1f0c0e',
+    bg: '#120c1f',
     accent: '#ef4444',
     iconLines: [
       '→ generating signed report',
@@ -96,9 +96,9 @@ const STYLES = `
   100% { transform: translateX(0);  text-shadow: none; }
 }
 @keyframes ss-glow {
-  0%   { box-shadow: 0 0 0 1px var(--ss-accent), 0 0 0 0 transparent; }
-  50%  { box-shadow: 0 0 0 1px var(--ss-accent), 0 0 28px 4px var(--ss-accent); }
-  100% { box-shadow: 0 0 0 1px var(--ss-accent), 0 0 0 0 transparent; }
+  0%   { box-shadow: 0 0 0 1px var(--brand), 0 0 0 0 transparent; }
+  50%  { box-shadow: 0 0 0 1px var(--brand), 0 0 28px 4px var(--brand); }
+  100% { box-shadow: 0 0 0 1px var(--brand), 0 0 0 0 transparent; }
 }
 @keyframes ss-roll-old {
   from { transform: translateY(0);    opacity: 1; }
@@ -249,7 +249,10 @@ function CardInner({ step, idx, total, runId }: { step: Step; idx: number; total
               margin: '0 0 32px',
             }}
           >
-            {step.title}
+            {(() => {
+              const i = step.title.lastIndexOf(' ');
+              return <>{step.title.slice(0, i)}{' '}<span style={{ color: 'var(--brand)' }}>{step.title.slice(i + 1)}</span></>;
+            })()}
           </h3>
           <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '17px', lineHeight: 1.6, maxWidth: '480px', margin: 0 }}>
             {step.desc}
@@ -262,7 +265,7 @@ function CardInner({ step, idx, total, runId }: { step: Step; idx: number; total
           style={{
             ...accentStyle,
             background: 'rgba(0,0,0,0.6)',
-            border: `1px solid ${step.accent}40`,
+            border: '1px solid rgba(var(--brand-rgb), 0.25)',
             borderRadius: '12px',
             padding: '32px',
             fontFamily: 'var(--font-mono, ui-monospace), monospace',

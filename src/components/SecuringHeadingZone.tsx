@@ -114,7 +114,7 @@ export default function SecuringHeadingZone() {
               textShadow: '0 0 30px rgba(0,0,0,0.85)',
             }}
           >
-            DEFENSE IN DEPTH
+            <span style={{ color: 'var(--brand)' }}>DEFENSE IN DEPTH</span>
           </h2>
         </div>
       </div>

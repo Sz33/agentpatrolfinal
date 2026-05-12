@@ -1,8 +1,8 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 
-const PHRASE = "KERNEL · ENFORCE · MONITOR · BLOCK · DETECT · PROTECT · ";
-const ITEMS = PHRASE.repeat(6);
+const WORDS = ['DETECT', 'PROTECT', 'KERNEL', 'ENFORCE', 'MONITOR', 'BLOCK'];
+const REPEATED_WORDS = Array.from({ length: 6 }, () => WORDS).flat();
 
 export default function SolaisMarqueeSection() {
   const ref = useRef<HTMLElement>(null);
@@ -48,21 +48,32 @@ export default function SolaisMarqueeSection() {
           whiteSpace: "nowrap",
         }}
       >
-        {/* Duplicate for seamless loop */}
-        {[0, 1].map((i) => (
-          <span
-            key={i}
-            style={{
-              color: "var(--brand)",
-              fontSize: "13px",
-              letterSpacing: "0.25em",
-              textTransform: "uppercase",
-              fontFamily: "var(--font-heading, sans-serif)",
-              opacity: 0.85,
-              paddingRight: "2rem",
-            }}
-          >
-            {ITEMS}
+        {REPEATED_WORDS.map((word, i) => (
+          <span key={i} style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <span
+              style={{
+                color: i % 2 === 0 ? '#ffffff' : 'var(--brand)',
+                fontSize: '13px',
+                letterSpacing: '0.25em',
+                textTransform: 'uppercase',
+                fontFamily: 'var(--font-heading, sans-serif)',
+                opacity: 0.85,
+              }}
+            >
+              {word}
+            </span>
+            <span
+              style={{
+                color: 'var(--brand)',
+                opacity: 0.4,
+                fontSize: '13px',
+                letterSpacing: '0.25em',
+                fontFamily: 'var(--font-heading, sans-serif)',
+                margin: '0 0.6rem',
+              }}
+            >
+              ·
+            </span>
           </span>
         ))}
       </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { DANGER_HEX, DANGER_RGB } from '@/lib/theme';
+import { BRAND_HEX, DANGER_HEX, DANGER_RGB } from '@/lib/theme';
 import React, {
   RefObject,
   useEffect,
@@ -135,7 +135,7 @@ function Fragments({ progressRef }: { progressRef: ProgressRef }) {
   const accentMat = useMemo(
     () =>
       new THREE.MeshBasicMaterial({
-        color: DANGER_HEX,
+        color: BRAND_HEX,
         wireframe: true,
         transparent: true,
         opacity: 0.85,
@@ -701,7 +701,7 @@ function StageOverlay({ progress }: OverlayProps) {
                   {/* Intro stage — small red label + big hero headline */}
                   <p
                     style={{
-                      color: 'var(--danger)',
+                      color: 'var(--brand)',
                       fontFamily:
                         'var(--font-mono, ui-monospace), monospace',
                       fontSize: 12,
@@ -720,8 +720,8 @@ function StageOverlay({ progress }: OverlayProps) {
                         width: 6,
                         height: 6,
                         borderRadius: '50%',
-                        background: 'var(--danger)',
-                        boxShadow: '0 0 10px var(--danger)',
+                        background: 'var(--brand)',
+                        boxShadow: '0 0 10px var(--brand)',
                       }}
                     />
                     // {s.label}
@@ -747,7 +747,7 @@ function StageOverlay({ progress }: OverlayProps) {
                     style={{
                       display: 'inline-flex',
                       alignItems: 'center',
-                      border: '0.5px solid var(--danger)',
+                      border: '0.5px solid var(--brand)',
                       borderRadius: 2,
                       fontSize: 10,
                       letterSpacing: '0.2em',
@@ -755,10 +755,10 @@ function StageOverlay({ progress }: OverlayProps) {
                       overflow: 'hidden',
                     }}
                   >
-                    <span style={{ background: 'rgba(var(--danger-rgb),0.25)', color: 'white', padding: '6px 10px' }}>{s.num}</span>
-                    <span style={{ color: 'rgba(var(--danger-rgb),0.55)', padding: '6px 8px' }}>│</span>
-                    <span style={{ background: 'rgba(var(--danger-rgb),0.08)', color: 'var(--danger)', padding: '6px 12px' }}>{s.pillLabel}</span>
-                    <span style={{ color: 'rgba(var(--danger-rgb),0.45)', padding: '6px 10px' }}>||</span>
+                    <span style={{ background: 'rgba(var(--brand-rgb),0.25)', color: 'white', padding: '6px 10px' }}>{s.num}</span>
+                    <span style={{ color: 'rgba(var(--brand-rgb),0.55)', padding: '6px 8px' }}>│</span>
+                    <span style={{ background: 'rgba(var(--brand-rgb),0.08)', color: 'var(--brand)', padding: '6px 12px' }}>{s.pillLabel}</span>
+                    <span style={{ color: 'rgba(var(--brand-rgb),0.45)', padding: '6px 10px' }}>||</span>
                   </div>
                   <h2
                     style={{
@@ -769,7 +769,7 @@ function StageOverlay({ progress }: OverlayProps) {
                       letterSpacing: '-0.005em',
                       lineHeight: 1.05,
                       margin: '0 0 22px',
-                      textShadow: '0 0 30px rgba(var(--danger-rgb),0.3), 0 2px 20px rgba(0,0,0,0.85)',
+                      textShadow: '0 0 30px rgba(var(--brand-rgb),0.3), 0 2px 20px rgba(0,0,0,0.85)',
                       textTransform: 'uppercase',
                     }}
                   >

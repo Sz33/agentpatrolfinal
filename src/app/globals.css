@@ -151,8 +151,8 @@
     /* scroll-behavior:smooth removed — conflicts with GSAP ScrollTrigger pin */
   }
   body {
-    background-color: #3c091e;
-    color: #ffffff;
+    background: #0A0A0B;
+    color: #F1F5F9;
     font-family: var(--font-body, ui-sans-serif), sans-serif;
     font-weight: 400;
     font-size: 16px;
@@ -684,8 +684,7 @@ nav a:hover::after {
   position: relative;
   background:
     radial-gradient(1200px 700px at 50% 20%, rgba(239, 68, 68, 0.05), transparent 60%),
-    radial-gradient(900px 600px at 50% 95%, rgba(239, 68, 68, 0.03), transparent 70%),
-    var(--bg);
+    radial-gradient(900px 600px at 50% 95%, rgba(239, 68, 68, 0.03), transparent 70%);
   color: var(--ink);
 }
 
