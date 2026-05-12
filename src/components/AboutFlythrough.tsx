@@ -701,16 +701,21 @@ function StageOverlay({ progress }: OverlayProps) {
                   {/* Intro stage — small red label + big hero headline */}
                   <p
                     style={{
-                      color: 'var(--brand)',
+                      color: '#F1F5F9',
                       fontFamily:
                         'var(--font-mono, ui-monospace), monospace',
-                      fontSize: 12,
-                      letterSpacing: '0.2em',
+                      fontSize: 13,
+                      letterSpacing: '0.22em',
                       textTransform: 'uppercase',
                       margin: '0 0 24px',
                       display: 'inline-flex',
                       alignItems: 'center',
                       gap: 10,
+                      background: 'rgba(0,0,0,0.5)',
+                      backdropFilter: 'blur(4px)',
+                      WebkitBackdropFilter: 'blur(4px)',
+                      padding: '4px 12px',
+                      borderRadius: '4px',
                     }}
                   >
                     <span
@@ -724,7 +729,7 @@ function StageOverlay({ progress }: OverlayProps) {
                         boxShadow: '0 0 10px var(--brand)',
                       }}
                     />
-                    // {s.label}
+                    {s.label}
                   </p>
                   <h2
                     style={{
@@ -747,18 +752,21 @@ function StageOverlay({ progress }: OverlayProps) {
                     style={{
                       display: 'inline-flex',
                       alignItems: 'center',
-                      border: '0.5px solid var(--brand)',
+                      border: '1px solid var(--brand)',
                       borderRadius: 2,
                       fontSize: 10,
                       letterSpacing: '0.2em',
                       marginBottom: 22,
                       overflow: 'hidden',
+                      background: 'rgba(0,0,0,0.6)',
+                      backdropFilter: 'blur(4px)',
+                      WebkitBackdropFilter: 'blur(4px)',
                     }}
                   >
-                    <span style={{ background: 'rgba(var(--brand-rgb),0.25)', color: 'white', padding: '6px 10px' }}>{s.num}</span>
-                    <span style={{ color: 'rgba(var(--brand-rgb),0.55)', padding: '6px 8px' }}>│</span>
-                    <span style={{ background: 'rgba(var(--brand-rgb),0.08)', color: 'var(--brand)', padding: '6px 12px' }}>{s.pillLabel}</span>
-                    <span style={{ color: 'rgba(var(--brand-rgb),0.45)', padding: '6px 10px' }}>||</span>
+                    <span style={{ background: 'rgba(var(--brand-rgb),0.25)', color: '#F1F5F9', padding: '6px 10px' }}>{s.num}</span>
+                    <span style={{ color: 'rgba(var(--brand-rgb),0.85)', padding: '6px 8px' }}>│</span>
+                    <span style={{ background: 'rgba(var(--brand-rgb),0.15)', color: '#F1F5F9', padding: '6px 12px' }}>{s.pillLabel}</span>
+                    <span style={{ color: 'rgba(var(--brand-rgb),0.75)', padding: '6px 10px' }}>||</span>
                   </div>
                   <h2
                     style={{

@@ -17,7 +17,7 @@ export default function Hero3D() {
         zIndex: 9999,
         pointerEvents: "none",
         transition: "opacity 0.15s linear",
-        transform: "translateY(-7vh)",
+        transform: "translateY(-13vh)",
       }}
     >
       <RobotScene />

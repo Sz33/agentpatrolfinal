@@ -29,9 +29,14 @@ function Chip({
     alert: "rgba(26,6,8,.90)",
   };
   const border: Record<ChipVariant, string> = {
-    default: "1px solid rgba(239,68,68,.4)",
+    default: "1px solid rgba(0,200,150,.6)",
     light: "1px solid rgba(77,159,255,.4)",
     alert: "1px solid rgba(230,57,70,.45)",
+  };
+  const boxShadow: Record<ChipVariant, string> = {
+    default: "0 20px 50px rgba(0,0,0,.45), 0 0 8px rgba(34,197,94,0.25), 0 0 16px rgba(34,197,94,0.1)",
+    light:   "0 20px 50px rgba(0,0,0,.45), 0 0 8px rgba(139,92,246,0.25), 0 0 16px rgba(139,92,246,0.1)",
+    alert:   "0 20px 50px rgba(0,0,0,.45), 0 0 8px rgba(220,38,38,0.25), 0 0 16px rgba(220,38,38,0.1)",
   };
   return (
     <div
@@ -44,7 +49,7 @@ function Chip({
         borderRadius: 6,
         fontSize: 13,
         lineHeight: 1.35,
-        boxShadow: "0 20px 50px rgba(0,0,0,.45), inset 0 0 30px rgba(239,68,68,.05)",
+        boxShadow: boxShadow[variant],
         minWidth: 240,
         animation: `team-bob 7s ease-in-out ${animDelay} infinite`,
         fontFamily: "var(--font-heading)",
