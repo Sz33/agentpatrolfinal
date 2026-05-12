@@ -248,7 +248,8 @@ export default function TeamHero() {
         >
           GOVERN
           <span style={{ display: "block" }}>
-            YOUR AGENTS
+            <span style={{ color: "var(--brand)", textShadow: "0 0 40px rgba(var(--brand-rgb),.6)" }}>—</span>
+            YOUR <span style={{ color: "var(--brand)" }}>AGENTS</span>
           </span>
         </h1>
       </div>

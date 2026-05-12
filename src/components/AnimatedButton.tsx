@@ -20,7 +20,7 @@ export default function AnimatedButton({
   shimmerSize = '0.05em',
   shimmerDuration = '3s',
   borderRadius = '8px',
-  background = '#ef4444',
+  background = 'var(--brand)',
   ...props
 }: AnimatedButtonProps) {
   return (

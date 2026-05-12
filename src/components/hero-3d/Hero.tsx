@@ -149,8 +149,8 @@ export function Hero() {
               width: '120%',
               aspectRatio: '1/1',
               borderRadius: '50%',
-              border: '1px solid rgba(239, 68, 68,.18)',
-              background: 'radial-gradient(circle, rgba(239, 68, 68,.08), transparent 60%)',
+              border: '1px solid rgba(var(--brand-rgb),.18)',
+              background: 'radial-gradient(circle, rgba(var(--brand-rgb),.08), transparent 60%)',
               zIndex: 1,
             }}
           />
@@ -163,7 +163,7 @@ export function Hero() {
               width: '80%',
               aspectRatio: '1/1',
               borderRadius: '50%',
-              border: '1px solid rgba(239, 68, 68,.1)',
+              border: '1px solid rgba(var(--brand-rgb),.1)',
               background: 'none',
               zIndex: 1,
             }}
@@ -177,7 +177,7 @@ export function Hero() {
               width: '46%',
               aspectRatio: '1/1',
               borderRadius: '50%',
-              border: '1px solid rgba(239, 68, 68,.08)',
+              border: '1px solid rgba(var(--brand-rgb),.08)',
               background: 'none',
               zIndex: 1,
             }}

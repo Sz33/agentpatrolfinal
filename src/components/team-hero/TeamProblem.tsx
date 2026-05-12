@@ -5,9 +5,9 @@ import React, { useEffect, useRef } from "react";
 const MONO = "var(--font-mono, ui-monospace), monospace";
 
 const CARDS = [
-  { pos: { top: "22%", left: "2%", right: "auto" }, num: "01", status: "CRITICAL", accent: "#E63946", delay: 0.15, title: "NO VISIBILITY\nAT RUNTIME", body: "Your agent runs as a black box once deployed. You have no way to see what it's actually doing during each run." },
-  { pos: { top: "58%", left: "2%", right: "auto" }, num: "02", status: "HIGH", accent: "#F5A623", delay: 0.35, title: "NO WAY\nTO STOP IT", body: "Alerts come too late. By the time anyone investigates, the damage is already done. There's no enforcement layer." },
-  { pos: { top: "22%", left: "auto", right: "2%" }, num: "03", status: "CRITICAL", accent: "#E63946", delay: 0.25, title: "NO AUDIT\nTRAIL", body: "Your CISO, auditor, or enterprise client asks for proof. You have no session reports. Nothing to show." },
+  { pos: { top: "22%", left: "2%", right: "auto" }, num: "01", status: "CRITICAL", accent: "var(--danger)", delay: 0.15, title: "NO VISIBILITY\nAT RUNTIME", body: "Your agent runs as a black box once deployed. You have no way to see what it's actually doing during each run." },
+  { pos: { top: "58%", left: "2%", right: "auto" }, num: "02", status: "HIGH", accent: "var(--info)", delay: 0.35, title: "NO WAY\nTO STOP IT", body: "Alerts come too late. By the time anyone investigates, the damage is already done. There's no enforcement layer." },
+  { pos: { top: "22%", left: "auto", right: "2%" }, num: "03", status: "CRITICAL", accent: "var(--danger)", delay: 0.25, title: "NO AUDIT\nTRAIL", body: "Your CISO, auditor, or enterprise client asks for proof. You have no session reports. Nothing to show." },
   { pos: { top: "58%", left: "auto", right: "2%" }, num: "04", status: "SUPPLY CHAIN", accent: "#4D9FFF", delay: 0.45, title: "NO CONTROL OVER\nWHAT IT WAS BUILT WITH", body: "You received the agent from a contractor or agency. You don't know every dependency it pulls in, every API it calls, or every capability it was given." },
 ] as const;
 
@@ -107,7 +107,7 @@ export default function TeamProblem() {
               fontFamily: MONO,
               fontSize: 9,
               letterSpacing: "0.44em",
-              color: "#E63946",
+              color: "var(--brand)",
               textTransform: "uppercase",
               opacity: 0.8,
             }}

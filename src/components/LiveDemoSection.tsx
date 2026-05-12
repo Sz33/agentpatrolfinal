@@ -67,7 +67,7 @@ const EVENTS: DemoEvent[] = [
 const SEVERITY_COLOR: Record<Severity, string> = {
   normal: 'rgba(255,255,255,0.85)',
   amber: '#f59e0b',
-  red: '#ef4444',
+  red: 'var(--danger)',
 };
 
 // Inline keyframes — kept local to this component so the rest of
@@ -226,7 +226,7 @@ export default function LiveDemoSection() {
         {/* Header */}
         <p
           style={{
-            color: '#ef4444',
+            color: 'var(--brand)',
             fontFamily: 'var(--font-mono, ui-monospace), monospace',
             fontSize: 12,
             letterSpacing: '0.18em',
@@ -249,7 +249,7 @@ export default function LiveDemoSection() {
           }}
         >
           Watch AgentPatrol catch a threat{' '}
-          <span style={{ color: '#ef4444' }}>in real time.</span>
+          <span style={{ color: 'var(--brand)' }}>in real time.</span>
         </h2>
         <p
           style={{
@@ -306,7 +306,7 @@ export default function LiveDemoSection() {
                     display: 'inline-block',
                     marginTop: 16,
                     padding: '10px 14px',
-                    background: '#ef4444',
+                    background: 'var(--brand)',
                     color: 'white',
                     textDecoration: 'none',
                     fontFamily:
@@ -318,10 +318,10 @@ export default function LiveDemoSection() {
                     animation: 'ld-fade-in 350ms ease-out both',
                   }}
                   onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLAnchorElement).style.background = '#dc2626';
+                    (e.currentTarget as HTMLAnchorElement).style.background = 'var(--brand-hover)';
                   }}
                   onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLAnchorElement).style.background = '#ef4444';
+                    (e.currentTarget as HTMLAnchorElement).style.background = 'var(--brand)';
                   }}
                 >
                   Download Signed Report PDF

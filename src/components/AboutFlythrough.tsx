@@ -1,5 +1,6 @@
 'use client';
 
+import { DANGER_HEX, DANGER_RGB } from '@/lib/theme';
 import React, {
   RefObject,
   useEffect,
@@ -134,7 +135,7 @@ function Fragments({ progressRef }: { progressRef: ProgressRef }) {
   const accentMat = useMemo(
     () =>
       new THREE.MeshBasicMaterial({
-        color: '#ef4444',
+        color: DANGER_HEX,
         wireframe: true,
         transparent: true,
         opacity: 0.85,
@@ -383,7 +384,7 @@ function makeTextSprite(
   ctx.font = `${fontPx}px 'JetBrains Mono', ui-monospace, monospace`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillStyle = accent ? 'rgba(239,68,68,0.55)' : 'rgba(255,255,255,0.45)';
+  ctx.fillStyle = accent ? `rgba(${DANGER_RGB},0.55)` : 'rgba(255,255,255,0.45)';
   ctx.fillText(text, w / 2, h / 2);
 
   const tex = new THREE.CanvasTexture(canvas);
@@ -649,7 +650,7 @@ function StageOverlay({ progress }: OverlayProps) {
           inset: 0,
           pointerEvents: 'none',
           background:
-            'radial-gradient(ellipse at center, rgba(239,68,68,0.04) 0%, transparent 40%)',
+            'radial-gradient(ellipse at center, rgba(var(--brand-rgb),0.04) 0%, transparent 40%)',
           opacity: atmosOpacity,
         }}
       />
@@ -700,7 +701,7 @@ function StageOverlay({ progress }: OverlayProps) {
                   {/* Intro stage — small red label + big hero headline */}
                   <p
                     style={{
-                      color: '#ef4444',
+                      color: 'var(--danger)',
                       fontFamily:
                         'var(--font-mono, ui-monospace), monospace',
                       fontSize: 12,
@@ -719,8 +720,8 @@ function StageOverlay({ progress }: OverlayProps) {
                         width: 6,
                         height: 6,
                         borderRadius: '50%',
-                        background: '#ef4444',
-                        boxShadow: '0 0 10px #ef4444',
+                        background: 'var(--danger)',
+                        boxShadow: '0 0 10px var(--danger)',
                       }}
                     />
                     // {s.label}
@@ -746,7 +747,7 @@ function StageOverlay({ progress }: OverlayProps) {
                     style={{
                       display: 'inline-flex',
                       alignItems: 'center',
-                      border: '0.5px solid #ef4444',
+                      border: '0.5px solid var(--danger)',
                       borderRadius: 2,
                       fontSize: 10,
                       letterSpacing: '0.2em',
@@ -754,10 +755,10 @@ function StageOverlay({ progress }: OverlayProps) {
                       overflow: 'hidden',
                     }}
                   >
-                    <span style={{ background: 'rgba(239,68,68,0.25)', color: 'white', padding: '6px 10px' }}>{s.num}</span>
-                    <span style={{ color: 'rgba(239,68,68,0.55)', padding: '6px 8px' }}>│</span>
-                    <span style={{ background: 'rgba(239,68,68,0.08)', color: '#ef4444', padding: '6px 12px' }}>{s.pillLabel}</span>
-                    <span style={{ color: 'rgba(239,68,68,0.45)', padding: '6px 10px' }}>||</span>
+                    <span style={{ background: 'rgba(var(--danger-rgb),0.25)', color: 'white', padding: '6px 10px' }}>{s.num}</span>
+                    <span style={{ color: 'rgba(var(--danger-rgb),0.55)', padding: '6px 8px' }}>│</span>
+                    <span style={{ background: 'rgba(var(--danger-rgb),0.08)', color: 'var(--danger)', padding: '6px 12px' }}>{s.pillLabel}</span>
+                    <span style={{ color: 'rgba(var(--danger-rgb),0.45)', padding: '6px 10px' }}>||</span>
                   </div>
                   <h2
                     style={{
@@ -768,7 +769,7 @@ function StageOverlay({ progress }: OverlayProps) {
                       letterSpacing: '-0.005em',
                       lineHeight: 1.05,
                       margin: '0 0 22px',
-                      textShadow: '0 0 30px rgba(239,68,68,0.3), 0 2px 20px rgba(0,0,0,0.85)',
+                      textShadow: '0 0 30px rgba(var(--danger-rgb),0.3), 0 2px 20px rgba(0,0,0,0.85)',
                       textTransform: 'uppercase',
                     }}
                   >
@@ -833,8 +834,8 @@ function StageOverlay({ progress }: OverlayProps) {
                     width: 6,
                     height: 6,
                     borderRadius: '50%',
-                    background: active ? '#ef4444' : 'rgba(255,255,255,0.2)',
-                    boxShadow: active ? '0 0 10px #ef4444' : 'none',
+                    background: active ? 'var(--brand)' : 'rgba(255,255,255,0.2)',
+                    boxShadow: active ? '0 0 10px var(--brand)' : 'none',
                     animation: active ? 'about-dot-pulse 1.6s ease-in-out infinite' : 'none',
                   }}
                 />
@@ -844,7 +845,7 @@ function StageOverlay({ progress }: OverlayProps) {
                       width: 1,
                       height: 18,
                       // Connector lights up once user has scrolled past this stage's end.
-                      background: progress > STAGE_ENDS[i] ? '#ef4444' : 'rgba(255,255,255,0.1)',
+                      background: progress > STAGE_ENDS[i] ? 'var(--brand)' : 'rgba(255,255,255,0.1)',
                       transition: 'background 0.2s linear',
                     }}
                   />
@@ -891,7 +892,7 @@ function ReducedMotionFallback() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 24 }}>
           {STAGES.map((s) => (
             <div key={s.num} style={{ border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)', padding: 24 }}>
-              <div style={{ color: '#ef4444', fontSize: 11, letterSpacing: '0.25em', marginBottom: 12 }}>
+              <div style={{ color: 'var(--brand)', fontSize: 11, letterSpacing: '0.25em', marginBottom: 12 }}>
                 {s.num} · {s.pillLabel}
               </div>
               <h3 style={{ color: 'white', fontSize: 18, letterSpacing: '0.05em', margin: '0 0 12px' }}>{s.heading}</h3>

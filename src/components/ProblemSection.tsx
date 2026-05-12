@@ -51,7 +51,7 @@ export default function ProblemSection() {
         {/* Eyebrow */}
         <p
           style={{
-            color: '#ef4444',
+            color: 'var(--brand)',
             fontFamily:
               'var(--font-mono, ui-monospace), monospace',
             fontSize: 12,
@@ -95,7 +95,7 @@ export default function ProblemSection() {
             >
               <p
                 style={{
-                  color: '#ef4444',
+                  color: 'var(--brand)',
                   fontFamily:
                     'var(--font-mono, ui-monospace), monospace',
                   fontSize: 11,
@@ -142,7 +142,7 @@ export default function ProblemSection() {
             maxWidth: 720,
             margin: '56px auto 0',
             paddingLeft: 16,
-            borderLeft: '2px solid #ef4444',
+            borderLeft: '2px solid var(--danger)',
           }}
         >
           This isn&apos;t a future risk. It&apos;s the current state of AI agent

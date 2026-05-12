@@ -33,7 +33,7 @@ export function Navbar() {
           }}
         />
         <b style={{ color: 'var(--ink)', fontWeight: 700, fontFamily: 'inherit' }}>
-          Agent<span className="brand-patrol">Patrol</span>
+          Agent<span style={{ color: 'var(--brand)' }}>Patrol</span>
         </b>
       </div>
 

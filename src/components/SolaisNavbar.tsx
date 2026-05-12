@@ -40,7 +40,7 @@ export default function SolaisNavbar() {
               letterSpacing: "0.08em",
             }}
           >
-            AGENTPATROL
+            AGENT<span style={{ color: 'var(--brand)' }}>PATROL</span>
           </span>
         </a>
 

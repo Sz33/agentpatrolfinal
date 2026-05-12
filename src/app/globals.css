@@ -85,6 +85,32 @@
   }
 }
 
+/* ── Pass 1: brand / danger / semantic color tokens ───────────────── */
+/* --brand-* will become purple in Pass 2. --danger-* stays red forever. */
+:root {
+  --brand: #8b5cf6;
+  --brand-hover: #7c3aed;
+  --brand-rgb: 139, 92, 246;
+  --brand-subtle: rgba(139, 92, 246, 0.1);
+  --brand-glow: rgba(139, 92, 246, 0.4);
+
+  --danger: #ef4444;
+  --danger-deep: #dc2626;
+  --danger-darker: #b91c1c;
+  --danger-deepest: #991b1b;
+  --danger-darkest: #7f1d1d;
+  --danger-rgb: 239, 68, 68;
+  --danger-subtle: rgba(239,68,68,0.1);
+  --danger-glow: rgba(239,68,68,0.4);
+
+  --safe: #10b981;
+  --safe-rgb: 16,185,129;
+  --safe-subtle: rgba(16,185,129,0.1);
+  --info: #f59e0b;
+  --info-rgb: 245,158,11;
+  --info-subtle: rgba(245,158,11,0.1);
+}
+
 :root {
   --background: #ffffff;
   --foreground: #3c091e;
@@ -643,10 +669,10 @@ nav a:hover::after {
   --ink-faint: rgba(255, 255, 255, 0.25);
   --line: rgba(255, 255, 255, 0.08);
   --line-2: rgba(255, 255, 255, 0.15);
-  --amber: #ef4444;
-  --amber-2: #dc2626;
+  --amber: var(--brand);
+  --amber-2: var(--brand-hover);
   --amber-glow: rgba(239, 68, 68, 0.35);
-  --accent: #ef4444;
+  --accent: var(--brand);
   --accent-deep: #7f1d1d;
   --accent-tint: #ff6644;
   --red: #ef4444;
@@ -838,9 +864,9 @@ nav a:hover::after {
   --surface-3:       #1A2540;
   --border-primary:  #1E2D4A;
   --border-secondary:#253560;
-  --green-glow:      #0066FF;
-  --accent:          #0066FF;
-  --accent-hover:    #0052CC;
+  --green-glow:      var(--brand);
+  --accent:          var(--brand);
+  --accent-hover:    var(--brand-hover);
   --accent-glow:     rgba(0,102,255,0.15);
   --accent-2:        #4D9FFF;
   --alert:           #E63946;

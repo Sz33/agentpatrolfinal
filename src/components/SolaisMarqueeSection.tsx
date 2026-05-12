@@ -33,7 +33,7 @@ export default function SolaisMarqueeSection() {
       ref={ref}
       className="w-full overflow-hidden py-4 relative"
       style={{
-        backgroundColor: "rgb(60, 9, 30)",
+        backgroundColor: "#0C1120",
         opacity: visible ? 1 : 0,
         transition: 'opacity 600ms ease-out',
         willChange: 'opacity',
@@ -53,7 +53,7 @@ export default function SolaisMarqueeSection() {
           <span
             key={i}
             style={{
-              color: "rgb(239,239,229)",
+              color: "var(--brand)",
               fontSize: "13px",
               letterSpacing: "0.25em",
               textTransform: "uppercase",

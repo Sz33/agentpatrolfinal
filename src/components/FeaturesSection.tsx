@@ -1,5 +1,6 @@
 'use client';
 import MagicCard, { MagicCardSpotlight } from '@/components/MagicCard';
+import { BRAND_RGB } from '@/lib/theme';
 
 interface Feature {
   num: string;
@@ -100,7 +101,7 @@ const STYLES = `
   font-weight: 400;
 }
 .feature-title-line1 { color: #ffffff; }
-.feature-title-line2 { color: #ef4444; }
+.feature-title-line2 { color: var(--brand); }
 .feature-body {
   color: rgba(255,255,255,0.55);
   font-size: 13px;
@@ -108,7 +109,7 @@ const STYLES = `
   margin-top: 12px;
 }
 .feature-tag {
-  color: #ef4444;
+  color: var(--brand);
   font-family: var(--font-mono, ui-monospace), monospace;
   font-size: 10px;
   letter-spacing: 0.14em;
@@ -135,7 +136,7 @@ export default function FeaturesSection() {
         {/* Eyebrow */}
         <p
           style={{
-            color: '#ef4444',
+            color: 'var(--brand)',
             fontFamily:
               'var(--font-mono, ui-monospace), monospace',
             fontSize: 12,
@@ -164,14 +165,14 @@ export default function FeaturesSection() {
         </h2>
       </div>
 
-      <MagicCardSpotlight glowColor="239, 68, 68" spotlightRadius={400} />
+      <MagicCardSpotlight glowColor={BRAND_RGB} spotlightRadius={400} />
 
       {/* Uniform 3×2 grid — every card identical, no nth-child overrides. */}
       <div className="features-grid">
         {FEATURES.map((f) => (
           <MagicCard
             key={f.num}
-            glowColor="239, 68, 68"
+            glowColor={BRAND_RGB}
             particleCount={12}
             enableStars
             enableBorderGlow

@@ -33,7 +33,7 @@ const STYLES = `
 .cinematic-footer {
   --cf-bg: #000000;
   --cf-fg: #ffffff;
-  --cf-primary: #ef4444;
+  --cf-primary: var(--brand);
   --cf-muted: rgba(255, 255, 255, 0.5);
   --cf-border: rgba(255, 255, 255, 0.1);
   position: relative;
@@ -76,8 +76,8 @@ const STYLES = `
   position: absolute;
   inset: -20%;
   background:
-    radial-gradient(ellipse 800px 600px at 25% 30%, rgba(239,68,68,0.18), transparent 60%),
-    radial-gradient(ellipse 700px 500px at 78% 70%, rgba(239,68,68,0.10), transparent 65%);
+    radial-gradient(ellipse 800px 600px at 25% 30%, rgba(var(--brand-rgb),0.18), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 78% 70%, rgba(var(--brand-rgb),0.10), transparent 65%);
   filter: blur(40px);
   animation: cf-aurora-drift 18s ease-in-out infinite alternate;
   pointer-events: none;
@@ -114,7 +114,7 @@ const STYLES = `
   white-space: nowrap;
   background: linear-gradient(180deg,
     rgba(255,255,255,0.10) 0%,
-    rgba(239,68,68,0.06) 60%,
+    rgba(var(--brand-rgb),0.06) 60%,
     rgba(0,0,0,0) 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -147,7 +147,7 @@ const STYLES = `
   line-height: 0.95;
   letter-spacing: -0.02em;
   margin: 0;
-  text-shadow: 0 0 40px rgba(239,68,68,0.25), 0 4px 30px rgba(0,0,0,0.6);
+  text-shadow: 0 0 40px rgba(var(--brand-rgb),0.25), 0 4px 30px rgba(0,0,0,0.6);
   will-change: transform, opacity;
 }
 .cinematic-footer__heading .cf-accent { color: var(--cf-primary); }
@@ -172,18 +172,18 @@ const STYLES = `
   will-change: transform;
 }
 .footer-glass-pill:hover {
-  background: rgba(239, 68, 68, 0.08);
-  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(var(--brand-rgb), 0.08);
+  border-color: rgba(var(--brand-rgb), 0.4);
   color: var(--cf-fg);
 }
 .footer-glass-pill--primary {
-  background: rgba(239, 68, 68, 0.85);
-  border-color: rgba(239, 68, 68, 1);
-  box-shadow: 0 0 0 1px rgba(239,68,68,0.4), 0 0 30px rgba(239,68,68,0.25);
+  background: rgba(var(--brand-rgb), 0.85);
+  border-color: var(--brand);
+  box-shadow: 0 0 0 1px rgba(var(--brand-rgb),0.4), 0 0 30px rgba(var(--brand-rgb),0.25);
 }
 .footer-glass-pill--primary:hover {
-  background: rgba(220, 38, 38, 1);
-  border-color: rgba(220, 38, 38, 1);
+  background: var(--brand-hover);
+  border-color: var(--brand-hover);
 }
 
 /* Bottom bar */
@@ -216,8 +216,8 @@ const STYLES = `
   transition: background 0.2s, border-color 0.2s;
 }
 .cinematic-footer__top:hover {
-  background: rgba(239, 68, 68, 0.1);
-  border-color: rgba(239, 68, 68, 0.5);
+  background: rgba(var(--brand-rgb), 0.1);
+  border-color: rgba(var(--brand-rgb), 0.5);
 }
 `;
 
@@ -405,12 +405,9 @@ export function CinematicFooter() {
               }}>
                 AGENTPATROL
               </span>
-              <span style={{
-                display: 'block',
-                color: '#ef4444',
-                textShadow: '0 0 40px rgba(239,68,68,0.3), 0 0 80px rgba(239,68,68,0.15)',
-              }}>
-                NEVER SLEEPS<span style={{ letterSpacing: 0, marginLeft: '-8px' }}>.</span>
+              <span style={{ display: 'block' }}>
+                <span style={{ color: 'var(--brand)', textShadow: '0 0 40px rgba(var(--brand-rgb),0.3), 0 0 80px rgba(var(--brand-rgb),0.15)' }}>NEVER</span>
+                <span style={{ color: '#ffffff' }}>{' '}SLEEPS<span style={{ letterSpacing: 0, marginLeft: '-8px' }}>.</span></span>
               </span>
             </h2>
 
@@ -423,7 +420,7 @@ export function CinematicFooter() {
                   as="a"
                   href="#early-access"
                   className="footer-glass-pill px-10 py-5 rounded-full font-bold text-sm md:text-base tracking-wider uppercase"
-                  style={{ background: '#ef4444', color: '#ffffff', border: '1px solid rgba(255,255,255,0.15)' }}
+                  style={{ background: 'var(--brand)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.15)' }}
                 >
                   Request Early Access →
                 </MagneticButton>

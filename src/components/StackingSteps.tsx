@@ -222,7 +222,7 @@ function CardInner({ step, idx, total, runId }: { step: Step; idx: number; total
           <div
             key={`label-${runId}`}
             style={{
-              color: step.accent,
+              color: 'var(--brand)',
               fontFamily: 'var(--font-mono, ui-monospace), monospace',
               fontSize: '13px',
               letterSpacing: '0.3em',

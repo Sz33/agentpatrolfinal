@@ -17,7 +17,7 @@ export default function WhyKernelSection() {
         {/* Eyebrow */}
         <p
           style={{
-            color: '#ef4444',
+            color: 'var(--brand)',
             fontFamily: 'var(--font-mono, ui-monospace), monospace',
             fontSize: 12,
             letterSpacing: '0.18em',
@@ -43,7 +43,7 @@ export default function WhyKernelSection() {
         >
           Application-layer monitoring sees what the agent reports.
           <br />
-          <span style={{ color: '#ef4444' }}>
+          <span style={{ color: 'var(--danger)' }}>
             Kernel-level monitoring sees what the agent does.
           </span>
         </h2>
@@ -95,15 +95,15 @@ export default function WhyKernelSection() {
           <div
             style={{
               padding: 28,
-              border: '1px solid rgba(239,68,68,0.3)',
+              border: '1px solid rgba(var(--danger-rgb),0.3)',
               borderRadius: 8,
-              background: 'rgba(239,68,68,0.04)',
-              boxShadow: '0 0 32px rgba(239,68,68,0.06)',
+              background: 'rgba(var(--danger-rgb),0.04)',
+              boxShadow: '0 0 32px rgba(var(--danger-rgb),0.06)',
             }}
           >
             <p
               style={{
-                color: '#ef4444',
+                color: 'var(--danger)',
                 fontFamily: 'var(--font-mono, ui-monospace), monospace',
                 fontSize: 11,
                 letterSpacing: '0.2em',
@@ -164,7 +164,7 @@ export default function WhyKernelSection() {
           </p>
           <p
             style={{
-              color: '#ef4444',
+              color: 'var(--danger)',
               fontFamily: 'var(--font-heading), sans-serif',
               fontSize: 'clamp(28px, 3.4vw, 44px)',
               lineHeight: 1.15,

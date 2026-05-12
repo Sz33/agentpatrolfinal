@@ -15,7 +15,8 @@ const isTouchDevice =
 
 // Pre-allocated — avoid per-frame GC pressure
 const CYAN = new THREE.Color("#00AAFF");
-const RED_EYE = new THREE.Color("#FF2020");
+const RED_EYE = new THREE.Color("#DC2626");
+const RED_EMISSIVE = new THREE.Color("#B91C1C");
 
 const smoothstep = (x: number, min: number, max: number) => {
   const t = Math.max(0, Math.min(1, (x - min) / (max - min)));
@@ -342,8 +343,8 @@ function Robot() {
       const mat = mesh.material as THREE.MeshStandardMaterial;
       if (mat) {
         mat.color.lerpColors(CYAN, RED_EYE, hardMix);
-        mat.emissive.lerpColors(CYAN, RED_EYE, hardMix);
-        mat.emissiveIntensity = THREE.MathUtils.lerp(2.5, 4.0, hardMix);
+        mat.emissive.lerpColors(CYAN, RED_EMISSIVE, hardMix);
+        mat.emissiveIntensity = THREE.MathUtils.lerp(2.5, 2.0, hardMix);
         mat.needsUpdate = true;
       }
     }

@@ -13,7 +13,7 @@ export default function FinalCtaSection() {
         overflow: 'hidden',
         padding: '140px 24px 100px',
         background:
-          'radial-gradient(ellipse at center, rgba(239,68,68,0.05) 0%, rgba(0,0,0,0) 60%), #000',
+          `radial-gradient(ellipse at center, rgba(var(--brand-rgb),0.05) 0%, rgba(0,0,0,0) 60%), #000`,
       }}
     >
       {/* Receding-floor grid — sits behind all content. */}
@@ -21,8 +21,8 @@ export default function FinalCtaSection() {
         angle={65}
         cellSize={60}
         opacity={0.15}
-        lightLineColor="rgba(239,68,68,0.4)"
-        darkLineColor="rgba(239,68,68,0.4)"
+        lightLineColor="rgba(var(--brand-rgb),0.4)"
+        darkLineColor="rgba(var(--brand-rgb),0.4)"
       />
       {/* Top-edge radial fade so the grid emerges from darkness instead
           of hard-cutting into the section above. */}
@@ -50,7 +50,7 @@ export default function FinalCtaSection() {
         {/* Eyebrow */}
         <p
           style={{
-            color: '#ef4444',
+            color: 'var(--brand)',
             fontFamily: 'var(--font-mono, ui-monospace), monospace',
             fontSize: 12,
             letterSpacing: '0.18em',
@@ -74,7 +74,7 @@ export default function FinalCtaSection() {
           }}
         >
           Your agents are running{' '}
-          <span style={{ color: '#ef4444' }}>right now.</span>
+          <span style={{ color: 'var(--brand)' }}>right now.</span>
         </h2>
 
         {/* Subheadline */}
