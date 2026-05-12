@@ -398,15 +398,11 @@ export function CinematicFooter() {
                 fontSize: 'clamp(48px, 8vw, 120px)',
               }}
             >
-              <span style={{
-                display: 'block',
-                color: '#ffffff',
-                textShadow: '0 0 40px rgba(255,255,255,0.15), 0 0 80px rgba(255,255,255,0.08)',
-              }}>
-                AGENTPATROL
+              <span style={{ display: 'block' }}>
+                <span style={{ color: '#ffffff', textShadow: '0 0 40px rgba(255,255,255,0.15), 0 0 80px rgba(255,255,255,0.08)' }}>AGENT</span><span style={{ color: 'var(--brand)', textShadow: '0 0 40px rgba(var(--brand-rgb),0.3), 0 0 80px rgba(var(--brand-rgb),0.15)' }}>PATROL</span>
               </span>
               <span style={{ display: 'block' }}>
-                <span style={{ color: 'var(--brand)', textShadow: '0 0 40px rgba(var(--brand-rgb),0.3), 0 0 80px rgba(var(--brand-rgb),0.15)' }}>NEVER</span>
+                <span style={{ color: '#ffffff' }}>NEVER</span>
                 <span style={{ color: '#ffffff' }}>{' '}SLEEPS<span style={{ letterSpacing: 0, marginLeft: '-8px' }}>.</span></span>
               </span>
             </h2>

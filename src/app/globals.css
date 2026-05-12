@@ -822,6 +822,27 @@ nav a:hover::after {
   animation: shimmerHero 5s linear infinite, patrolGlow 8s ease-in-out infinite;
 }
 
+/* "AGENTS" hero word shimmer — purple sweep */
+.agents-shimmer {
+  display: inline;
+  background: linear-gradient(90deg,
+    var(--brand) 0%,
+    var(--brand) 35%,
+    #ddd6fe 50%,
+    var(--brand) 65%,
+    var(--brand) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: agentsShimmer 6s linear infinite;
+}
+@keyframes agentsShimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
 /* HUD label glow */
 #hero-zone .hud-glow {
   text-shadow: 0 0 10px rgba(239, 68, 68, 0.55), 0 0 26px rgba(239, 68, 68, 0.2);

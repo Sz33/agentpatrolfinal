@@ -94,15 +94,15 @@ export default function WhyKernelSection() {
           <div
             style={{
               padding: 28,
-              border: '1px solid rgba(var(--danger-rgb),0.3)',
+              border: '1px solid rgba(var(--brand-rgb),0.3)',
               borderRadius: 8,
-              background: 'rgba(var(--danger-rgb),0.04)',
-              boxShadow: '0 0 32px rgba(var(--danger-rgb),0.06)',
+              background: 'rgba(var(--brand-rgb),0.04)',
+              boxShadow: '0 0 32px rgba(var(--brand-rgb),0.06)',
             }}
           >
             <p
               style={{
-                color: 'var(--danger)',
+                color: 'var(--brand)',
                 fontFamily: 'var(--font-mono, ui-monospace), monospace',
                 fontSize: 11,
                 letterSpacing: '0.2em',
@@ -172,7 +172,10 @@ export default function WhyKernelSection() {
               margin: '28px 0 0',
             }}
           >
-            Not flagged. Not alerted. Killed. Before.
+            <span style={{ color: '#F1F5F9' }}>Not flagged. </span>
+            <span style={{ color: '#F1F5F9' }}>Not alerted. </span>
+            <span style={{ color: 'var(--danger)' }}>Killed. </span>
+            <span style={{ color: '#F1F5F9' }}>Before.</span>
           </p>
         </div>
       </div>

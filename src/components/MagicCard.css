@@ -1,3 +1,10 @@
+.magic-card,
+.magic-card:hover,
+.magic-card::after,
+.magic-card::before {
+  border-radius: 8px;
+}
+
 .magic-card {
   position: relative;
   overflow: hidden;
@@ -19,7 +26,7 @@
     rgba(var(--glow-color), calc(var(--glow-intensity) * 0.4)) 30%,
     transparent 60%
   );
-  border-radius: inherit;
+  border-radius: 8px;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -31,6 +38,7 @@
 }
 
 .magic-card--border-glow:hover {
+  border-radius: 8px;
   box-shadow:
     0 4px 20px rgba(0, 0, 0, 0.4),
     0 0 30px rgba(var(--glow-color), 0.2);

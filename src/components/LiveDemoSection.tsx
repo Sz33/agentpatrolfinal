@@ -1,7 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import AnimatedButton from '@/components/AnimatedButton';
-import { GridScan } from './GridScan';
 
 // ── Event sequence ──────────────────────────────────────────────────
 // One entry per event. `delay` is the offset from "trigger" at which
@@ -117,11 +116,6 @@ const STYLES = `
   }
 }
 
-/* Hide GridScan on mobile — 3 simultaneous WebGL canvases would
-   choke phones. Hero robot + AboutFlythrough are the other two. */
-@media (max-width: 767px) {
-  .live-demo-grid-scan { display: none; }
-}
 `;
 
 // ── Component ───────────────────────────────────────────────────────
@@ -182,31 +176,6 @@ export default function LiveDemoSection() {
     >
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
 
-      {/* GridScan background — red-tinted scanning grid. Mobile-hidden
-          (3rd WebGL canvas would choke phones). */}
-      <div
-        className="live-demo-grid-scan"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          zIndex: 0,
-          pointerEvents: 'none',
-        }}
-        aria-hidden="true"
-      >
-        <GridScan
-          sensitivity={0.55}
-          lineThickness={1}
-          linesColor="#1a0d0d"
-          gridScale={0.1}
-          scanColor="#ef4444"
-          scanOpacity={0.35}
-          enablePost
-          bloomIntensity={0.5}
-          chromaticAberration={0.001}
-          noiseIntensity={0.008}
-        />
-      </div>
 
       {/* Top + bottom edge fades so the grid merges into adjacent
           black sections instead of cutting hard. */}

@@ -514,7 +514,7 @@ function CameraTilt({ mouseRef }: { mouseRef: MouseRef }) {
 interface Stage {
   num: string;
   pillLabel: string;
-  heading: string;
+  heading: React.ReactNode;
   desc: string;
   isIntro?: boolean;
   /** Intro-only label rendered in `// LABEL` form instead of the pill. */
@@ -526,7 +526,7 @@ const STAGES: Stage[] = [
     num: '00',
     pillLabel: 'INTRO',
     label: 'INTRODUCING AGENTPATROL',
-    heading: 'The security layer your AI agents have been missing.',
+    heading: <>The security layer your AI agents have been <span style={{ color: 'var(--brand)' }}>missing.</span></>,
     desc: '',
     isIntro: true,
   },

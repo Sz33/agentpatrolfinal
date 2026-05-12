@@ -220,6 +220,7 @@ export default function TeamHero() {
             gap: 6,
           }}
         >
+          <span style={{ color: "var(--brand)", marginRight: "8px" }}>●</span>
           AI AGENT GOVERNANCE PLATFORM
           <span
             style={{
@@ -246,7 +247,7 @@ export default function TeamHero() {
           GOVERN
           <span style={{ display: "block" }}>
             <span style={{ color: "var(--brand)", textShadow: "0 0 40px rgba(var(--brand-rgb),.6)" }}>—</span>
-            YOUR <span style={{ color: "var(--brand)" }}>AGENTS</span>
+            YOUR <span className="agents-shimmer">AGENTS</span>
           </span>
         </h1>
       </div>
