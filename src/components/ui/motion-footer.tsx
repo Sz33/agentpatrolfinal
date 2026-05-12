@@ -38,6 +38,7 @@ const STYLES = `
   --cf-border: rgba(255, 255, 255, 0.1);
   position: relative;
   width: 100%;
+  overflow-x: hidden;
 }
 
 /* The curtain wrapper — gives 100vh of scroll runway on phones (where

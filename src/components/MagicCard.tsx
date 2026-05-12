@@ -355,7 +355,7 @@ export function MagicCard({
     <div
       ref={cardRef}
       className={cls}
-      style={{ ...style, '--glow-color': glowColor } as CSSProperties}
+      style={{ position: 'relative', overflow: 'hidden', ...style, '--glow-color': glowColor } as CSSProperties}
     >
       {children}
     </div>

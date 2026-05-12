@@ -20,7 +20,7 @@ export default function SolaisNavbar() {
 
   return (
     <header
-      className="navbar-load fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      className="navbar-load navbar-blur-transition fixed top-0 left-0 right-0 z-50"
       style={{
         backgroundColor: scrolled ? "rgba(5,5,5,0.92)" : "transparent",
         backdropFilter: scrolled ? "blur(12px)" : "none",

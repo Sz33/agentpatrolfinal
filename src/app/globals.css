@@ -121,7 +121,7 @@
     box-sizing: border-box;
   }
   html {
-    /* overflow-x:hidden removed — breaks position:sticky stacking */
+    overflow-x: clip; /* clip (not hidden) — does NOT break position:sticky */
     /* scroll-behavior:smooth removed — conflicts with GSAP ScrollTrigger pin */
   }
   body {
@@ -130,7 +130,7 @@
     font-family: var(--font-body, ui-sans-serif), sans-serif;
     font-size: 16px;
     line-height: 1.6;
-    /* overflow-x:hidden removed — breaks position:sticky stacking */
+    overflow-x: clip; /* clip (not hidden) — does NOT break position:sticky */
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading, sans-serif);

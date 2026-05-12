@@ -31,7 +31,7 @@ export default function SolaisMarqueeSection() {
   return (
     <section
       ref={ref}
-      className="w-full overflow-hidden py-4"
+      className="w-full overflow-hidden py-4 relative"
       style={{
         backgroundColor: "rgb(60, 9, 30)",
         opacity: visible ? 1 : 0,

@@ -97,6 +97,7 @@ export default function Navbar() {
   return (
     <>
       <nav
+        className="navbar-blur-transition"
         style={{
           position: "sticky",
           top: 0,
