@@ -40,10 +40,9 @@ export function Navbar() {
       {/* Nav links */}
       <nav style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
         {[
-          { label: 'About', href: '#about' },
           { label: 'How it works', href: '#how-it-works' },
           { label: 'Features', href: '#features' },
-          { label: 'Live Demo', href: '#live-demo' },
+          { label: 'Demo', href: '#live-demo' },
         ].map(({ label, href }) => (
           <a
             key={href}
