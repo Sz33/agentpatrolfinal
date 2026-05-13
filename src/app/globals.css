@@ -1,0 +1,978 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* Fonts */
+  --font-sans: var(--font-body, ui-sans-serif, system-ui, sans-serif);
+  --font-mono: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
+  --font-heading: var(--font-heading, sans-serif);
+
+  /* Solais brand colors */
+  --color-brown: #3c091e;
+  --color-brown-transparent: #3c091e00;
+  --color-burnt-orange: #97494e;
+  --color-orange: #af6267;
+  --color-dark-grey: #646464;
+  --color-grey: #dedede;
+  --color-light-grey: #f4f4f4;
+
+  /* shadcn tokens mapped to Solais palette */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+
+  /* Solais custom breakpoints */
+  --breakpoint-phone: 36rem;
+  --breakpoint-mini: 48rem;
+  --breakpoint-tablet: 64rem;
+  --breakpoint-laptop: 80rem;
+  --breakpoint-big-laptop: 90rem;
+  --breakpoint-desktop: 100rem;
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+
+  /* Magic-UI ShimmerButton animations — drives AnimatedButton's perimeter
+     spark. Tailwind v4 auto-emits `animate-shimmer-slide` and
+     `animate-spin-around` utilities from these tokens. */
+  --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
+  --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
+
+  @keyframes shimmer-slide {
+    to { transform: translate(calc(100cqw - 100%), 0); }
+  }
+  @keyframes spin-around {
+    0%        { transform: translateZ(0) rotate(0); }
+    15%, 35%  { transform: translateZ(0) rotate(90deg); }
+    65%, 85%  { transform: translateZ(0) rotate(270deg); }
+    100%      { transform: translateZ(0) rotate(360deg); }
+  }
+
+  /* Magic-UI RetroGrid — drives the receding floor animation. */
+  --animate-grid: grid 20s linear infinite;
+
+  @keyframes grid {
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(calc(var(--cell-size) * 1)); }
+  }
+}
+
+/* ── Pass 1: brand / danger / semantic color tokens ───────────────── */
+/* --brand-* will become purple in Pass 2. --danger-* stays red forever. */
+:root {
+  --brand: #8b5cf6;
+  --brand-hover: #7c3aed;
+  --brand-rgb: 139, 92, 246;
+  --brand-subtle: rgba(139, 92, 246, 0.1);
+  --brand-glow: rgba(139, 92, 246, 0.4);
+
+  --danger: #ef4444;
+  --danger-deep: #dc2626;
+  --danger-darker: #b91c1c;
+  --danger-deepest: #991b1b;
+  --danger-darkest: #7f1d1d;
+  --danger-rgb: 239, 68, 68;
+  --danger-subtle: rgba(239,68,68,0.1);
+  --danger-glow: rgba(239,68,68,0.4);
+
+  --safe: #10b981;
+  --safe-rgb: 16,185,129;
+  --safe-subtle: rgba(16,185,129,0.1);
+  --info: #f59e0b;
+  --info-rgb: 245,158,11;
+  --info-subtle: rgba(245,158,11,0.1);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #3c091e;
+  --card: #ffffff;
+  --card-foreground: #3c091e;
+  --popover: #ffffff;
+  --popover-foreground: #3c091e;
+  --primary: #3c091e;
+  --primary-foreground: #ffffff;
+  --secondary: #f4f4f4;
+  --secondary-foreground: #3c091e;
+  --muted: #f4f4f4;
+  --muted-foreground: #646464;
+  --accent: #97494e;
+  --accent-foreground: #ffffff;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: #dedede;
+  --input: #dedede;
+  --ring: #3c091e;
+  --radius: 0px;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #3c091e;
+  --sidebar-primary: #3c091e;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f4f4f4;
+  --sidebar-accent-foreground: #3c091e;
+  --sidebar-border: #dedede;
+  --sidebar-ring: #3c091e;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+  }
+  html {
+    overflow-x: clip; /* clip (not hidden) — does NOT break position:sticky */
+    /* scroll-behavior:smooth removed — conflicts with GSAP ScrollTrigger pin */
+  }
+  body {
+    background: #0A0A0B;
+    color: #F1F5F9;
+    font-family: var(--font-body, ui-sans-serif), sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.65;
+    letter-spacing: 0;
+    overflow-x: clip; /* clip (not hidden) — does NOT break position:sticky */
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading, sans-serif);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+  h2, h3 {
+    line-height: 1.2;
+  }
+  h1, .display {
+    line-height: 1.05;
+  }
+  code, pre, kbd, samp, .mono {
+    font-family: var(--font-mono, ui-monospace), monospace;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.6;
+  }
+}
+
+/* ── Typography utilities ─────────────────────────────────────────── */
+.body-medium {
+  font-weight: 500;
+}
+
+.label {
+  font-family: var(--font-body, ui-sans-serif), sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* ── Typography Scale (matching solais.ai is-h* classes) ─────────── */
+.is-h1 {
+  font-size: clamp(2rem, 4vw, 4.5rem);
+  line-height: 1;
+  font-family: var(--font-heading, sans-serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.is-h2 {
+  font-size: clamp(1.5rem, 3vw, 3rem);
+  line-height: 1;
+  font-family: var(--font-heading, sans-serif);
+  font-weight: 400;
+}
+.is-h3 {
+  font-size: clamp(1.25rem, 2vw, 2rem);
+  line-height: 1.1;
+  font-family: var(--font-heading, sans-serif);
+}
+.is-h4 {
+  font-size: clamp(1rem, 1.5vw, 1.5rem);
+  line-height: 1.2;
+  font-family: var(--font-heading, sans-serif);
+}
+.is-h6 {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  font-family: var(--font-heading, sans-serif);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.supertitle {
+  font-size: 0.75rem;
+  line-height: 1;
+  font-family: var(--font-heading, sans-serif);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.para-indent {
+  padding-left: 2rem;
+}
+.font-heading {
+  font-family: var(--font-heading, sans-serif);
+}
+.font-body {
+  font-family: var(--font-body, sans-serif);
+}
+
+/* ── Custom Colors (shorthand classes) ──────────────────────────── */
+.bg-brown { background-color: #3c091e; }
+.bg-burntOrange { background-color: #97494e; }
+.text-brown { color: #3c091e; }
+.text-burntOrange { color: #97494e; }
+.fill-brown { fill: #3c091e; }
+.border-brown { border-color: #3c091e; }
+.border-burntOrange { border-color: #97494e; }
+.border-t-white { border-top-color: #ffffff; }
+
+/* ── Blink animation ─────────────────────────────────────────────── */
+@keyframes blink {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+.blink {
+  animation: blink 0.4s 0.1s infinite alternate;
+}
+.blinking-cursor {
+  display: inline-block;
+  animation: blink 0.4s 0.1s infinite alternate;
+}
+
+/* ── Marquee ─────────────────────────────────────────────────────── */
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 18s linear infinite;
+}
+
+/* ── Scrollbar hide ──────────────────────────────────────────────── */
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+
+/* ── Nav link underline hover ────────────────────────────────────── */
+.nav-link { position: relative; display: inline-block; }
+.nav-link .btn-text { position: relative; }
+.nav-link .btn-text::after {
+  content: "";
+  position: absolute;
+  bottom: -1px; left: 0;
+  width: 0; height: 1px;
+  background: currentColor;
+  transition: width 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+.nav-link:hover .btn-text::after { width: 100%; }
+
+/* ── Loading screen grid background ─────────────────────────────── */
+.grid-background {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ── Button styles ───────────────────────────────────────────────── */
+.button-primary {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button.second {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid currentColor;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease;
+  font-family: var(--font-heading, sans-serif);
+}
+.button.second:hover {
+  background-color: currentColor;
+}
+.button.second .btn-text {
+  position: relative;
+  z-index: 1;
+  mix-blend-mode: difference;
+}
+.button.second.white {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+/* ── Clip path utility ───────────────────────────────────────────── */
+.clip-parallelogram-tl {
+  clip-path: polygon(0 0, 100% 0, 100% 75%, 85.9% 100%, 0% 100%);
+}
+
+/* ── Smooth scroll wrapper (GSAP) ────────────────────────────────── */
+#smooth-wrapper { overflow: hidden; height: 100vh; }
+#smooth-content { will-change: transform; }
+
+/* ── ENHANCE §1: Scroll reveal — GSAP-driven now, neutralize legacy CSS ── */
+.reveal { opacity: 1; transform: none; transition: none; filter: blur(0px); }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── ENHANCE §2: Micro animations ───────────────────────────────── */
+.btn-glow {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.btn-glow:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 32px rgba(151,73,78,0.65), 0 0 12px rgba(90,15,45,0.4);
+}
+.card-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+}
+.input-glow:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(60,9,30,0.4);
+}
+@keyframes ctaShimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.cta-shimmer {
+  background-size: 200% auto;
+  animation: ctaShimmer 60s linear infinite;
+}
+
+/* ── ENHANCE §3: Page load animations ───────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* Navbar fires immediately; hero elements staggered after ~2s loading screen */
+.navbar-load   { animation: fadeDown  0.5s ease 0.1s  both; }
+.navbar-blur-transition { transition: backdrop-filter 0.4s ease, background-color 0.4s ease, border-color 0.4s ease !important; }
+.hero-label    { animation: fadeInUp  0.6s ease 2.25s both; }
+.hero-heading  { animation: fadeInUp  0.6s ease 2.45s both; }
+.hero-load-sub { animation: fadeInUp  0.6s ease 2.65s both; }
+.hero-load-cta { animation: fadeInUp  0.6s ease 2.85s both; }
+
+/* ── ENHANCE §8: Preloader ──────────────────────────────────────── */
+@keyframes blockRevealIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes blockRevealOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+.preloader-block-in  { animation: blockRevealIn  0.15s ease forwards; }
+.preloader-block-out { animation: blockRevealOut 0.15s ease forwards; }
+
+/* Hide native cursor globally — EvilCursor handles hero zone,
+   CustomCursor handles everywhere else. */
+@media (pointer: fine) {
+  html, body, * { cursor: none; }
+}
+.custom-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease;
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+.custom-cursor.hovering { width: 22px; height: 22px; }
+
+/* ── ENHANCE §10: Asset placeholder ─────────────────────────────── */
+.asset-placeholder {
+  background: #2a0815;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.3);
+  font-size: 11px;
+  text-align: center;
+}
+img[src].error { display: none; }
+
+/* ── Mascot / 3D visual placeholder ─────────────────────────────── */
+@keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+@keyframes pulse-glow {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+@keyframes robotFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+.mascot-placeholder {
+  width: 500px;
+  height: 500px;
+  border: 2px dashed rgba(255,255,255,0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: rgba(255,255,255,0.4);
+  font-family: sans-serif;
+  font-size: 14px;
+  text-align: center;
+  gap: 8px;
+  position: relative;
+  animation: spin-slow 90s linear infinite;
+}
+
+/* ── Section visual placeholder ──────────────────────────────────── */
+.section-placeholder {
+  width: 100%;
+  height: 300px;
+  border-top: 2px dashed rgba(255,255,255,0.15);
+  border-bottom: 2px dashed rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.3);
+  font-family: sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  margin: 2rem 0;
+}
+
+/* ── Nav underline hover (slide from left) ───────────────────────── */
+.nav-underline {
+  position: relative;
+}
+.nav-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.25s ease;
+}
+.nav-underline:hover::after { width: 100%; }
+
+/* ── Process steps ───────────────────────────────────────────────── */
+.process-step {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 1.5rem;
+  padding: 1.75rem 0;
+  border-top: 1px solid rgb(53,53,57);
+}
+.process-step-desc {
+  overflow: hidden;
+}
+
+/* ── Number counter slot machine ────────────────────────────────── */
+.number-slot {
+  overflow: hidden;
+  display: inline-flex;
+}
+.number-column {
+  display: flex;
+  flex-direction: column;
+  transition: transform 2s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ── Hero load staggered reveal ─────────────────────────────────── */
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroBlurIn {
+  from { filter: blur(6px); }
+  to   { filter: blur(0px); }
+}
+
+.hero-section [class*="eyebrow"], .hero-section [class*="label"] {
+  animation: heroFadeUp 0.6s ease-out 0.2s both;
+}
+.hero-section h1 {
+  animation: heroFadeUp 0.7s ease-out 0.4s both;
+}
+.hero-section h2 {
+  animation: heroFadeUp 0.7s ease-out 0.55s both;
+}
+.hero-section p {
+  animation: heroFadeUp 0.6s ease-out 0.7s both;
+}
+.hero-section button,
+.hero-section a[class*="cta"],
+.hero-section [class*="schedule"],
+.hero-section [class*="request"] {
+  animation: heroFadeUp 0.6s ease-out 0.85s both;
+}
+.hero-section [class*="navbar"], header {
+  animation: heroFadeUp 0.5s ease-out 0s both;
+}
+.hero-content-wrapper {
+  animation: heroFadeUp 0.7s ease-out 0.3s both,
+             heroBlurIn 0.8s ease-out 0.3s both;
+}
+
+/* ── Button active + focus states ───────────────────────────────── */
+button:active, [class*="btn"]:active, [class*="cta"]:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
+}
+button:focus-visible, a:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.4);
+  outline-offset: 3px;
+}
+
+/* ── Pulse (used by Suspense fallbacks etc.) ────────────────────── */
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 1; }
+}
+
+/* ── Legacy sr-reveal classes — neutralized; GSAP handles reveals now ── */
+.sr-reveal, .sr-visible { opacity: 1; transform: none; transition: none; }
+
+/* Respect prefers-reduced-motion globally — disable GSAP transforms */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Button hover ───────────────────────────────────────────────── */
+button, a[class*="btn"], [class*="button"], [class*="cta"] {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+button:hover, a[class*="btn"]:hover {
+  transform: scale(1.03);
+}
+
+/* ── Card hover ─────────────────────────────────────────────────── */
+[class*="card"], [class*="Card"] {
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+[class*="card"]:hover, [class*="Card"]:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255,255,255,0.2);
+}
+
+/* ── Step / item hover slide ────────────────────────────────────── */
+[class*="step"]:hover h3,
+[class*="step"]:hover h4,
+[class*="item"]:hover h3 {
+  transform: translateX(8px);
+  transition: transform 0.3s ease;
+}
+[class*="step"] h3,
+[class*="step"] h4,
+[class*="item"] h3 {
+  transition: transform 0.3s ease;
+}
+
+/* ── Nav link underline ─────────────────────────────────────────── */
+nav a {
+  position: relative;
+  transition: color 0.2s ease;
+}
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.3s ease;
+}
+nav a:hover::after {
+  width: 100%;
+}
+
+/* ── Industry cards lift ────────────────────────────────────────── */
+.industry-card {
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+.industry-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255,255,255,0.2);
+}
+
+/* ============================================================
+   AGENTPATROL HERO ZONE — scoped to #hero-zone
+   Transplanted from landing-page/src/app/globals.css.
+   All selectors prefixed with #hero-zone so the AgentPatrol
+   theme (red/black) does not bleed into the rest of the page.
+   ============================================================ */
+
+/* Tokens scoped to hero zone only */
+#hero-zone {
+  --bg: #000000;
+  --bg-2: #0a0a0a;
+  --bg-3: #0f0606;
+  --ink: #ffffff;
+  --ink-dim: rgba(255, 255, 255, 0.65);
+  --ink-mute: rgba(255, 255, 255, 0.4);
+  --ink-faint: rgba(255, 255, 255, 0.25);
+  --line: rgba(255, 255, 255, 0.08);
+  --line-2: rgba(255, 255, 255, 0.15);
+  --amber: var(--brand);
+  --amber-2: var(--brand-hover);
+  --amber-glow: rgba(239, 68, 68, 0.35);
+  --accent: var(--brand);
+  --accent-deep: #7f1d1d;
+  --accent-tint: #ff6644;
+  --red: #ef4444;
+  --green: #22c55e;
+  --cyan: #7ad7ff;
+  --font-jetbrains-mono: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
+  --font-orbitron: var(--font-heading);
+
+  position: relative;
+  background:
+    radial-gradient(1200px 700px at 50% 20%, rgba(239, 68, 68, 0.05), transparent 60%),
+    radial-gradient(900px 600px at 50% 95%, rgba(239, 68, 68, 0.03), transparent 70%);
+  color: var(--ink);
+}
+
+#hero-zone h1, #hero-zone h2, #hero-zone h3,
+#hero-zone h4, #hero-zone h5, #hero-zone h6 {
+  font-family: var(--font-heading), sans-serif;
+  font-weight: 400;
+  line-height: 1.05;
+  margin: 0;
+}
+
+/* Suppress global nav-link underline rule inside hero-zone navbar */
+#hero-zone nav a::after { display: none; }
+/* Suppress global button hover scale inside hero-zone (we use translateY) */
+#hero-zone button:hover, #hero-zone a[class*="btn"]:hover { transform: none; }
+
+/* Background overlays — absolute, scoped to hero zone */
+#hero-zone .bg-fx {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+#hero-zone .bg-scan {
+  position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  mix-blend-mode: overlay; opacity: 0.25;
+  background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 3px);
+}
+#hero-zone .bg-vignette {
+  position: absolute; inset: 0; pointer-events: none; z-index: 2;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+/* Brand dot pulses — reuses existing @keyframes pulse */
+#hero-zone .brand-dot { animation: pulse 2s infinite; }
+
+/* Hero tag */
+#hero-zone .hero-tag {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  color: var(--amber);
+  font-family: var(--font-mono, ui-monospace), monospace;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  animation: fadeInUp 0.6s 0.05s ease both;
+  text-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+}
+#hero-zone .hero-tag::before,
+#hero-zone .hero-tag::after {
+  content: "";
+  height: 1px;
+  width: 60px;
+  background: linear-gradient(90deg, transparent, var(--amber), transparent);
+  flex-shrink: 0;
+}
+
+/* Spec readouts */
+#hero-zone .spec-row-left {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono, ui-monospace), monospace;
+  font-size: 11px; color: var(--ink-mute); letter-spacing: 0.06em;
+}
+#hero-zone .spec-row-left::before {
+  content: ""; width: 18px; height: 1px;
+  background: var(--amber); opacity: 0.6; flex-shrink: 0;
+}
+#hero-zone .spec-row-right {
+  display: flex; align-items: center; gap: 8px; flex-direction: row-reverse;
+  font-family: var(--font-mono, ui-monospace), monospace;
+  font-size: 11px; color: var(--ink-mute); letter-spacing: 0.06em;
+}
+#hero-zone .spec-row-right::after {
+  content: ""; width: 18px; height: 1px;
+  background: var(--amber); opacity: 0.6; flex-shrink: 0;
+}
+
+/* Buttons */
+#hero-zone .btn {
+  font-family: var(--font-heading), sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 18px 28px;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.15s, background 0.2s, box-shadow 0.2s;
+  border: 1px solid var(--amber);
+}
+#hero-zone .btn-primary {
+  background: var(--amber);
+  color: #0a0a0a;
+  box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.3), 0 0 32px rgba(239, 68, 68, 0.25);
+}
+#hero-zone .btn-primary:hover {
+  background: var(--amber-2);
+  transform: translateY(-1px);
+}
+#hero-zone .btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line-2);
+}
+#hero-zone .btn-ghost:hover {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+/* Hero entrance — reuses existing @keyframes fadeInUp */
+#hero-zone .hero-h1-anim       { animation: fadeInUp 0.7s  0.2s  ease both; }
+#hero-zone .hero-subtitle-anim { animation: fadeInUp 0.65s 0.4s  ease both; }
+#hero-zone .hero-art-anim      { animation: fadeInUp 0.75s 0.55s ease both; }
+#hero-zone .hero-cta-anim      { animation: fadeInUp 0.65s 0.72s ease both; }
+#hero-zone .hero-stats-anim    { animation: fadeInUp 0.65s 0.9s  ease both; }
+
+/* "SLEEP. PATROL." shimmer */
+#hero-zone .patrol-shimmer {
+  display: block;
+  background: linear-gradient(90deg, #7f1d1d 0%, var(--amber) 25%, var(--amber-2) 44%, #ffe5e5 50%, var(--amber-2) 56%, var(--amber) 75%, #7f1d1d 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmerHero 5s linear infinite, patrolGlow 8s ease-in-out infinite;
+}
+
+/* "AGENTS" hero word shimmer — purple sweep */
+.agents-shimmer {
+  display: inline;
+  background: linear-gradient(90deg,
+    var(--brand) 0%,
+    var(--brand) 35%,
+    #ddd6fe 50%,
+    var(--brand) 65%,
+    var(--brand) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: agentsShimmer 6s linear infinite;
+}
+@keyframes agentsShimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+/* HUD label glow */
+#hero-zone .hud-glow {
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.55), 0 0 26px rgba(239, 68, 68, 0.2);
+}
+
+/* Brand "Patrol" hover glow */
+#hero-zone .brand-patrol {
+  color: var(--amber);
+  transition: text-shadow 0.3s ease;
+}
+#hero-zone .brand-patrol:hover {
+  text-shadow: 0 0 12px rgba(239, 68, 68, 0.7), 0 0 28px rgba(239, 68, 68, 0.3);
+}
+
+/* Mobile collapses — original landing page rules */
+@media (max-width: 980px) {
+  #hero-zone .specs-side { display: none !important; }
+  #hero-zone .nav-links  { display: none !important; }
+}
+
+/* Hero-zone-only keyframes (fadeInUp + pulse already exist globally) */
+@keyframes shimmerHero {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+@keyframes patrolGlow {
+  0%, 100% { filter: drop-shadow(0 0 16px rgba(239, 68, 68, 0.3)); }
+  50%      { filter: drop-shadow(0 0 40px rgba(239, 68, 68, 0.7)) drop-shadow(0 0 80px rgba(239, 68, 68, 0.2)); }
+}
+
+/* === TEAM HERO + PROBLEM — scoped tokens, helpers, keyframes === */
+.team-hero-zone {
+  --green-deep:      #060810;
+  --green:           #0A0F1E;
+  --green-mid:       #0F1628;
+  --ink:             #080C18;
+  --surface-1:       #0F1628;
+  --surface-2:       #141D35;
+  --surface-3:       #1A2540;
+  --border-primary:  #1E2D4A;
+  --border-secondary:#253560;
+  --green-glow:      var(--brand);
+  --accent:          var(--brand);
+  --accent-hover:    var(--brand-hover);
+  --accent-glow:     rgba(0,102,255,0.15);
+  --accent-2:        #4D9FFF;
+  --alert:           #E63946;
+  --amber:           #F5A623;
+  --success:         #00C896;
+  --neutral:         #4A5568;
+  --cream:           #E8ECF4;
+  --text-secondary:  #8892A4;
+  --text-tertiary:   #4A5568;
+  --text-accent:     #4D9FFF;
+  --code-bg:         #080C18;
+  --code-text:       #00FF88;
+  --code-label:      #4D9FFF;
+}
+
+/* HUD grid overlay (team-prefixed to avoid global collision) */
+.team-stage-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(0, 102, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 102, 255, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(80% 80% at 50% 50%, #000, transparent 80%);
+  -webkit-mask-image: radial-gradient(80% 80% at 50% 50%, #000, transparent 80%);
+  z-index: 5;
+}
+
+/* Scanlines + vignette */
+.team-stage-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 3px),
+    radial-gradient(80% 60% at 50% 110%, rgba(0, 0, 0, 0.5), transparent 60%);
+  z-index: 4;
+}
+
+/* Animations — all team-prefixed */
+@keyframes team-ring-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes team-ring-spin-rev {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(-360deg); }
+}
+@keyframes team-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+@keyframes team-blink {
+  50% { opacity: 0; }
+}
+@keyframes team-flicker {
+  0%, 100% { opacity: 1; }
+  45%      { opacity: 0.25; }
+  50%      { opacity: 0.9; }
+}
+@keyframes team-card-reveal {
+  0%   { opacity: 0; transform: translateY(48px) scale(0.94); filter: blur(10px); }
+  55%  { filter: blur(0px); }
+  100% { opacity: 1; transform: translateY(0) scale(1);       filter: blur(0px); }
+}
+@keyframes team-heading-reveal {
+  0%   { opacity: 0; transform: translateY(32px); filter: blur(8px); }
+  55%  { filter: blur(0px); }
+  100% { opacity: 1; transform: translateY(0);    filter: blur(0px); }
+}
+@keyframes team-closing-reveal {
+  from { opacity: 0; transform: translateY(16px); filter: blur(4px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0px); }
+}
+@keyframes team-dot-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.2; }
+}
+@keyframes team-spin-cw {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Team hero 3D canvas — must never intercept mouse events */
+#team-hero-3d-wrapper,
+#team-hero-3d-wrapper * {
+  pointer-events: none !important;
+}
