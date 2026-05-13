@@ -957,7 +957,9 @@ export default function AboutFlythrough() {
       // Active when within range that needs the canvas mounted. Kept
       // ~1.10 of extendedProgress as a safety margin past the section
       // end so the streaks have room to fade out before unmounting.
-      const isActive = scrolled > -vh && ep < 1.10;
+      // Mount threshold tightened to 0.1×vh so canvas doesn't activate
+      // a full viewport early (was -vh), only mounts ~10vh before About enters.
+      const isActive = scrolled > -vh * 0.1 && ep < 1.10;
       setActive(isActive);
     };
     const onMove = (e: MouseEvent) => {

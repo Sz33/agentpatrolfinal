@@ -1,8 +1,10 @@
 'use client'
 import AnimatedButton from '@/components/AnimatedButton'
+import { useEarlyAccess } from '@/components/EarlyAccessContext'
 import { SceneWrapper } from './SceneWrapper'
 
 export function Hero() {
+  const { open } = useEarlyAccess();
   return (
     <section
       style={{
@@ -240,11 +242,9 @@ export function Hero() {
             zIndex: 5,
           }}
         >
-          <a href="#" style={{ textDecoration: 'none' }}>
-            <AnimatedButton className="px-7 py-4 text-[12px] tracking-[0.2em]">
-              Request Early Access <span style={{ fontFamily: 'var(--font-mono, ui-monospace), monospace', fontWeight: 400 }}>→</span>
-            </AnimatedButton>
-          </a>
+          <AnimatedButton className="px-7 py-4 text-[12px] tracking-[0.2em]" onClick={open}>
+            Request Early Access <span style={{ fontFamily: 'var(--font-mono, ui-monospace), monospace', fontWeight: 400 }}>→</span>
+          </AnimatedButton>
         </div>
 
         {/* Meta stats */}

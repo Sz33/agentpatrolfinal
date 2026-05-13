@@ -971,6 +971,45 @@ nav a:hover::after {
   to   { transform: rotate(360deg); }
 }
 
+@keyframes problemNumPulse {
+  0%, 100% { opacity: 0.85; text-shadow: 0 0 0px currentColor; }
+  50%       { opacity: 1;    text-shadow: 0 0 8px currentColor, 0 0 16px currentColor; }
+}
+.problem-num          { animation: problemNumPulse 3.5s ease-in-out infinite; }
+.problem-num.delay-1  { animation-delay: 0.4s; }
+.problem-num.delay-2  { animation-delay: 0.8s; }
+.problem-num.delay-3  { animation-delay: 1.2s; }
+@media (prefers-reduced-motion: reduce) {
+  .problem-num { animation: none; }
+}
+
+.problem-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(220, 38, 38, 0.04) 0%,
+    rgba(220, 38, 38, 0.02) 25%,
+    transparent 60%
+  );
+}
+
+.problem-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 80px 80px;
+  opacity: 0.6;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+
 /* Team hero 3D canvas — must never intercept mouse events */
 #team-hero-3d-wrapper,
 #team-hero-3d-wrapper * {

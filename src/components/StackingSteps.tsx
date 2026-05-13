@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { useEffect, useRef, useState } from 'react';
 
 interface Step {
@@ -113,8 +113,8 @@ const STYLES = `
 .ss-glow      { animation: ss-glow 0.8s ease-out; }
 .ss-counter   { position: relative; display: inline-block; height: 1.2em; vertical-align: middle; overflow: hidden; min-width: 1.6em; line-height: 1.2; }
 .ss-counter > span { display: block; line-height: 1.2; }
-.ss-counter .ss-old { animation: ss-roll-old 0.3s ease-out forwards; position: absolute; left: 0; top: 0; }
-.ss-counter .ss-new { animation: ss-roll-new 0.3s ease-out forwards; }
+.ss-counter .ss-old { display: none; }
+.ss-counter .ss-new { opacity: 1; transform: none; }
 .ss-pulse-dot {
   display: inline-block;
   width: 7px; height: 7px;
@@ -140,40 +140,33 @@ function CardInner({ step, idx, total, runId }: { step: Step; idx: number; total
     setTypedLines(step.iconLines.map(() => ''));
     setCursorOn(false);
 
-    const acc = step.iconLines.map(() => '');
     let lineIdx = 0;
     let charIdx = 0;
-    let cancelled = false;
     let timer: ReturnType<typeof setTimeout> | undefined;
-    let cursorTimer: ReturnType<typeof setTimeout> | undefined;
 
-    function tick() {
-      if (cancelled) return;
+    const tick = () => {
       if (lineIdx >= step.iconLines.length) {
-        setCursorOn(true);
-        cursorTimer = setTimeout(() => setCursorOn(false), 3000);
+        setTimeout(() => setCursorOn(false), 3000);
         return;
       }
       const line = step.iconLines[lineIdx];
-      acc[lineIdx] = line.slice(0, charIdx + 1);
-      setTypedLines([...acc]);
-      charIdx++;
-      if (charIdx >= line.length) {
+      if (charIdx <= line.length) {
+        setTypedLines(prev => {
+          const next = [...prev];
+          next[lineIdx] = line.slice(0, charIdx);
+          return next;
+        });
+        charIdx++;
+        timer = setTimeout(tick, 40);
+      } else {
         lineIdx++;
         charIdx = 0;
         timer = setTimeout(tick, 150);
-      } else {
-        timer = setTimeout(tick, 40);
       }
-    }
-
-    timer = setTimeout(tick, 200);
-
-    return () => {
-      cancelled = true;
-      if (timer) clearTimeout(timer);
-      if (cursorTimer) clearTimeout(cursorTimer);
     };
+
+    timer = setTimeout(tick, 150);
+    return () => { if (timer) clearTimeout(timer); };
   }, [runId, step.iconLines]);
 
   const accentStyle = { '--ss-accent': step.accent } as React.CSSProperties;
@@ -238,7 +231,7 @@ function CardInner({ step, idx, total, runId }: { step: Step; idx: number; total
           </div>
           <h3
             key={`title-${runId}`}
-            className={runId > 0 ? 'ss-glitch' : ''}
+            className=""
             style={{
               color: 'white',
               fontFamily: 'var(--font-heading), sans-serif',

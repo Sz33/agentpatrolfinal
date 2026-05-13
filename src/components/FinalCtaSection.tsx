@@ -1,10 +1,10 @@
 'use client';
 import AnimatedButton from '@/components/AnimatedButton';
 import { RetroGrid } from '@/components/magicui/retro-grid';
+import { useEarlyAccess } from '@/components/EarlyAccessContext';
 
-// Final conversion section. Sits directly above the footer; replaces
-// the email-capture block that previously lived inside SolaisFooter.
 export default function FinalCtaSection() {
+  const { open } = useEarlyAccess();
   return (
     <section
       id="get-started"
@@ -116,45 +116,17 @@ export default function FinalCtaSection() {
             marginTop: 40,
           }}
         >
-          <a href="#" style={{ textDecoration: 'none' }}>
-            <AnimatedButton className="px-7 py-[14px]">
-              Request Early Access{' '}
-              <span
-                style={{
-                  fontFamily:
-                    'var(--font-mono, ui-monospace), monospace',
-                  fontWeight: 400,
-                }}
-              >
-                →
-              </span>
-            </AnimatedButton>
-          </a>
-          <a
-            href="#"
-            style={{
-              background: 'transparent',
-              color: 'white',
-              padding: '14px 28px',
-              borderRadius: 6,
-              fontWeight: 500,
-              fontFamily: 'var(--font-heading), sans-serif',
-              textDecoration: 'none',
-              fontSize: 14,
-              letterSpacing: '0.04em',
-              border: '1px solid rgba(255,255,255,0.25)',
-              transition: 'background 0.2s ease, border-color 0.2s ease',
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background =
-                'rgba(255,255,255,0.05)';
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background = 'transparent';
-            }}
-          >
-            Talk to a Founder
-          </a>
+          <AnimatedButton className="px-7 py-3.5" onClick={open}>
+            Request Early Access{' '}
+            <span
+              style={{
+                fontFamily: 'var(--font-mono, ui-monospace), monospace',
+                fontWeight: 400,
+              }}
+            >
+              →
+            </span>
+          </AnimatedButton>
         </div>
       </div>
     </section>

@@ -1,275 +1,129 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import MagicCard from "@/components/MagicCard";
 
 const MONO = "var(--font-mono, ui-monospace), monospace";
+const HEAD = "var(--font-heading)";
+const BODY = "var(--font-body, var(--font-heading))";
 
 const CARDS = [
-  { pos: { top: "22%", left: "2%", right: "auto" }, num: "01", status: "CRITICAL", accent: "var(--danger)", delay: 0.15, title: "NO VISIBILITY\nAT RUNTIME", body: "Your agent runs as a black box once deployed. You have no way to see what it's actually doing during each run." },
-  { pos: { top: "58%", left: "2%", right: "auto" }, num: "02", status: "HIGH", accent: "var(--info)", delay: 0.35, title: "NO WAY\nTO STOP IT", body: "Alerts come too late. By the time anyone investigates, the damage is already done. There's no enforcement layer." },
-  { pos: { top: "22%", left: "auto", right: "2%" }, num: "03", status: "CRITICAL", accent: "var(--danger)", delay: 0.25, title: "NO AUDIT\nTRAIL", body: "Your CISO, auditor, or enterprise client asks for proof. You have no session reports. Nothing to show." },
-  { pos: { top: "58%", left: "auto", right: "2%" }, num: "04", status: "SUPPLY CHAIN", accent: "#4D9FFF", delay: 0.45, title: "NO CONTROL OVER\nWHAT IT WAS BUILT WITH", body: "You received the agent from a contractor or agency. You don't know every dependency it pulls in, every API it calls, or every capability it was given." },
-] as const;
-
-function HudBrackets({ color, size = 14 }: { color: string; size?: number }) {
-  const b = (s: React.CSSProperties) => <div style={{ position: "absolute", background: color, ...s }} />;
-  return (
-    <>
-      {b({ top: 0, left: 0, width: size, height: 1 })} {b({ top: 0, left: 0, width: 1, height: size })}
-      {b({ top: 0, right: 0, width: size, height: 1 })} {b({ top: 0, right: 0, width: 1, height: size })}
-      {b({ bottom: 0, left: 0, width: size, height: 1 })} {b({ bottom: 0, left: 0, width: 1, height: size })}
-      {b({ bottom: 0, right: 0, width: size, height: 1 })} {b({ bottom: 0, right: 0, width: 1, height: size })}
-    </>
-  );
-}
+  { col: 1, num: "01", color: "#DC2626", colorRgb: "220, 38, 38",  severity: "CRITICAL", title: "NO VISIBILITY AT RUNTIME",               body: "Your agent runs as a black box once deployed. Zero telemetry on execution." },
+  { col: 1, num: "02", color: "#F59E0B", colorRgb: "245, 158, 11", severity: "HIGH",     title: "NO WAY TO STOP IT",                      body: "Alerts come too late. By the time anyone investigates, the damage is done." },
+  { col: 3, num: "03", color: "#DC2626", colorRgb: "220, 38, 38",  severity: "CRITICAL", title: "NO AUDIT TRAIL",                         body: "Your CISO asks for proof. You have no session reports. Nothing to show." },
+  { col: 3, num: "04", color: "#4D9FFF", colorRgb: "77, 159, 255", severity: "SUPPLY",   title: "NO CONTROL OVER WHAT IT WAS BUILT WITH", body: "Unknown dependencies. Unknown APIs. Unknown capabilities given by your vendor." },
+];
 
 export default function TeamProblem() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const allRefs = useRef<(HTMLElement | null)[]>([]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        allRefs.current.forEach((el) => {
-          if (el) el.style.animationPlayState = "running";
-        });
-        observer.disconnect();
-      },
-      { threshold: 0.12 },
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  const reg = (el: HTMLElement | null, i: number) => {
-    allRefs.current[i] = el;
-  };
+  const leftCards  = CARDS.filter(c => c.col === 1);
+  const rightCards = CARDS.filter(c => c.col === 3);
 
   return (
     <section
-      ref={sectionRef}
       id="problem"
       className="team-hero-zone"
-      style={{
-        minHeight: "100vh",
-        position: "relative",
-        overflow: "hidden",
-        fontFamily: "var(--font-heading)",
-        color: "var(--cream)",
-        background: `
-          radial-gradient(ellipse 80% 60% at 50% 0%,   rgba(0,102,255,.06)  0%, transparent 60%),
-          radial-gradient(ellipse 60% 50% at 80% 80%,  rgba(0,102,255,.06)  0%, transparent 55%)
-        `,
-      }}
+      style={{ minHeight: "100vh", position: "relative", display: "flex", flexDirection: "column", justifyContent: "center", padding: "80px 0" }}
     >
-      {/* Grid */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          pointerEvents: "none",
-          backgroundImage:
-            "linear-gradient(rgba(0,102,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,102,255,.03) 1px,transparent 1px)",
-          backgroundSize: "80px 80px",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 1,
-          background: "linear-gradient(90deg,transparent,rgba(0,102,255,.15) 30%,rgba(0,102,255,.15) 70%,transparent)",
-        }}
-      />
-
-      {/* ── Heading ─────────────────────────────────────────── */}
-      <div
-        ref={(el) => reg(el, 10)}
-        style={{
-          position: "absolute",
-          top: "5%",
-          left: 0,
-          right: 0,
-          textAlign: "center",
-          zIndex: 2,
-          animation: "team-heading-reveal 0.9s cubic-bezier(0.16,1,0.3,1) 0s forwards",
-          animationPlayState: "paused",
-        } as React.CSSProperties}
-      >
+      {/* Heading */}
+      <div style={{ textAlign: "center", marginBottom: 56, zIndex: 2, position: "relative" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14, marginBottom: 18 }}>
-          <div style={{ height: 1, width: 56, background: "rgba(230,57,70,.45)" }} />
-          <span
-            style={{
-              fontFamily: MONO,
-              fontSize: 9,
-              letterSpacing: "0.44em",
-              color: "var(--brand)",
-              textTransform: "uppercase",
-              opacity: 0.8,
-            }}
-          >
-            SOUND FAMILIAR?
-          </span>
-          <div style={{ height: 1, width: 56, background: "rgba(230,57,70,.45)" }} />
+          <div style={{ height: 1, width: 56, background: "rgba(220,38,38,.45)" }} />
+          <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: "0.44em", color: "var(--brand)", textTransform: "uppercase", opacity: 0.8 }}>SOUND FAMILIAR?</span>
+          <div style={{ height: 1, width: 56, background: "rgba(220,38,38,.45)" }} />
         </div>
-        <h2
-          style={{
-            fontFamily: "var(--font-heading)",
-            fontWeight: 700,
-            fontSize: "clamp(32px,5vw,72px)",
-            letterSpacing: "-0.03em",
-            textTransform: "uppercase",
-            color: "var(--cream)",
-            lineHeight: 1.05,
-          }}
-        >
+        <h2 style={{ fontFamily: HEAD, fontWeight: 700, fontSize: "clamp(32px,5vw,72px)", letterSpacing: "-0.03em", textTransform: "uppercase", color: "var(--cream)", lineHeight: 1.05, margin: 0 }}>
           YOU DEPLOYED AN AI AGENT.
           <span style={{ display: "block", color: "#E63946" }}>NOW WHAT?</span>
         </h2>
       </div>
 
-      {/* ── Targeting ring (single, subtle) ─────────────────── */}
+      {/* 3-column bento grid */}
       <div
         style={{
-          position: "absolute",
-          left: "50%",
-          top: "55%",
-          transform: "translate(-50%,-50%)",
-          width: 320,
-          height: 320,
-          pointerEvents: "none",
-          zIndex: 1,
+          display: "grid",
+          gridTemplateColumns: "minmax(280px, 1fr) clamp(300px, 30vw, 500px) minmax(280px, 1fr)",
+          gap: 20,
+          alignItems: "stretch",
+          padding: "0 clamp(16px, 4vw, 60px)",
+          position: "relative",
+          zIndex: 2,
         }}
       >
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            borderRadius: "50%",
-            border: "1px solid rgba(0,102,255,.04)",
-            animation: "team-spin-cw 40s linear infinite",
-          }}
-        />
+        {/* Left column */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
+          {leftCards.map(card => <ProblemBentoCard key={card.num} card={card} />)}
+        </div>
+
+        {/* Center column — robot floats here (fixed position), keep empty */}
+        <div style={{ gridColumn: 2 }} />
+
+        {/* Right column */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
+          {rightCards.map(card => <ProblemBentoCard key={card.num} card={card} />)}
+        </div>
       </div>
 
-      {/* ── Cards ───────────────────────────────────────────── */}
-      {CARDS.map((card, i) => (
-        <div
-          key={card.num}
-          ref={(el) => reg(el, i)}
-          style={{
-            position: "absolute",
-            top: card.pos.top,
-            left: card.pos.left,
-            right: card.pos.right,
-            width: "30%",
-            background: "rgba(15,22,40,.92)",
-            backdropFilter: "blur(12px)",
-            border: "1px solid var(--border-primary)",
-            padding: "22px 22px 20px",
-            display: "flex",
-            flexDirection: "column",
-            overflow: "hidden",
-            animation: `team-card-reveal 0.85s cubic-bezier(0.16,1,0.3,1) ${card.delay}s forwards`,
-            animationPlayState: "paused",
-          }}
-        >
-          <HudBrackets color={card.accent} size={14} />
-
-          {/* Status badge */}
-          <div
-            style={{
-              position: "absolute",
-              top: 12,
-              right: 18,
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-              fontFamily: MONO,
-              fontSize: 8,
-              letterSpacing: "0.28em",
-              color: card.accent,
-            }}
-          >
-            <span
-              style={{
-                width: 5,
-                height: 5,
-                borderRadius: "50%",
-                background: card.accent,
-                animation: `team-dot-blink ${1.2 + i * 0.2}s ease infinite`,
-              }}
-            />
-            {card.status}
-          </div>
-
-          <div
-            style={{
-              fontFamily: MONO,
-              fontSize: 10,
-              letterSpacing: "0.34em",
-              color: card.accent,
-              marginBottom: 16,
-              opacity: 0.8,
-            }}
-          >
-            {card.num}
-          </div>
-
-          <h3
-            style={{
-              fontFamily: "var(--font-heading)",
-              fontWeight: 700,
-              fontSize: "clamp(14px,1.2vw,18px)",
-              letterSpacing: "0.04em",
-              textTransform: "uppercase",
-              color: "var(--cream)",
-              marginBottom: 12,
-              lineHeight: 1.2,
-              whiteSpace: "pre-line",
-            }}
-          >
-            {card.title}
-          </h3>
-
-          <p
-            style={{
-              fontFamily: "var(--font-heading)",
-              fontSize: "clamp(11px,0.85vw,13px)",
-              color: "var(--text-secondary)",
-              lineHeight: 1.75,
-            }}
-          >
-            {card.body}
-          </p>
-        </div>
-      ))}
-
-      {/* ── Closing ─────────────────────────────────────────── */}
+      {/* Closing line */}
       <div
-        ref={(el) => reg(el, 30)}
         style={{
-          position: "absolute",
-          bottom: "4%",
-          left: 0,
-          right: 0,
           textAlign: "center",
           fontFamily: MONO,
           fontSize: 10,
           letterSpacing: "0.22em",
           lineHeight: 2,
-          animation: "team-closing-reveal 0.7s cubic-bezier(0.16,1,0.3,1) 0.65s forwards",
-          animationPlayState: "paused",
-        } as React.CSSProperties}
+          marginTop: 100,
+          zIndex: 2,
+          position: "relative",
+        }}
       >
         <div style={{ color: "var(--text-secondary)" }}>THIS ISN&apos;T A FUTURE RISK.</div>
-        <div style={{ color: "rgba(230,57,70,.7)" }}>
-          IT&apos;S THE CURRENT STATE OF AI AGENT DEPLOYMENT — RIGHT NOW.
-        </div>
+        <div style={{ color: "rgba(230,57,70,.7)" }}>IT&apos;S THE CURRENT STATE OF AI AGENT DEPLOYMENT — RIGHT NOW.</div>
       </div>
     </section>
+  );
+}
+
+function ProblemBentoCard({ card }: { card: typeof CARDS[number] }) {
+  return (
+    <MagicCard
+      glowColor={card.colorRgb}
+      particleCount={0}
+      enableStars
+      enableBorderGlow
+      enableTilt={false}
+      enableMagnetism
+      clickEffect
+    >
+      <div
+        style={{
+          background: "#0a0a0a",
+          border: "1px solid rgba(255,255,255,0.08)",
+          borderRadius: 8,
+          padding: "24px 24px 20px",
+          display: "flex",
+          flexDirection: "column",
+          height: "100%",
+          position: "relative",
+          zIndex: 1,
+          minHeight: 180,
+        }}
+      >
+        {/* Meta row */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14, fontFamily: MONO, fontSize: 10, fontWeight: 700, letterSpacing: "0.12em" }}>
+          <span style={{ color: card.color, fontSize: 13, fontWeight: 800 }}>{card.num}</span>
+          <span style={{ display: "inline-block", width: 16, height: 1, background: "rgba(255,255,255,0.15)" }} />
+          <span style={{ padding: "2px 7px", borderRadius: 3, fontSize: 9, background: `rgba(${card.colorRgb},0.12)`, color: card.color, fontWeight: 700, letterSpacing: "0.1em" }}>{card.severity}</span>
+        </div>
+
+        {/* Title */}
+        <h3 style={{ fontFamily: HEAD, fontWeight: 800, fontSize: 14, color: "#F1F5F9", letterSpacing: "-0.01em", lineHeight: 1.25, textTransform: "uppercase", margin: "0 0 10px" }}>
+          {card.title}
+        </h3>
+
+        {/* Body */}
+        <p style={{ fontFamily: BODY, fontSize: 12, color: "#64748B", lineHeight: 1.65, margin: 0, flex: 1 }}>
+          {card.body}
+        </p>
+      </div>
+    </MagicCard>
   );
 }

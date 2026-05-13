@@ -18,6 +18,7 @@
 //   • "Crafted with ❤" badge → removed
 //   • Bottom bar simplified to two-item justify-between layout
 import React, { useEffect, useRef, type MouseEvent } from 'react';
+import { useEarlyAccess } from '@/components/EarlyAccessContext';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -305,6 +306,7 @@ function MagneticButton({
 // ── CinematicFooter
 export function CinematicFooter() {
   useInjectStyles();
+  const { open } = useEarlyAccess();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const giantTextRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -413,30 +415,22 @@ export function CinematicFooter() {
               {/* Primary CTAs */}
               <div className="flex flex-wrap justify-center gap-4">
                 <MagneticButton
-                  as="a"
-                  href="#early-access"
+                  as="button"
+                  onClick={open}
                   className="footer-glass-pill px-10 py-5 rounded-full font-bold text-sm md:text-base tracking-wider uppercase"
                   style={{ background: 'var(--brand)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.15)' }}
                 >
                   Request Early Access →
                 </MagneticButton>
-                <MagneticButton
-                  as="a"
-                  href="#contact"
-                  className="footer-glass-pill px-10 py-5 rounded-full text-foreground font-bold text-sm md:text-base tracking-wider uppercase"
-                >
-                  Talk to a Founder
-                </MagneticButton>
               </div>
 
               {/* Secondary nav pills */}
               <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-                <MagneticButton as="a" href="#features" className="footer-glass-pill px-5 py-2.5 rounded-full text-muted-foreground font-medium text-xs hover:text-foreground uppercase tracking-wider">Features</MagneticButton>
-                <MagneticButton as="a" href="#how-it-works" className="footer-glass-pill px-5 py-2.5 rounded-full text-muted-foreground font-medium text-xs hover:text-foreground uppercase tracking-wider">How It Works</MagneticButton>
-                <MagneticButton as="a" href="#pre-flight" className="footer-glass-pill px-5 py-2.5 rounded-full text-muted-foreground font-medium text-xs hover:text-foreground uppercase tracking-wider">Pre-Flight Scan</MagneticButton>
-                <MagneticButton as="a" href="#sessions" className="footer-glass-pill px-5 py-2.5 rounded-full text-muted-foreground font-medium text-xs hover:text-foreground uppercase tracking-wider">Session Reports</MagneticButton>
-                <MagneticButton as="a" href="#privacy" className="footer-glass-pill px-5 py-2.5 rounded-full text-muted-foreground font-medium text-xs hover:text-foreground uppercase tracking-wider">Privacy</MagneticButton>
-                <MagneticButton as="a" href="#terms" className="footer-glass-pill px-5 py-2.5 rounded-full text-muted-foreground font-medium text-xs hover:text-foreground uppercase tracking-wider">Terms</MagneticButton>
+                <a href="#about"        className="footer-glass-pill px-5 py-2.5 rounded-full text-muted-foreground font-medium text-xs hover:text-foreground uppercase tracking-wider">About</a>
+                <a href="#how-it-works" className="footer-glass-pill px-5 py-2.5 rounded-full text-muted-foreground font-medium text-xs hover:text-foreground uppercase tracking-wider">How It Works</a>
+                <a href="#features"     className="footer-glass-pill px-5 py-2.5 rounded-full text-muted-foreground font-medium text-xs hover:text-foreground uppercase tracking-wider">Features</a>
+                <a href="#why-kernel"   className="footer-glass-pill px-5 py-2.5 rounded-full text-muted-foreground font-medium text-xs hover:text-foreground uppercase tracking-wider">Usage</a>
+                <a href="#live-demo"    className="footer-glass-pill px-5 py-2.5 rounded-full text-muted-foreground font-medium text-xs hover:text-foreground uppercase tracking-wider">Demo</a>
               </div>
             </div>
           </div>

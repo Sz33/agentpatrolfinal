@@ -66,14 +66,17 @@ function Robot() {
       // Canvas fade-out past problem section
       if (problemEl) {
         const problemBottom = problemEl.offsetTop + problemEl.offsetHeight;
-        const fadeStart = problemBottom - window.innerHeight * 0.15;
-        const fadeEnd   = problemBottom + window.innerHeight * 0.25;
+        const fadeStart = problemBottom - window.innerHeight * 0.35;
+        const fadeEnd   = problemBottom - window.innerHeight * 0.05;
         let opacity = 1;
         if (window.scrollY > fadeStart) {
           opacity = 1 - Math.min(1, (window.scrollY - fadeStart) / (fadeEnd - fadeStart));
         }
         const wrapper = document.getElementById("team-hero-3d-wrapper");
-        if (wrapper) wrapper.style.opacity = String(opacity);
+        if (wrapper) {
+          wrapper.style.opacity = String(opacity);
+          wrapper.style.transform = `translateY(-13vh)`;
+        }
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });

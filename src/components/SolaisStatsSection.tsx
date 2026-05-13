@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import AnimatedButton from "@/components/AnimatedButton";
+import { useEarlyAccess } from "@/components/EarlyAccessContext";
 
 function SlotMachineDigit({ targetDigit, delay }: { targetDigit: number; delay: number }) {
   const [currentOffset, setCurrentOffset] = useState(0);
@@ -72,6 +73,7 @@ function SlotMachineNumber({ value }: { value: string }) {
 }
 
 export default function SolaisStatsSection() {
+  const { open } = useEarlyAccess();
   return (
     <section
       className="w-full py-24 lg:py-32"
@@ -98,15 +100,13 @@ export default function SolaisStatsSection() {
               AI agents already have access to your systems. AgentPatrol gives you full visibility and control before something goes wrong.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 reveal">
-              <a href="#" style={{ textDecoration: 'none' }}>
-                <AnimatedButton className="inline-flex items-center gap-3">
-                  Request Early Access
-                  <svg width="12" height="12" viewBox="0 0 24 25" fill="none">
-                    <path d="M2.68 20.211V4.058H0V21.34L3.354 24.748H20.484V22.024H4.464L2.68 20.211Z" fill="currentColor"/>
-                    <path d="M21.145 0.749H8.907V3.475H18.973L5.945 16.718L7.84 18.644L21.06 5.206V15.734H23.74V3.387L21.145 0.749Z" fill="currentColor"/>
-                  </svg>
-                </AnimatedButton>
-              </a>
+              <AnimatedButton className="inline-flex items-center gap-3" onClick={open}>
+                Request Early Access
+                <svg width="12" height="12" viewBox="0 0 24 25" fill="none">
+                  <path d="M2.68 20.211V4.058H0V21.34L3.354 24.748H20.484V22.024H4.464L2.68 20.211Z" fill="currentColor"/>
+                  <path d="M21.145 0.749H8.907V3.475H18.973L5.945 16.718L7.84 18.644L21.06 5.206V15.734H23.74V3.387L21.145 0.749Z" fill="currentColor"/>
+                </svg>
+              </AnimatedButton>
               <a
                 href="#how-it-works"
                 className="inline-flex items-center gap-2 text-[rgb(239,239,229)] text-sm opacity-60 hover:opacity-100 transition-opacity"

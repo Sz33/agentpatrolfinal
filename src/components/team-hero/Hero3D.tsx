@@ -16,7 +16,7 @@ export default function Hero3D() {
         inset: 0,
         zIndex: 9999,
         pointerEvents: "none",
-        transition: "opacity 0.15s linear",
+        transition: "opacity 0.25s ease-out",
         transform: "translateY(-13vh)",
       }}
     >

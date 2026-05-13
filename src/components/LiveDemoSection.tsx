@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import AnimatedButton from '@/components/AnimatedButton';
+import { useEarlyAccess } from '@/components/EarlyAccessContext';
 
 // ── Event sequence ──────────────────────────────────────────────────
 // One entry per event. `delay` is the offset from "trigger" at which
@@ -121,6 +122,7 @@ const STYLES = `
 // ── Component ───────────────────────────────────────────────────────
 
 export default function LiveDemoSection() {
+  const { open } = useEarlyAccess();
   const sectionRef = useRef<HTMLElement>(null);
   const [triggered, setTriggered] = useState(false);
   const [step, setStep] = useState(0);   // number of events that have fired
@@ -354,11 +356,9 @@ export default function LiveDemoSection() {
           Run this simulation on your own agent.
         </p>
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 16 }}>
-          <a href="#" style={{ textDecoration: 'none' }}>
-            <AnimatedButton>
-              Try on your agent <span style={{ fontWeight: 400 }}>→</span>
-            </AnimatedButton>
-          </a>
+          <AnimatedButton onClick={open}>
+            Try on your agent <span style={{ fontWeight: 400 }}>→</span>
+          </AnimatedButton>
         </div>
       </div>
     </section>
