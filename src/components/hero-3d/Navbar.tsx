@@ -1,7 +1,9 @@
 'use client'
 import AnimatedButton from '@/components/AnimatedButton'
+import { useEarlyAccess } from '@/components/EarlyAccessContext'
 
 export function Navbar() {
+  const { open } = useEarlyAccess();
   return (
     <header
       className="navbar-blur-transition"
@@ -66,11 +68,9 @@ export function Navbar() {
 
       {/* CTA button */}
       <div>
-        <a href="#" style={{ textDecoration: 'none' }}>
-          <AnimatedButton>
-            Request Early Access <span style={{ fontWeight: 400 }}>→</span>
-          </AnimatedButton>
-        </a>
+        <AnimatedButton onClick={open}>
+          Request Early Access <span style={{ fontWeight: 400 }}>→</span>
+        </AnimatedButton>
       </div>
     </header>
   )

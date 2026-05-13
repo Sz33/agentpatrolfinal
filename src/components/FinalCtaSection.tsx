@@ -1,10 +1,10 @@
 'use client';
 import AnimatedButton from '@/components/AnimatedButton';
 import { RetroGrid } from '@/components/magicui/retro-grid';
+import { useEarlyAccess } from '@/components/EarlyAccessContext';
 
-// Final conversion section. Sits directly above the footer; replaces
-// the email-capture block that previously lived inside SolaisFooter.
 export default function FinalCtaSection() {
+  const { open } = useEarlyAccess();
   return (
     <section
       id="get-started"
@@ -116,20 +116,17 @@ export default function FinalCtaSection() {
             marginTop: 40,
           }}
         >
-          <a href="#" style={{ textDecoration: 'none' }}>
-            <AnimatedButton className="px-7 py-[14px]">
-              Request Early Access{' '}
-              <span
-                style={{
-                  fontFamily:
-                    'var(--font-mono, ui-monospace), monospace',
-                  fontWeight: 400,
-                }}
-              >
-                →
-              </span>
-            </AnimatedButton>
-          </a>
+          <AnimatedButton className="px-7 py-3.5" onClick={open}>
+            Request Early Access{' '}
+            <span
+              style={{
+                fontFamily: 'var(--font-mono, ui-monospace), monospace',
+                fontWeight: 400,
+              }}
+            >
+              →
+            </span>
+          </AnimatedButton>
           <a
             href="#"
             style={{
