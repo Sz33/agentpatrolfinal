@@ -30,7 +30,7 @@ export default function TeamProblem() {
           <span style={{ fontFamily: MONO, fontSize: 9, letterSpacing: "0.44em", color: "var(--brand)", textTransform: "uppercase", opacity: 0.8 }}>SOUND FAMILIAR?</span>
           <div style={{ height: 1, width: 56, background: "rgba(220,38,38,.45)" }} />
         </div>
-        <h2 style={{ fontFamily: HEAD, fontWeight: 700, fontSize: "clamp(32px,5vw,72px)", letterSpacing: "-0.03em", textTransform: "uppercase", color: "var(--cream)", lineHeight: 1.05, margin: 0 }}>
+        <h2 className="problem-headline" style={{ fontFamily: HEAD, fontWeight: 700, fontSize: "clamp(32px,5vw,72px)", letterSpacing: "-0.03em", textTransform: "uppercase", color: "var(--cream)", lineHeight: 1.05, margin: 0 }}>
           YOU DEPLOYED AN AI AGENT.
           <span style={{ display: "block", color: "#E63946" }}>NOW WHAT?</span>
         </h2>
@@ -38,6 +38,7 @@ export default function TeamProblem() {
 
       {/* 3-column bento grid */}
       <div
+        className="mobile-grid-1"
         style={{
           display: "grid",
           gridTemplateColumns: "minmax(280px, 1fr) clamp(300px, 30vw, 500px) minmax(280px, 1fr)",
@@ -54,7 +55,7 @@ export default function TeamProblem() {
         </div>
 
         {/* Center column — robot floats here (fixed position), keep empty */}
-        <div style={{ gridColumn: 2 }} />
+        <div className="mobile-hide" style={{ gridColumn: 2 }} />
 
         {/* Right column */}
         <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>

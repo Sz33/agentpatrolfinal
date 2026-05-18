@@ -6,7 +6,7 @@ export function Navbar() {
   const { open } = useEarlyAccess();
   return (
     <header
-      className="navbar-blur-transition"
+      className="navbar-blur-transition nav-header-mobile"
       style={{
         position: 'fixed',
         top: 0,
@@ -68,7 +68,7 @@ export function Navbar() {
 
       {/* CTA button */}
       <div>
-        <AnimatedButton onClick={open}>
+        <AnimatedButton className="nav-cta-mobile" onClick={open}>
           Request Early Access <span style={{ fontWeight: 400 }}>→</span>
         </AnimatedButton>
       </div>

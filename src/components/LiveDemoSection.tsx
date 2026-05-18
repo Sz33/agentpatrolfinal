@@ -208,6 +208,7 @@ export default function LiveDemoSection() {
           See It In Action
         </p>
         <h2
+          className="livedemo-headline"
           style={{
             color: 'white',
             fontFamily: 'var(--font-heading), sans-serif',

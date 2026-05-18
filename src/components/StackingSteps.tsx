@@ -302,19 +302,6 @@ function CardInner({ step, idx, total, runId }: { step: Step; idx: number; total
         </div>
       </div>
 
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '32px',
-          right: '40px',
-          fontFamily: 'var(--font-mono, ui-monospace), monospace',
-          fontSize: '11px',
-          letterSpacing: '0.25em',
-          color: step.accent,
-        }}
-      >
-        {step.num} / 0{total}
-      </div>
     </div>
   );
 }

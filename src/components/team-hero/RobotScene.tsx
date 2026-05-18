@@ -43,6 +43,10 @@ function Robot() {
 
   // Unified scroll handler — spin progress, eye color, canvas fade-out
   useEffect(() => {
+    // Cached viewport flag — re-read only on resize (scroll runs every frame)
+    let isMobile = window.innerWidth <= 640;
+    const onResize = () => { isMobile = window.innerWidth <= 640; };
+
     const onScroll = () => {
       const problemEl = document.getElementById("problem");
 
@@ -74,14 +78,31 @@ function Robot() {
         }
         const wrapper = document.getElementById("team-hero-3d-wrapper");
         if (wrapper) {
-          wrapper.style.opacity = String(opacity);
+          // Mobile: the shared robot canvas overlaps the full-width stacked
+          // bento cards inside #problem. Hide it while scrolled within the
+          // problem section. Entry threshold reuses the eye-color trigger
+          // math so scrolling back up to the hero restores it.
+          const problemEnter = problemEl.offsetTop - window.innerHeight * 0.45;
+          const inProblemRange =
+            window.scrollY >= problemEnter && window.scrollY < problemBottom;
+          if (isMobile && inProblemRange) {
+            wrapper.style.opacity = "0";
+            wrapper.style.pointerEvents = "none";
+          } else {
+            wrapper.style.opacity = String(opacity);
+            wrapper.style.pointerEvents = "";
+          }
           wrapper.style.transform = `translateY(-13vh)`;
         }
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize, { passive: true });
     onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
 
   // Material setup — FIX 1-5 from team Robot.tsx + eyeMeshesRef tracking
@@ -315,7 +336,8 @@ function Robot() {
     const inHeroZone = window.scrollY < problemTop;
 
     if (isTouchDevice) {
-      g.rotation.y += 0.004;
+      g.rotation.y = -Math.PI * 2;
+      return;
     } else if (inHeroZone) {
       // Hero zone: scroll-driven 360° spin with weighted damping
       const t      = Math.max(0, Math.min(1, scrollRef.current));

@@ -49,6 +49,7 @@ export default function WhyKernelSection() {
 
         {/* Two-column comparison */}
         <div
+          className="mobile-grid-1"
           style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',

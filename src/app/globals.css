@@ -1068,3 +1068,65 @@ nav a:hover::after {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ── Mobile fixes: robot scale, navbar CTA, clipped headlines ── */
+@media (max-width: 640px) {
+  #hero,
+  .team-hero-zone,
+  .hero-content-wrapper {
+    transform: none !important;
+    filter: none !important;
+    will-change: auto !important;
+    animation: none !important;
+  }
+  [data-robot-wrapper] {
+    height: 60vh !important;
+    bottom: auto !important;
+    top: 80px !important;
+    z-index: 1 !important;
+  }
+  .hero-content-wrapper {
+    left: 0 !important;
+    right: 0 !important;
+    bottom: auto !important;
+    top: 62vh !important;
+    padding: 0 !important;
+    text-align: left !important;
+  }
+  .hero-content-wrapper > div:first-child {
+    position: fixed !important;
+    top: 90px !important;
+    left: 0 !important;
+    right: 0 !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    z-index: 25 !important;
+    margin: 0 !important;
+  }
+  .hero-main-headline {
+    font-size: clamp(64px, 22vw, 96px) !important;
+    line-height: 1 !important;
+    text-align: left !important;
+    padding-left: 20px !important;
+    padding-right: 0 !important;
+    width: 100% !important;
+  }
+  .nav-header-mobile {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .nav-cta-mobile {
+    font-size: 11px !important;
+    padding: 8px 14px !important;
+  }
+  .problem-headline {
+    padding-top: 40px !important;
+    font-size: 28px !important;
+    line-height: 1.1 !important;
+  }
+  .livedemo-headline {
+    padding-top: 32px !important;
+    font-size: 32px !important;
+    line-height: 1.15 !important;
+  }
+}

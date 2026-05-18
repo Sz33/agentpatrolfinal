@@ -176,7 +176,7 @@ export default function TeamHero() {
       <Hero3D />
 
       {/* Floating chips */}
-      <div style={{ position: "absolute", top: "23%", left: "30%", zIndex: 15 }}>
+      <div className="mobile-hide" style={{ position: "absolute", top: "23%", left: "30%", zIndex: 15 }}>
         <Chip
           variant="default"
           label="SESSION · LIVE"
@@ -187,7 +187,7 @@ export default function TeamHero() {
           animDelay="0s"
         />
       </div>
-      <div style={{ position: "absolute", top: "54%", right: "30%", zIndex: 15 }}>
+      <div className="mobile-hide" style={{ position: "absolute", top: "54%", right: "30%", zIndex: 15 }}>
         <Chip
           variant="light"
           label="RUNTIME POLICY · ENFORCED"
@@ -198,7 +198,7 @@ export default function TeamHero() {
           animDelay="-2s"
         />
       </div>
-      <div style={{ position: "absolute", top: "34%", right: "18%", zIndex: 15 }}>
+      <div className="mobile-hide" style={{ position: "absolute", top: "34%", right: "18%", zIndex: 15 }}>
         <Chip
           variant="alert"
           label="BREACH · DETECTED"
@@ -239,6 +239,7 @@ export default function TeamHero() {
           />
         </div>
         <h1
+          className="hero-main-headline"
           style={{
             fontFamily: "var(--font-heading)",
             fontWeight: 700,

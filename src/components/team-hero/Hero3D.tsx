@@ -11,6 +11,7 @@ export default function Hero3D() {
     // id="team-hero-3d-wrapper" so RobotScene's scroll handler can fade it out
     <div
       id="team-hero-3d-wrapper"
+      data-robot-wrapper
       style={{
         position: "fixed",
         inset: 0,
