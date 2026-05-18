@@ -3,6 +3,7 @@ import { Manrope, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import GsapAnimations from "@/components/GsapAnimations";
 import EarlyAccessRoot from "@/components/EarlyAccessRoot";
+import ScrollToTopOnReload from "@/components/ScrollToTopOnReload";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -57,6 +58,7 @@ export default function RootLayout({
       className={`${manrope.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <ScrollToTopOnReload />
         <EarlyAccessRoot>
           {children}
           <GsapAnimations />
