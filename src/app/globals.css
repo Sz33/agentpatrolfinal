@@ -1015,3 +1015,56 @@ nav a:hover::after {
 #team-hero-3d-wrapper * {
   pointer-events: none !important;
 }
+
+/* ── Mobile (phones) ── */
+@media (max-width: 640px) {
+  .mobile-stack {
+    flex-direction: column !important;
+  }
+  .mobile-grid-1 {
+    grid-template-columns: 1fr !important;
+  }
+  .mobile-hide {
+    display: none !important;
+  }
+  .mobile-full-width {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: unset !important;
+  }
+  .mobile-padding {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+/* ── Tablet (iPad portrait, small tablets) ── */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .mobile-stack {
+    flex-direction: column !important;
+  }
+  .mobile-grid-1 {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .mobile-hide {
+    display: none !important;
+  }
+  .mobile-full-width {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .mobile-padding {
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+  }
+}
+
+/* ── Tablet-specific overrides for cards/grids that should be 2-col on tablet ── */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .tablet-grid-2 {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .tablet-grid-1 {
+    grid-template-columns: 1fr !important;
+  }
+}

@@ -40,7 +40,7 @@ export function Navbar() {
       </div>
 
       {/* Nav links */}
-      <nav style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
+      <nav className="mobile-hide" style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
         {[
           { label: 'How it works', href: '#how-it-works' },
           { label: 'Features', href: '#features' },

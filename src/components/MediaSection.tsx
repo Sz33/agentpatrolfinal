@@ -51,7 +51,7 @@ export default function MediaSection() {
         </div>
 
         {/* Cards */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 24 }} className="media-grid">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 24 }} className="media-grid mobile-grid-1">
           {articles.map((article, idx) => (
             <a
               key={article.title}

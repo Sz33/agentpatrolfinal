@@ -108,6 +108,7 @@ export default function FinalCtaSection() {
 
         {/* Buttons */}
         <div
+          className="mobile-stack"
           style={{
             display: 'flex',
             justifyContent: 'center',

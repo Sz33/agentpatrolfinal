@@ -91,7 +91,7 @@ export function Hero() {
 
           {/* HUD labels */}
           <span
-            className="hud-glow"
+            className="hud-glow mobile-hide"
             style={{
               position: 'absolute',
               fontFamily: 'var(--font-mono, ui-monospace), monospace',
@@ -107,7 +107,7 @@ export function Hero() {
             UNIT-04 // POLICE PATROL
           </span>
           <span
-            className="hud-glow"
+            className="hud-glow mobile-hide"
             style={{
               position: 'absolute',
               fontFamily: 'var(--font-mono, ui-monospace), monospace',
@@ -125,7 +125,7 @@ export function Hero() {
             TARGET LOCK
           </span>
           <span
-            className="hud-glow"
+            className="hud-glow mobile-hide"
             style={{
               position: 'absolute',
               fontFamily: 'var(--font-mono, ui-monospace), monospace',
@@ -249,7 +249,7 @@ export function Hero() {
 
         {/* Meta stats */}
         <div
-          className="hero-stats-anim"
+          className="hero-stats-anim mobile-hide"
           style={{
             display: 'flex',
             justifyContent: 'center',

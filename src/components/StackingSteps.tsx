@@ -200,6 +200,7 @@ function CardInner({ step, idx, total, runId }: { step: Step; idx: number; total
       />
 
       <div
+        className="mobile-grid-1"
         style={{
           position: 'relative',
           maxWidth: '1280px',

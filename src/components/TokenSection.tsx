@@ -54,7 +54,7 @@ export default function TokenSection() {
     <section id="token" style={{ backgroundColor: "rgb(10,9,15)", padding: "100px 40px" }}>
       <div
         style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}
-        className="token-grid"
+        className="token-grid mobile-grid-1"
       >
         {/* Left column */}
         <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
@@ -79,7 +79,7 @@ export default function TokenSection() {
           </div>
 
           {/* Stats grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }} className="mobile-grid-1">
             {stats.map((s, i) => (
               <div
                 key={s.label}

@@ -77,7 +77,8 @@ const GlobalSpotlight = ({
     spotlight.className = 'global-spotlight';
     spotlight.style.cssText = `
       position: fixed;
-      width: 800px;
+      max-width: 800px;
+      width: 100%;
       height: 800px;
       border-radius: 50%;
       pointer-events: none;
